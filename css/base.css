@@ -1,0 +1,44 @@
+/* ═══════════════════════════════════════════════════════
+   base.css — 리셋 + 전역 기본 스타일
+   대응 TDD: 없음 (인프라).
+
+   CSS 분리 전략 (업계 통용 — ITCSS 의 단순화 버전):
+     tokens.css      → 변수만 (Settings)
+     base.css        → 리셋 + 요소 기본값 (Generic/Elements)  ← 이 파일
+     layout.css      → 큰 구조: 컨테이너·씬·무대 (Objects)
+     components.css  → 재사용 부품: 버튼·게이지·엔티티 (Components)
+   파일이 더 커지면 components 를 buttons.css / gauge.css 등으로 더 쪼갠다.
+   ═══════════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    background: var(--bg-frame);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    -webkit-user-select: none;
+    user-select: none; /* 드래그로 텍스트 선택되는 것 방지 */
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}

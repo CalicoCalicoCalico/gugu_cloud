@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>담배 줍기 — Phase 0</title>
+
+        <!-- CSS: 변수 → 리셋 → 레이아웃 → 부품 순서 (ITCSS 단순화) -->
+        <link rel="stylesheet" href="css/tokens.css" />
+        <link rel="stylesheet" href="css/base.css" />
+        <link rel="stylesheet" href="css/layout.css" />
+        <link rel="stylesheet" href="css/components.css" />
+    </head>
+    <body>
+        <!-- 모든 씬을 담는 박스 -->
+        <div id="game-container">
+            <!-- ═══ 씬: 타이틀 ═══ -->
+            <div id="scene-title" class="scene active">
+                <h1 style="font-family: var(--font-display); font-size: var(--font-size-h1)">
+                    담배 줍기
+                </h1>
+                <p style="color: var(--text-secondary)">
+                    ← → (또는 A·D)로 이동, E로 줍기
+                </p>
+                <button id="btn-game-start" class="btn-primary">
+                    시작하기
+                </button>
+            </div>
+
+            <!-- ═══ 씬: 플레이 ═══ -->
+            <div id="scene-play" class="scene">
+                <!-- HUD: 폐 게이지 -->
+                <div id="hud">
+                    <span class="gauge-label">폐</span>
+                    <div class="gauge-track">
+                        <div id="gauge-fill" class="gauge-fill"></div>
+                    </div>
+                    <span id="gauge-value">0 / 100</span>
+
+                    <!-- ⚠ dev 폴백 버튼 (spawn 규칙 미정 동안 담배 수동 생성) -->
+                    <button id="btn-dev-spawn" class="btn-dev">
+                        담배 1개 생성
+                    </button>
+                </div>
+
+                <!-- 플레이 무대: 플레이어 + 담배가 여기 absolute 배치됨 -->
+                <div id="play-field">
+                    <!-- 담배 레이어 (render 가 자식 노드 생성/관리) -->
+                    <div id="cigarette-layer"></div>
+                    <!-- 플레이어 (render 가 left/top 설정) -->
+                    <div id="player"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 스크립트 로드 (의존성 순서) ═══ -->
+        <script src="js/helpers.js"></script>
+        <script src="js/data.js"></script>
+        <script src="js/state.js"></script>
+        <script src="js/systems/input.js"></script>
+        <script src="js/systems/movement.js"></script>
+        <script src="js/systems/interaction.js"></script>
+        <script src="js/systems/render.js"></script>
+        <script src="js/loop.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,105 @@
+/* ═══════════════════════════════════════════════════════
+   tokens.css — 디자인 토큰 (모든 변수의 단일 출처)
+   대응 TDD: 없음 (인프라). 단, 게임 전용 토큰은 4단계 DATA 의
+   시각 표현 값과 짝을 이룬다 (필드 크기·게이지 등).
+
+   제공해주신 엽전인생 tokens.css 의 구조를 그대로 따른다:
+   원시색 → 의미색 → 버튼 → 간격 → 폰트 → 모서리 → 그림자 → 게임전용.
+   값만 이 게임(담배 줍기)에 맞게 교체했다.
+   ═══════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Jua&display=swap");
+
+:root {
+    /* ═══ 1. 원시 색상 (Primitive Colors) ═══ */
+    --ink-900: #1a1a1f;
+    --ink-700: #2e2e38;
+    --ink-500: #4a4a57;
+
+    --paper-0: #ffffff;
+    --paper-50: #f7f5f0;
+    --paper-100: #ece8df;
+    --paper-300: #d6d0c2;
+
+    --smoke-300: #b8c0c4;
+    --smoke-500: #8a949a;
+
+    /* 게이지(폐) — 차오를수록 탁해지는 느낌의 강조색 */
+    --gauge-fill: #d8654f;
+    --gauge-track: #3a3a44;
+
+    --accent-500: #e8b84b; /* 담배 불빛/포인트 */
+
+    /* ═══ 2. 의미 색상 (Semantic Colors) ═══ */
+    --text-primary: var(--paper-50);
+    --text-secondary: var(--smoke-300);
+    --text-inverse: var(--ink-900);
+
+    --bg-frame: var(--ink-900); /* 화면 바깥 여백 */
+    --bg-stage: var(--ink-700); /* 플레이 무대 배경 */
+    --bg-ground: #3f3f4a; /* 바닥 */
+
+    --border-primary: var(--ink-500);
+
+    /* ═══ 3. 버튼 색상 ═══ */
+    --button-primary-bg: var(--accent-500);
+    --button-primary-hover: #f1c766;
+    --button-primary-text: var(--ink-900);
+
+    --button-dev-bg: var(--smoke-500);
+    --button-dev-hover: var(--smoke-300);
+    --button-dev-text: var(--ink-900);
+
+    /* ═══ 4. 간격 (Spacing) — 4px 단위 ═══ */
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-6: 24px;
+    --spacing-8: 32px;
+    --spacing-12: 48px;
+
+    /* ═══ 5. 폰트 ═══ */
+    --font-family: "Noto Sans KR", sans-serif;
+    --font-display: "Jua", "Noto Sans KR", sans-serif; /* 타이틀용 */
+
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-h2: 30px;
+    --font-size-h1: 40px;
+
+    --font-weight-base: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /* ═══ 6. 모서리 (Border Radius) ═══ */
+    --radius-sm: 4px;
+    --radius-base: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+
+    /* ═══ 7. 그림자 (Shadow) ═══ */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+
+    /* ═══ 8. 게임 전용 토큰 ═══ */
+    /* 플레이 무대(필드) 크기 — JS 의 DATA.FIELD 와 값을 일치시킬 것.
+       ⚠ 한 곳(DATA)에서만 진짜로 쓰이며, 여기 값은 CSS 레이아웃용 복제다.
+       바꿀 땐 둘 다 바꿔야 한다 (0차에서는 수동 동기화, 추후 통일 고려). */
+    --field-width: 720px;
+    --field-height: 360px;
+
+    /* 플레이어 크기 — DATA.PLAYER.w/h 와 일치 */
+    --player-width: 24px;
+    --player-height: 32px;
+
+    /* 담배 크기 — DATA.CIGARETTE.w/h 와 일치 */
+    --cig-width: 16px;
+    --cig-height: 16px;
+
+    /* 게이지 바 */
+    --gauge-bar-width: 240px;
+    --gauge-bar-height: 20px;
+}

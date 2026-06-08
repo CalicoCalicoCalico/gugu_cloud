@@ -1,0 +1,61 @@
+/* ═══════════════════════════════════════════════════════
+   layout.css — 큰 구조 (컨테이너 · 씬 전환 · 플레이 무대)
+   대응 TDD: 2단계 씬 FSM 의 시각적 그릇.
+   (씬 전환 자체는 JS switchScene 이 .active 토글로 수행)
+   ═══════════════════════════════════════════════════════ */
+
+#game-container {
+    position: relative;
+    width: var(--field-width);
+    background: var(--bg-stage);
+    border: 2px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+/* ── 씬 공통: 기본은 숨김, .active 만 보임 ── */
+.scene {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-8);
+    min-height: var(--field-height);
+}
+.scene.active {
+    display: flex;
+}
+
+/* ── 타이틀 씬 ── */
+#scene-title {
+    gap: var(--spacing-6);
+    text-align: center;
+}
+
+/* ── 플레이 씬 ── */
+#scene-play {
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+}
+
+/* 플레이 무대: 좌우 이동·담배가 놓이는 고정 크기 박스.
+   position:relative → 안의 player/담배가 absolute 로 배치됨 */
+#play-field {
+    position: relative;
+    width: var(--field-width);
+    height: var(--field-height);
+    background: var(--bg-stage);
+    overflow: hidden;
+}
+
+/* 바닥선 — 플레이어와 담배가 서 있는 지면(시각용) */
+#play-field::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 64px;
+    background: var(--bg-ground);
+}

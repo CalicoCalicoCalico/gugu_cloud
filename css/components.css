@@ -1,0 +1,99 @@
+/* ═══════════════════════════════════════════════════════
+   components.css — 재사용 부품 (버튼 · 게이지 · 엔티티)
+   대응 TDD: 4단계 엔티티의 시각 표현, 5단계 render() 가 조작하는 대상.
+   ⚠ 여기엔 "보이는 것"만. 위치(left/top)·게이지 너비 등 STATE 에서
+     나오는 값은 render() 가 인라인 스타일로 쓴다 (CSS 는 고정 모양만).
+   ═══════════════════════════════════════════════════════ */
+
+/* ── 버튼 ── */
+.btn-primary {
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    color: var(--button-primary-text);
+    background: var(--button-primary-bg);
+    padding: var(--spacing-3) var(--spacing-8);
+    border-radius: var(--radius-base);
+    box-shadow: var(--shadow-md);
+    transition: background 0.15s ease;
+}
+.btn-primary:hover {
+    background: var(--button-primary-hover);
+}
+
+/* 개발용 버튼 (담배 생성 등 — spawn 규칙 미정 동안의 폴백) */
+.btn-dev {
+    font-size: var(--font-size-sm);
+    color: var(--button-dev-text);
+    background: var(--button-dev-bg);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-sm);
+}
+.btn-dev:hover {
+    background: var(--button-dev-hover);
+}
+
+/* ── HUD: 게이지 바 ── */
+#hud {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    width: var(--field-width);
+}
+.gauge-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+.gauge-track {
+    width: var(--gauge-bar-width);
+    height: var(--gauge-bar-height);
+    background: var(--gauge-track);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+/* 채움 너비(%)는 render() 가 인라인으로 설정 — CSS 는 0% 기본만 */
+.gauge-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--gauge-fill);
+    border-radius: var(--radius-full);
+    transition: width 0.12s linear;
+}
+#gauge-value {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    min-width: 48px;
+}
+
+/* ── 엔티티: 플레이어 ── */
+/* 0차 표현: 스프라이트 에셋 없음 → 색 박스 플레이스홀더.
+   ⚠ TODO(에셋): 실제 캐릭터 이미지가 생기면 background → url(...)
+     facing 에 따라 transform: scaleX(-1) 좌우 반전. */
+#player {
+    position: absolute;
+    width: var(--player-width);
+    height: var(--player-height);
+    background: var(--accent-500);
+    border-radius: var(--radius-sm);
+    /* left/top 은 render() 가 STATE.player.x/y 로 설정 */
+}
+#player[data-facing="left"] {
+    transform: scaleX(-1);
+}
+
+/* ── 엔티티: 담배 ── */
+/* 0차 표현: 색 박스 플레이스홀더.
+   ⚠ TODO(에셋): DATA.CIGARETTE.sprite 이미지로 교체. */
+.cigarette {
+    position: absolute;
+    width: var(--cig-width);
+    height: var(--cig-height);
+    background: var(--paper-50);
+    border: 1px solid var(--ink-500);
+    border-radius: var(--radius-sm);
+    /* left/top 은 render() 가 인스턴스 x/y 로 설정 */
+}
+/* 주운 담배는 화면에서 사라짐 (collected === true) */
+.cigarette.collected {
+    display: none;
+}
