@@ -11,7 +11,7 @@
     color: var(--button-primary-text);
     background: var(--button-primary-bg);
     padding: var(--spacing-3) var(--spacing-8);
-    border-radius: var(--radius-base);
+    border-radius: var(--radius-full);
     box-shadow: var(--shadow-md);
     transition: background 0.15s ease;
 }
@@ -71,7 +71,7 @@
     width: var(--player-width);
     height: var(--player-height);
     border-radius: var(--radius-sm);
-    background-position: center;
+    background-position: bottom;
     background-size: contain;
     background-repeat: no-repeat;
 }

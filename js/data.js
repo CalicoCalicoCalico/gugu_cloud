@@ -27,9 +27,9 @@ const DATA = {
         // ── 플레이 무대(필드) ──
         // ⚠ tokens.css 의 --field-* 와 값을 일치시킬 것 (main.js 가 주입).
         FIELD: {
-            WIDTH: 960,
-            HEIGHT: 540,
-            GROUND_HEIGHT: 64, // 바닥 띠의 높이(px). layout.css 의 바닥과 일치시킬 것.
+            WIDTH: 1200,
+            HEIGHT: 440,
+            GROUND_HEIGHT: 40 - 16, // 바닥 띠의 높이(px). layout.css 의 바닥과 일치시킬 것.
             // GROUND_Y 는 위 값들에서 "파생"되므로 객체 아래에서 계산해 넣는다.
         },
 
@@ -37,8 +37,8 @@ const DATA = {
         // BOX_W / BOX_H = 충돌 박스 크기(px). 지금은 화면 표시 크기와 같다.
         // (개발문서의 boxW / boxH. 나중에 스프라이트 크기와 달라질 수 있음)
         PLAYER: {
-            BOX_W: 60, //24,
-            BOX_H: 60, //32,
+            BOX_W: 100, //24,
+            BOX_H: 100, //32,
             SPEED: 3, // 프레임당 이동 픽셀
             SPRITE: "img/player.png", // ⚠ index.html 기준 경로
         },
