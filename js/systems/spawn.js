@@ -31,20 +31,16 @@ function spawnCigarette() {
 // ─────────────────────────────────────────
 
 /**
- * 확률(percentage)에 따라 담배 종류 키 하나를 뽑는다.
- * (단초 45 / 중초 45 / 장초 10 → 합 100 가정)
  * @returns {("cigar_s"|"cigar_m"|"cigar_l")}
  */
 function pickRandomCigaretteType() {
-    const roll = Math.random() * 100; // 0 이상 100 미만
-    let cumulative = 0;
-    for (const [type, def] of Object.entries(DATA.CIGARETTE_TYPES)) {
-        cumulative += def.percentage;
-        if (roll < cumulative) return type;
-    }
-    // 부동소수 오차 등으로 안 걸리면 마지막 종류 반환 (안전장치)
-    const typeKeys = Object.keys(DATA.CIGARETTE_TYPES);
-    return typeKeys[typeKeys.length - 1];
+    let cigaTypesArray = ["cigar_s", "cigar_m", "cigar_l"];
+    // 랜덤 인덱스 만들기 0, 1, 2 중 하나
+    let randIndex = Math.floor(Math.random() * 3);
+
+    // TODO: 학률 추가하기
+
+    return cigaTypesArray[randIndex];
 }
 
 /**
@@ -54,22 +50,7 @@ function pickRandomCigaretteType() {
  */
 function spawnOneCigarette(x) {
     const type = pickRandomCigaretteType();
-    const def = DATA.CIGARETTE_TYPES[type];
-
-    const { WIDTH, GROUND_Y } = DATA.CONFIG.FIELD;
-    const { BOX_H } = DATA.CONFIG.PLAYER;
-
-    const px = x ?? Math.random() * (WIDTH - def.boxW);
-    // y: 담배 밑면이 플레이어 발밑(바닥선)과 같은 높이에 오도록.
-    const py = GROUND_Y + BOX_H - def.boxH;
-
-    STATE.cigarettesArray.push({
-        id: `cig_${STATE.cigaretteIdCounter++}`,
-        type,
-        x: px,
-        y: py,
-        boxW: def.boxW,
-        boxH: def.boxH,
-        collected: false,
-    });
+    // 위치 계산·크기 설정은 Cigarette 생성자가 알아서 한다 (x 안 주면 랜덤).
+    const id = `cig_${STATE.cigaretteIdCounter++}`;
+    STATE.cigarettesArray.push(new Cigarette(id, type, x));
 }

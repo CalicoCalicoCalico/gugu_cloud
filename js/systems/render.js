@@ -50,7 +50,7 @@ function renderCigarettes() {
             el.dataset.type = cig.type; // 디버깅용 (어떤 종류인지 DOM 에서 보임)
 
             // 종류별 스프라이트·크기는 DATA 가 단일 출처 → 여기서 인라인 적용
-            el.style.backgroundImage = `url("${DATA.CIGARETTE_TYPES[cig.type].sprite}")`;
+            el.style.backgroundImage = `url("${cig.sprite}")`;
             el.style.width = `${cig.boxW}px`;
             el.style.height = `${cig.boxH}px`;
 

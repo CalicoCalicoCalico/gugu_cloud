@@ -59,32 +59,18 @@ function smoke() {
     // (다음 스코프) 피우는 중엔 재진입 금지 — 줍기/피우기 상태가 들어오면 부활.
     // if (STATE.player.playerStatus !== "idle") return;
 
-    // 플레이어 충돌 박스: 위치는 STATE.player, 크기는 DATA.CONFIG.PLAYER.
-    const { BOX_W, BOX_H } = DATA.CONFIG.PLAYER;
-    const playerBox = {
-        x: STATE.player.x,
-        y: STATE.player.y,
-        w: BOX_W,
-        h: BOX_H,
-    };
+    // 플레이어 충돌 박스는 플레이어가 스스로 알려준다.
+    const playerBox = STATE.player.getBox();
 
-    // 사전 조건 2~3: 겹쳤고 아직 안 주운 담배 찾기.
-    // (담배는 boxW/boxH 로 가지고 있으니, AABB 가 쓰는 w/h 로 맞춰 넘긴다)
+    // 겹쳤고 아직 안 주운 담배 찾기. (담배도 자기 박스를 getBox() 로 알려줌)
     const c = STATE.cigarettesArray.find(
-        (cig) =>
-            !cig.collected &&
-            isColliding(playerBox, {
-                x: cig.x,
-                y: cig.y,
-                w: cig.boxW,
-                h: cig.boxH,
-            }),
+        (cig) => !cig.collected && isColliding(playerBox, cig.getBox()),
     );
     if (!c) return; // 대상 없음 → 중단
 
     // ── 트랜잭션 본체 (순서 고정) ──
-    c.collected = true; // (1) 먼저 플래그 → 이중 가산 차단
-    addGauge(DATA.CIGARETTE_TYPES[c.type].points); // (2) 종류별 점수만큼 게이지 가산
+    c.collect(); // (1) 먼저 주운 것으로 표시 → 이중 가산 차단
+    addGauge(c.points); // (2) 담배가 가진 점수만큼 게이지 가산
 
     // (다음 스코프) 줍기/피우기 상태·애니 + currentCigarette 세팅이 여기 들어온다.
     // STATE.currentCigarette = c;

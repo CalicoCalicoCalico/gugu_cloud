@@ -19,15 +19,7 @@ const STATE = {
     currentScene: "title",
 
     // ── 플레이어 ──
-    // TODO(다음 스코프): Player 클래스로 전환 예정 (지금은 평범한 객체).
-    player: {
-        x: 0, // 좌상단 x (resetGameState 에서 무대 중앙으로 설정)
-        y: 0, // 좌상단 y (resetGameState 에서 바닥 y 로 설정)
-        looking: "right", // 바라보는 방향: "left" | "right"  (개발문서: looking)
-        playerStatus: "idle", // 개발문서 플레이어 상태: "idle" | "picking" | "smoking"
-        // 지금은 항상 "idle". 상태 전환은 다음 스코프(애니) 담당.
-        // animTimer: 0,        // 다음 스코프(애니메이션 재설계)에서 사용 예정
-    },
+    player: null, // Player 인스턴스 (resetGameState 에서 생성)
 
     // ── 바닥에 있는 담배들 ──
     // 각 원소(지금은 평범한 객체): { id, type, x, y, boxW, boxH, collected }
@@ -69,12 +61,8 @@ const STATE = {
 function resetGameState() {
     const { FIELD, PLAYER } = DATA.CONFIG;
 
-    // 플레이어: 무대 가운데, 바닥 위에 서기
-    STATE.player.x = FIELD.WIDTH / 2 - PLAYER.BOX_W / 2;
-    STATE.player.y = FIELD.GROUND_Y;
-    STATE.player.looking = "right";
-    STATE.player.playerStatus = "idle";
-    // STATE.player.animTimer = 0; // 다음 스코프(애니)에서 사용 예정
+    // 플레이어: 새 인스턴스 생성 (생성자가 위치·방향·상태를 초기화한다)
+    STATE.player = new Player();
 
     // 담배 · 상호작용 초기화
     STATE.cigarettesArray = [];
