@@ -1,11 +1,6 @@
 /* ═══════════════════════════════════════════════════════
    tokens.css — 디자인 토큰 (모든 변수의 단일 출처)
-   대응 TDD: 없음 (인프라). 단, 게임 전용 토큰은 4단계 DATA 의
-   시각 표현 값과 짝을 이룬다 (필드 크기·게이지 등).
-
-   제공해주신 엽전인생 tokens.css 의 구조를 그대로 따른다:
    원시색 → 의미색 → 버튼 → 간격 → 폰트 → 모서리 → 그림자 → 게임전용.
-   값만 이 게임(담배 줍기)에 맞게 교체했다.
    ═══════════════════════════════════════════════════════ */
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Jua&display=swap");
@@ -85,19 +80,20 @@
     --shadow-lg: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
 
     /* ═══ 8. 게임 전용 토큰 ═══ */
-    /* 플레이 무대(필드) 크기 — JS 의 DATA.FIELD 와 값을 일치시킬 것.
-       ⚠ 한 곳(DATA)에서만 진짜로 쓰이며, 여기 값은 CSS 레이아웃용 복제다.
-       바꿀 땐 둘 다 바꿔야 한다 (0차에서는 수동 동기화, 추후 통일 고려). */
+    /* 무대(필드)·플레이어·바닥 크기. 진짜 단일 출처는 JS 의 DATA.CONFIG 이며,
+       main.js 부팅 때 아래 값들을 DATA 값으로 덮어쓴다(주입).
+       여기 값은 JS 로딩 전/주입 실패 시의 폴백(fallback)일 뿐이다. */
     --field-width: 720px;
     --field-height: 360px;
-
-    /* 플레이어 크기 — DATA.PLAYER.w/h 와 일치 */
     --player-width: 24px;
     --player-height: 32px;
+    --ground-height: 64px; /* = DATA.CONFIG.FIELD.GROUND_HEIGHT 폴백 */
 
-    /* 담배 크기 — DATA.CIGARETTE.w/h 와 일치 */
+    /* 담배 크기는 종류마다 달라서 더 이상 CSS 토큰을 쓰지 않는다.
+       이제 DATA.CIGARETTE_TYPES 가 단일 출처이고, render() 가 인스턴스별로
+       width/height 를 인라인 설정한다.
     --cig-width: 16px;
-    --cig-height: 16px;
+    --cig-height: 16px; */
 
     /* 게이지 바 */
     --gauge-bar-width: 240px;

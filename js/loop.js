@@ -1,43 +1,86 @@
 // ═══════════════════════════════════════════════════════
-// loop.js — 씬 전환 + 게임 루프 순서
-// 대응 TDD: 2단계 씬 FSM(루프 지배), 6단계 게임 루프 순서표.
+// loop.js — 씬 전환 + 게임 루프
 //
-// "지금 어느 scene 인가" 가 어떤 시스템이 도는지를 정한다 → 최상단 분기.
-// 아래 play 순서는 TDD 6단계 표에서 0차에 없는 단계
-// (생성·판정·애니)를 뺀 것이다.
+// "지금 어느 씬인가(STATE.currentScene)" 가 매 프레임 무엇이 도는지를 정한다.
+//
+// 씬 흐름 (개발문서): title → introVideo → play → endingVideo → end
+//   - introVideo / endingVideo : 이미지 한 장을 보여주고 시간이 지나면 자동 전환
+//   - play                     : 실제 게임 루프
+//   - title / end              : 정적 화면 (버튼 클릭이 전환을 담당)
 // ═══════════════════════════════════════════════════════
 
+// ─────────────────────────────────────────
+// 씬 전환
+// ─────────────────────────────────────────
+
 /**
- * 씬을 전환한다. .active 클래스를 토글하고 STATE.scene 갱신.
- * @param {('title'|'play')} name
+ * 씬을 전환한다. .active 클래스를 토글하고 STATE.currentScene 을 갱신한다.
+ * 씬에 머문 시간(framesInCurrentScene)도 0 으로 리셋한다.
+ * @param {("title"|"introVideo"|"play"|"endingVideo"|"end")} name
  */
 function switchScene(name) {
     document
         .querySelectorAll(".scene")
         .forEach((el) => el.classList.remove("active"));
     $(`scene-${name}`).classList.add("active");
-    STATE.scene = name;
+
+    STATE.currentScene = name;
+    STATE.framesInCurrentScene = 0; // 새 씬에 막 들어왔으니 0 부터 센다
+}
+
+// ─────────────────────────────────────────
+// 게임 루프 (매 프레임 1회)
+// ─────────────────────────────────────────
+
+/**
+ * 시간이 지나면 자동으로 다음 씬으로 넘어가는 "영상(이미지) 씬" 처리.
+ * @param {number} durationFrames 머물 프레임 수 (DATA.CONFIG.SCENE.*)
+ * @param {string} nextScene 시간이 다 되면 갈 씬
+ */
+function advanceTimedScene(durationFrames, nextScene) {
+    STATE.framesInCurrentScene += 1;
+    if (STATE.framesInCurrentScene >= durationFrames) {
+        switchScene(nextScene);
+    }
 }
 
 /**
  * 매 프레임 1회 호출. 현재 씬에 맞는 시스템들을 정해진 순서로 돌린다.
  */
 function tick() {
-    switch (STATE.scene) {
+    const { SCENE } = DATA.CONFIG;
+
+    switch (STATE.currentScene) {
+        case "introVideo":
+            advanceTimedScene(SCENE.INTRO_FRAMES, "play");
+            break;
+
         case "play":
-            // ── play 루프 순서 (TDD 6단계, 0차) ──
-            handleInput(); // 1. 입력 수집
-            movePlayer(); // 2. 이동
-            // (3. 생성 spawnCigarette  — ⚠ 1차)
-            smoke(); // 4. 상호작용 (내부에서 isColliding)
-            // (5. 종료 판정 checkEnding — ⚠ 2차)
-            // (6. 애니 갱신 updateAnim — ⚠ 1차)
-            render(); // 7. 렌더 (맨 끝, 읽기 전용)
+            // ── play 루프 순서 ──
+            // 1. 입력 수집
+            handleInput();
+            // 2. 이동
+            movePlayer();
+            // 3. 담배 생성
+            spawnCigarette();
+            // 4. 상호작용(줍기) — 내부에서 충돌 판정
+            smoke();
+            // 5. 종료 판정
+            checkEnding();
+            // 6. 애니 갱신 — 다음 스코프(애니 재설계)에서 부활 예정
+            // updateAnim();
+            // 7. 렌더 (맨 끝, 읽기 전용)
+            render();
+            break;
+
+        case "endingVideo":
+            advanceTimedScene(SCENE.ENDING_FRAMES, "end");
             break;
 
         case "title":
+        case "end":
         default:
-            // 타이틀은 정적 화면 — 루프에서 할 일 없음 (버튼 클릭이 전환)
+            // 정적 화면 — 루프에서 할 일 없음 (버튼 클릭이 전환을 담당)
             break;
     }
 }

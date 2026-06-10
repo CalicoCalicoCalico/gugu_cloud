@@ -1,8 +1,7 @@
 /* ═══════════════════════════════════════════════════════
    components.css — 재사용 부품 (버튼 · 게이지 · 엔티티)
-   대응 TDD: 4단계 엔티티의 시각 표현, 5단계 render() 가 조작하는 대상.
-   ⚠ 여기엔 "보이는 것"만. 위치(left/top)·게이지 너비 등 STATE 에서
-     나오는 값은 render() 가 인라인 스타일로 쓴다 (CSS 는 고정 모양만).
+   ⚠ 여기엔 "보이는 모양"만. 위치(left/top)·크기·게이지 너비처럼 STATE/DATA
+     에서 나오는 값은 render() 가 인라인 스타일로 쓴다 (CSS 는 고정 모양만).
    ═══════════════════════════════════════════════════════ */
 
 /* ── 버튼 ── */
@@ -20,7 +19,7 @@
     background: var(--button-primary-hover);
 }
 
-/* 개발용 버튼 (담배 생성 등 — spawn 규칙 미정 동안의 폴백) */
+/* 개발용 버튼 (담배 수동 생성 — 테스트용) */
 .btn-dev {
     font-size: var(--font-size-sm);
     color: var(--button-dev-text);
@@ -32,7 +31,7 @@
     background: var(--button-dev-hover);
 }
 
-/* ── HUD: 게이지 바 ── */
+/* ── HUD: 폐 게이지 바 (임시)── */
 #hud {
     display: flex;
     align-items: center;
@@ -66,32 +65,35 @@
 }
 
 /* ── 엔티티: 플레이어 ── */
-/* 0차 표현: 스프라이트 에셋 없음 → 색 박스 플레이스홀더.
-   ⚠ TODO(에셋): 실제 캐릭터 이미지가 생기면 background → url(...)
-     facing 에 따라 transform: scaleX(-1) 좌우 반전. */
+/* 위치(left/top)는 render() 가 STATE.player.x/y 로 설정. */
 #player {
     position: absolute;
     width: var(--player-width);
     height: var(--player-height);
-    background: var(--accent-500);
     border-radius: var(--radius-sm);
-    /* left/top 은 render() 가 STATE.player.x/y 로 설정 */
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
-#player[data-facing="left"] {
+/* 오른쪽을 볼 때 좌우 반전 (data-looking 은 render() 가 설정) */
+#player[data-looking="right"] {
     transform: scaleX(-1);
 }
+/* (다음 스코프) 피우는 중 표현 — 애니 재설계 때 부활 예정
+#player[data-status="smoking"] {
+    background: var(--gauge-fill);
+} */
 
 /* ── 엔티티: 담배 ── */
-/* 0차 표현: 색 박스 플레이스홀더.
-   ⚠ TODO(에셋): DATA.CIGARETTE.sprite 이미지로 교체. */
+/* 크기·이미지는 종류마다 다르므로 render() 가 인라인으로 설정한다(DATA 단일 출처).
+   CSS 는 "배경 이미지를 어떻게 보여줄지"만 고정으로 둔다. */
 .cigarette {
     position: absolute;
-    width: var(--cig-width);
-    height: var(--cig-height);
-    background: var(--paper-50);
-    border: 1px solid var(--ink-500);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
     border-radius: var(--radius-sm);
-    /* left/top 은 render() 가 인스턴스 x/y 로 설정 */
+    /* left/top/width/height/background-image 는 render() 가 인스턴스별로 설정 */
 }
 /* 주운 담배는 화면에서 사라짐 (collected === true) */
 .cigarette.collected {

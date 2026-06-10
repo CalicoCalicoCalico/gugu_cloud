@@ -1,37 +1,46 @@
 // ═══════════════════════════════════════════════════════
 // main.js — 부팅 + 이벤트 연결 + 게임 루프 시작
-// 대응 TDD: 전체를 엮는 진입점. (엽전인생 game.js 의 DOMContentLoaded 패턴)
 //
 // "이 게임 어디서 시작해?" → 맨 아래 DOMContentLoaded.
 // ═══════════════════════════════════════════════════════
 
 /**
- * 타이틀 "시작하기" → STATE 리셋 후 play 씬 진입.
- * ⚠ 이 흐름(startGame)은 TDD 9단계에서 ❌(타이틀 흐름 미추출)로 표시된 부분.
- *   0차 동작을 위해 최소 구현했다. 정식 설계 시 1단계 흐름 추출 필요.
+ * 타이틀 "시작하기" → STATE 리셋 + 담배 DOM 정리 후 인트로 영상 씬으로.
+ * (인트로 영상 씬은 시간이 지나면 자동으로 play 로 넘어간다)
  */
 function onTitleStart() {
     resetGameState();
-    switchScene("play");
+    clearCigaretteLayer(); // 이전 게임의 담배 DOM 정리 (재시작 안전)
+    switchScene("introVideo");
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    // 위생: 크기의 단일 출처 = DATA. CSS 변수로 주입 (tokens.css 의 복제 제거).
+    const root = document.documentElement.style;
+    const { FIELD, PLAYER } = DATA.CONFIG;
+    root.setProperty("--field-width", `${FIELD.WIDTH}px`);
+    root.setProperty("--field-height", `${FIELD.HEIGHT}px`);
+    root.setProperty("--ground-height", `${FIELD.GROUND_HEIGHT}px`);
+    root.setProperty("--player-width", `${PLAYER.BOX_W}px`);
+    root.setProperty("--player-height", `${PLAYER.BOX_H}px`);
+
     // ── 입력 리스너 등록 ──
     initInput();
 
     // ── 버튼 연결 ──
     $("btn-game-start").addEventListener("click", onTitleStart);
 
-    // ⚠ dev 폴백: spawnCigarette() 의 생성 규칙(간격·분포·재생성)이
-    //   1차 BLOCKING 미해결이라, 버튼으로 담배를 한 개씩 수동 생성한다.
-    //   (TDD 명시: "0차만이면 dev 버튼이 한 번 직접 생성")
-    $("btn-dev-spawn").addEventListener("click", () => {
-        if (STATE.scene !== "play") return;
-        devSpawnCigarette();
-    });
+    // 엔딩 "다시하기" → 타이틀로
+    $("btn-restart").addEventListener("click", () => switchScene("title"));
+
+    // dev 버튼: 담배를 한 개씩 수동 생성 (테스트용)
+    // $("btn-dev-spawn").addEventListener("click", () => {
+    //     if (STATE.currentScene !== "play") return;
+    //     spawnOneCigarette();
+    // });
 
     // ── 게임 루프 시작 (requestAnimationFrame) ──
-    // 0차는 프레임 기반 이동(speed = 프레임당 px)이라 delta 안 씀.
+    // 프레임 기반 이동(speed = 프레임당 px)이라 delta(경과시간) 안 씀.
     function frame() {
         tick();
         requestAnimationFrame(frame);

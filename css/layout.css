@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════
    layout.css — 큰 구조 (컨테이너 · 씬 전환 · 플레이 무대)
-   대응 TDD: 2단계 씬 FSM 의 시각적 그릇.
-   (씬 전환 자체는 JS switchScene 이 .active 토글로 수행)
+   씬 전환 자체는 JS switchScene 이 .active 토글로 수행한다.
+   씬 흐름(개발문서): title → introVideo → play → endingVideo → end
    ═══════════════════════════════════════════════════════ */
 
 #game-container {
@@ -33,6 +33,31 @@
     text-align: center;
 }
 
+#scene-title h1 {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h1);
+}
+#scene-title p {
+    color: var(--text-secondary);
+}
+
+#scene-end h2 {
+    font-family: var(--font-display);
+}
+
+/* ── 영상(이미지) 씬: introVideo / endingVideo ── */
+/* 이미지 한 장을 무대 크기에 맞춰 보여준다. 시간이 지나면 자동 전환(loop.js). */
+#scene-introVideo,
+#scene-endingVideo {
+    padding: 0; /* 이미지를 무대에 꽉 맞추기 위해 패딩 제거 */
+}
+.scene-image {
+    display: block;
+    width: var(--field-width);
+    height: var(--field-height);
+    object-fit: contain; /* 비율 유지하며 무대 안에 맞춤 */
+}
+
 /* ── 플레이 씬 ── */
 #scene-play {
     gap: var(--spacing-4);
@@ -49,13 +74,14 @@
     overflow: hidden;
 }
 
-/* 바닥선 — 플레이어와 담배가 서 있는 지면(시각용) */
+/* 바닥선 — 플레이어와 담배가 서 있는 지면(시각용).
+   높이는 DATA.CONFIG.FIELD.GROUND_HEIGHT 와 같다 (main.js 가 --ground-height 주입). */
 #play-field::after {
     content: "";
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 64px;
+    height: var(--ground-height);
     background: var(--bg-ground);
 }
