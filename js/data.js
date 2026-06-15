@@ -40,7 +40,7 @@ const DATA = {
             BOX_W: 100, //24,
             BOX_H: 100, //32,
             SPEED: 3, // 프레임당 이동 픽셀
-            SPRITE: "img/player.png", // ⚠ index.html 기준 경로
+            SPRITE: "img_assets/characters/99_default.png", // ⚠ index.html 기준 경로
         },
 
         // ── 담배 생성 규칙 ──
@@ -101,21 +101,21 @@ const DATA = {
             percentage: 45,
             boxW: 20,
             boxH: 30,
-            sprite: "img/cigar_s.png",
+            sprite: "img_assets/items/cigar_s.png",
         }, // 단초
         cigar_m: {
             points: 10,
             percentage: 45,
             boxW: 28,
             boxH: 30,
-            sprite: "img/cigar_m.png",
+            sprite: "img_assets/items/cigar_m.png",
         }, // 중초
         cigar_l: {
             points: 20,
             percentage: 10,
             boxW: 36,
             boxH: 30,
-            sprite: "img/cigar_l.png",
+            sprite: "img_assets/items/cigar_l.png",
         }, // 장초
     },
 

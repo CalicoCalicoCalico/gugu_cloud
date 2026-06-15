@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>구구름과자</title>
 
-        <link rel="icon" type="image/x-icon" href="/img/cig.png" />
+        <link rel="icon" type="image/x-icon" href="/img_assets/cig.png" />
 
         <!-- CSS: tokens → 리셋 → 레이아웃 → 부품 순서 -->
         <link rel="stylesheet" href="css/tokens.css" />
@@ -15,21 +15,31 @@
     </head>
     <body>
         <!-- 모든 씬을 담는 박스. 씬 흐름: title → introVideo → play → endingVideo → end -->
+         
         <div id="game-container">
             <!-- ═══ 씬: 타이틀 ═══ -->
             <div id="scene-title" class="scene active">
-                <h1>구구름과자</h1>
-                <p>← → (또는 A·D)로 이동, E로 줍기</p>
-                <button id="btn-game-start" class="btn-primary">
-                    시작하기
-                </button>
+                <img class="scene-title-image" src="img_assets/bg/title.png" alt="타이틀" />
+                <div class="title-controls">
+                    <div class="btn-group">
+                        <button id="btn-game-setting" class="btn-ui-frame">
+                            <img src="img_assets/ui/gameSetting.png" alt="설정">
+                        </button>
+                        <button id="btn-game-start" class="btn-ui-frame">
+                            <img src="img_assets/ui/gameStartButton.png" alt="게임 시작">
+                        </button>
+                        <button id="btn-game-credit" class="btn-ui-frame">
+                            <img src="img_assets/ui/gameCredit.png" alt="크레딧">
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- ═══ 씬: 인트로 영상(이미지) ═══ -->
             <!-- 이미지 한 장을 보여주고 잠시 후 자동으로 play 로 넘어간다.
                  ⚠ TODO(에셋): src 를 실제 인트로 이미지 경로로 교체. -->
             <div id="scene-introVideo" class="scene">
-                <img class="scene-image" src="img/intro.png" alt="인트로" />
+                <img class="scene-image" src="img_assets/bg/opening.png" alt="인트로" />
             </div>
 
             <!-- ═══ 씬: 플레이 ═══ -->
@@ -57,7 +67,7 @@
             <!-- ═══ 씬: 엔딩 영상(이미지) ═══ -->
             <!-- ⚠ TODO(에셋): src 를 실제 엔딩 이미지 경로로 교체. -->
             <div id="scene-endingVideo" class="scene">
-                <img class="scene-image" src="img/ending.png" alt="엔딩" />
+                <img class="scene-image" src="img_assets/bg/ending.png" alt="엔딩" />
             </div>
 
             <!-- ═══ 씬: 엔딩 화면 end ═══ -->
