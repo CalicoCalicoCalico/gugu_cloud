@@ -67,12 +67,23 @@ function renderCigarettes() {
     }
 }
 
-/** 폐 게이지 바 채움/숫자 반영 */
+/** 폐 게이지 채움/숫자 반영. clip-path로 아래서 위로 채운다 */
 function renderGauge() {
-    const max = DATA.CONFIG.LUNG_GAUGE_MAX;
-    const pct = (STATE.playerLungGauge / max) * 100;
-    $("gauge-fill").style.width = `${pct}%`;
-    $("gauge-value").textContent = `${STATE.playerLungGauge} / ${max}`;
+    const { LUNG_GAUGE_MAX, LUNG } = DATA.CONFIG;
+
+    // 1. 게이지 비율 (0 ~ 1)
+    const ratio = STATE.playerLungGauge / LUNG_GAUGE_MAX;
+
+    // 2. SEGMENTS 조각으로 끊기 (계단식). floor → 한 조각을 "채워야" 올라감.
+    const stepped = Math.floor(ratio * LUNG.SEGMENTS) / LUNG.SEGMENTS;
+
+    // 3. 천장 적용: 가득 차도 위에서 FILL_TOP_PERCENT 지점까지만 채운다.
+    const fillableRange = 100 - LUNG.FILL_TOP_PERCENT; // 실제로 채울 세로 범위(%)
+    const fromTop = 100 - stepped * fillableRange; // inset 으로 위에서 잘라낼 %
+
+    $("lung-fill").style.clipPath = `inset(${fromTop}% 0 0 0)`;
+    $("gauge-value").textContent =
+        `${STATE.playerLungGauge} / ${LUNG_GAUGE_MAX}`;
 }
 
 /**

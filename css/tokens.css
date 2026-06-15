@@ -20,7 +20,8 @@
     --smoke-500: #8a949a;
 
     /* 게이지(폐) — 차오를수록 탁해지는 느낌의 강조색 */
-    --gauge-fill: #d8654f;
+    /* --gauge-fill: #d8654f; */
+    --gauge-fill: #e0c7b6;
     --gauge-track: #3a3a44;
 
     --accent-500: #e8b84b; /* 담배 불빛/포인트 */

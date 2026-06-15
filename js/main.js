@@ -17,12 +17,19 @@ function onTitleStart() {
 window.addEventListener("DOMContentLoaded", () => {
     // 위생: 크기의 단일 출처 = DATA. CSS 변수로 주입 (tokens.css 의 복제 제거).
     const root = document.documentElement.style;
+
     const { FIELD, PLAYER } = DATA.CONFIG;
     root.setProperty("--field-width", `${FIELD.WIDTH}px`);
     root.setProperty("--field-height", `${FIELD.HEIGHT}px`);
     root.setProperty("--ground-height", `${FIELD.GROUND_HEIGHT}px`);
     root.setProperty("--player-width", `${PLAYER.BOX_W}px`);
     root.setProperty("--player-height", `${PLAYER.BOX_H}px`);
+
+    // 폐 이미지 경로·크기를 CSS 변수로 주입
+    const { LUNG } = DATA.CONFIG;
+    root.setProperty("--lung-sprite", `url("${LUNG.SPRITE}")`);
+    root.setProperty("--lung-width", `${LUNG.WIDTH}px`);
+    root.setProperty("--lung-height", `${LUNG.HEIGHT}px`);
 
     // ── 입력 리스너 등록 ──
     initInput();
