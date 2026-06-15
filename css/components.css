@@ -31,32 +31,12 @@
     background: var(--button-dev-hover);
 }
 
-/* ── HUD: 폐 게이지 바 (임시)── */
+/* ── HUD: 폐 게이지 ── */
 #hud {
     display: flex;
     align-items: center;
     gap: var(--spacing-3);
     width: var(--field-width);
-}
-.gauge-label {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    white-space: nowrap;
-}
-.gauge-track {
-    width: var(--gauge-bar-width);
-    height: var(--gauge-bar-height);
-    background: var(--gauge-track);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-}
-/* 채움 너비(%)는 render() 가 인라인으로 설정 — CSS 는 0% 기본만 */
-.gauge-fill {
-    width: 0%;
-    height: 100%;
-    background: var(--gauge-fill);
-    border-radius: var(--radius-full);
-    transition: width 0.12s linear;
 }
 #gauge-value {
     font-size: var(--font-size-sm);
@@ -64,6 +44,45 @@
     min-width: 48px;
 }
 
+/* 폐 모양 게이지 컨테이너: 크기는 폐 이미지 비율에 맞게 조정 */
+#lung-gauge {
+    position: relative;
+    width: var(--lung-width); /* DATA에서 주입 */
+    height: var(--lung-height); /* DATA에서 주입 */
+}
+
+/* 레이어1: 폐 외곽선 이미지. 항상 전체가 보임 */
+#lung-outline {
+    position: absolute;
+    inset: 0;
+    background-image: var(--lung-sprite); /* JS가 주입 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* opacity: 0.4; 외곽선만 희미하게 */
+}
+
+/* 레이어2: 채움 색. mask로 폐 모양만 남기고, clip-path로 아래서 위로 채운다 */
+#lung-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--gauge-fill);
+
+    /* 폐 PNG의 투명 부분은 뚫리고 불투명 부분만 색이 보임 */
+    mask-image: var(--lung-sprite); /* JS가 주입 */
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    /* mask-position: center; */
+    -webkit-mask-image: var(--lung-sprite); /* Safari */
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+
+    /* clip-path: inset(X% 0 0 0) → 위에서 X%만큼 잘라냄. 즉 아래서 위로 채워짐 */
+    /* 초기값 100% = 완전히 비어있음. render.js가 매 프레임 갱신 */
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.12s linear;
+}
 /* ── 엔티티: 플레이어 ── */
 /* 위치(left/top)는 render() 가 STATE.player.x/y 로 설정. */
 #player {

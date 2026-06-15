@@ -36,16 +36,13 @@
             <div id="scene-play" class="scene">
                 <!-- HUD: 폐 게이지 -->
                 <div id="hud">
-                    <span class="gauge-label">폐</span>
-                    <div class="gauge-track">
-                        <div id="gauge-fill" class="gauge-fill"></div>
+                    <div id="lung-gauge">
+                        <!-- 레이어1: 폐 외곽선 (항상 보임) -->
+                        <div id="lung-outline"></div>
+                        <!-- 레이어2: 채움 색, mask로 폐 모양만 남기고 clip-path로 아래서 위로 채움 -->
+                        <div id="lung-fill"></div>
                     </div>
                     <span id="gauge-value">0 / 100</span>
-
-                    <!-- dev 버튼 (담배 수동 생성 — 테스트용) -->
-                    <!-- <button id="btn-dev-spawn" class="btn-dev">
-                        담배 1개 생성
-                    </button> -->
                 </div>
 
                 <!-- 플레이 무대: 플레이어 + 담배가 여기 absolute 배치됨 -->
