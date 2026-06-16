@@ -63,13 +63,15 @@
             <div id="scene-play" class="scene">
                 <!-- HUD: 폐 게이지 -->
                 <div id="hud">
-                    <div id="lung-gauge">
-                        <!-- 레이어1: 폐 외곽선 (항상 보임) -->
-                        <div id="lung-outline"></div>
-                        <!-- 레이어2: 채움 색, mask로 폐 모양만 남기고 clip-path로 아래서 위로 채움 -->
-                        <div id="lung-fill"></div>
+                    <div class="hud-lung-box">
+                        <div id="lung-gauge">
+                            <!-- 레이어1: 폐 외곽선 (항상 보임) -->
+                            <div id="lung-outline"></div>
+                            <!-- 레이어2: 채움 색, mask로 폐 모양만 남기고 clip-path로 아래서 위로 채움 -->
+                            <div id="lung-fill"></div>
+                        </div>
+                        <span id="gauge-value">0 / 100</span>
                     </div>
-                    <span id="gauge-value">0 / 100</span>
                 </div>
 
                 <!-- 플레이 무대(뷰포트): 고정 크기 창. 이 안에서 #world 가 스크롤된다. -->
