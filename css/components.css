@@ -33,10 +33,13 @@
 
 /* ── HUD: 폐 게이지 ── */
 #hud {
+    position: absolute;
+    top: 0;
     display: flex;
     align-items: center;
     gap: var(--spacing-3);
     width: var(--field-width);
+    z-index: 20; /* 맨 위에 올리기 */
 }
 #gauge-value {
     font-size: var(--font-size-sm);
@@ -59,7 +62,6 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    /* opacity: 0.4; 외곽선만 희미하게 */
 }
 
 /* 레이어2: 채움 색. mask로 폐 모양만 남기고, clip-path로 아래서 위로 채운다 */
@@ -72,7 +74,6 @@
     mask-image: var(--lung-sprite); /* JS가 주입 */
     mask-size: contain;
     mask-repeat: no-repeat;
-    /* mask-position: center; */
     -webkit-mask-image: var(--lung-sprite); /* Safari */
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;

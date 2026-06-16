@@ -29,17 +29,39 @@ const DATA = {
         FIELD: {
             WIDTH: 1200,
             HEIGHT: 440,
-            GROUND_HEIGHT: 40 - 16, // 바닥 띠의 높이(px). layout.css 의 바닥과 일치시킬 것.
+            GROUND_HEIGHT: 40, // 바닥 띠의 높이(px). layout.css 의 바닥과 일치시킬 것.
             // GROUND_Y 는 위 값들에서 "파생"되므로 객체 아래에서 계산해 넣는다.
         },
+        // 뷰포트 = 화면에 실제로 보이는 창 (스크롤되지 않는 고정 크기)
+        // VIEWPORT: {
+        //     WIDTH: 1200,
+        //     HEIGHT: 440,
+        //     GROUND_HEIGHT: 40 - 16, // 바닥 띠의 높이(px). layout.css 의 바닥과 일치시킬 것.
+        //     // GROUND_Y 는 위 값들에서 "파생"되므로 객체 아래에서 계산해 넣는다.
+        // },
+
+        // // 맵(월드) = 플레이어가 돌아다니는 전체 공간. 뷰포트가 이 안을 좌우로 스크롤한다.
+        // // 배경 원본 11000x1100 을 뷰포트 높이(440)에 맞춰 0.4배 축소한 표시 크기.
+        // MAP: {
+        //     WIDTH: 11000 * 0.4, // = 4400
+        //     HEIGHT: 1100 * 0.4, // = 440 (= VIEWPORT.HEIGHT, 세로 스크롤 없음)
+        //     SPRITE: "img/map.png", // ⚠ TODO(에셋): 실제 배경 이미지 경로로 교체
+        // },
+
+        // // 카메라(스크롤) 설정
+        // CAMERA: {
+        //     // 데드존: 플레이어가 화면 좌/우 끝에서 이만큼 안쪽에 닿으면 카메라가 따라 스크롤.
+        //     // 값 ↑ = 더 일찍(가운데서) 스크롤 / 값 ↓ = 화면 끝에 더 붙어야 스크롤. 보면서 조절.
+        //     EDGE_MARGIN: 400,
+        // },
 
         // ── 플레이어 ──
         // BOX_W / BOX_H = 충돌 박스 크기(px). 지금은 화면 표시 크기와 같다.
         // (개발문서의 boxW / boxH. 나중에 스프라이트 크기와 달라질 수 있음)
         PLAYER: {
-            BOX_W: 100, //24,
-            BOX_H: 100, //32,
-            SPEED: 3, // 프레임당 이동 픽셀
+            BOX_W: 340,
+            BOX_H: 340,
+            SPEED: 4, // 프레임당 이동 픽셀
             SPRITE: "img_assets/characters/99_default.png", // ⚠ index.html 기준 경로
         },
 
@@ -137,3 +159,8 @@ DATA.CONFIG.FIELD.GROUND_Y =
     DATA.CONFIG.FIELD.HEIGHT -
     DATA.CONFIG.FIELD.GROUND_HEIGHT -
     DATA.CONFIG.PLAYER.BOX_H;
+
+// DATA.CONFIG.VIEWPORT.GROUND_Y =
+//     DATA.CONFIG.VIEWPORT.HEIGHT -
+//     DATA.CONFIG.VIEWPORT.GROUND_HEIGHT -
+//     DATA.CONFIG.PLAYER.BOX_H;
