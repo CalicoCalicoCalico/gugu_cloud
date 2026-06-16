@@ -116,21 +116,21 @@ const DATA = {
         cigar_s: {
             points: 5,
             percentage: 45,
-            boxW: 20,
+            boxW: 50,
             boxH: 30,
             sprite: "img_assets/items/cigar_s.png",
         }, // 단초
         cigar_m: {
             points: 10,
             percentage: 45,
-            boxW: 28,
+            boxW: 70,
             boxH: 30,
             sprite: "img_assets/items/cigar_m.png",
         }, // 중초
         cigar_l: {
             points: 20,
             percentage: 10,
-            boxW: 36,
+            boxW: 90,
             boxH: 30,
             sprite: "img_assets/items/cigar_l.png",
         }, // 장초
