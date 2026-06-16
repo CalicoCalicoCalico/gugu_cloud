@@ -6,7 +6,7 @@
 
 #game-container {
     position: relative;
-    width: var(--field-width);
+    width: var(--viewport-width); /* 보이는 게임 = 뷰포트 폭 */
     background: var(--bg-stage);
     border: 2px solid var(--border-primary);
     border-radius: var(--radius-lg);
@@ -20,7 +20,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: var(--field-height);
+    min-height: var(--viewport-height);
 }
 
 .scene.active {
@@ -121,8 +121,8 @@
 }
 .scene-image {
     display: block;
-    width: var(--field-width);
-    height: var(--field-height);
+    width: var(--viewport-width);
+    height: var(--viewport-height);
     object-fit: contain; /* 비율 유지하며 무대 안에 맞춤 */
 }
 
@@ -136,10 +136,10 @@
    position:relative → 안의 player/담배가 absolute 로 배치됨 */
 #play-field {
     position: relative;
-    width: var(--field-width);
-    height: var(--field-height);
+    width: var(--viewport-width);
+    height: var(--viewport-height);
     background: var(--bg-stage);
-    overflow: hidden;
+    overflow: hidden; /* ← 이게 4400px 월드를 1200px 창으로 잘라준다. 절대 지우면 안된답니다; */
 }
 
 /* 바닥선 — 플레이어와 담배가 서 있는 지면(시각용).
@@ -151,5 +151,27 @@
     right: 0;
     bottom: 0;
     height: var(--ground-height);
-    background: var(--bg-ground);
+    background: transparent;
+}
+
+/* ── 월드(맵 전체): #play-field 안에서 transform 으로 좌우 스크롤 ── */
+#world {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--map-width);
+    height: var(--map-height);
+    will-change: transform; /* 매 프레임 transform → GPU 합성으로 부드럽게 (당신이 짚은 #3) */
+}
+
+/* ── 배경 맵 이미지 (월드 맨 뒤) ── */
+#map-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--map-width);
+    height: var(--map-height);
+    background-image: var(--map-sprite);
+    background-size: 100% 100%; /* 4400x440 칸에 꽉 채움. 원본과 같은 10:1 비율이라 왜곡 없음 */
+    background-repeat: no-repeat;
 }

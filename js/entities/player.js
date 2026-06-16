@@ -18,9 +18,9 @@ class Player {
     // 생성자: 무대 가운데, 바닥 위에 서서 오른쪽을 보는 상태로 시작
     // ─────────────────────────────────────────
     constructor() {
-        const { FIELD, PLAYER } = DATA.CONFIG;
-        this.x = FIELD.WIDTH / 2 - PLAYER.BOX_W / 2; // 무대 가로 중앙
-        this.y = FIELD.GROUND_Y; // 바닥에 서기
+        const { VIEWPORT, MAP, PLAYER } = DATA.CONFIG;
+        this.x = MAP.WIDTH / 2 - PLAYER.BOX_W / 2; // 맵(월드) 가로 한가운데에서 시작
+        this.y = VIEWPORT.GROUND_Y; // 바닥에 서기 (세로는 안 바뀜)
         this.looking = "right";
         this.playerStatus = "idle";
     }
@@ -36,9 +36,9 @@ class Player {
     walk(dir) {
         if (dir === 0) return; // 안 움직임
 
-        const { WIDTH } = DATA.CONFIG.FIELD;
+        const { WIDTH } = DATA.CONFIG.MAP; // 이동 한계는 화면이 아니라 맵(월드) 전체
         const { BOX_W, SPEED } = DATA.CONFIG.PLAYER;
-        const maxX = WIDTH - BOX_W; // 오른쪽 끝 한계
+        const maxX = WIDTH - BOX_W; // 맵 오른쪽 끝 한계
         this.x = clamp(this.x + dir * SPEED, 0, maxX); // helpers.js 의 clamp
         this.looking = dir < 0 ? "left" : "right";
     }

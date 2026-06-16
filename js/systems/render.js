@@ -15,9 +15,16 @@ const cigDomCache = new Map();
  * 한 프레임의 화면을 STATE 로부터 그린다. STATE 는 읽기만.
  */
 function render() {
+    renderWorld(); // 카메라 위치를 #world 에 반영 (배경·담배·플레이어가 함께 스크롤)
     renderPlayer();
     renderCigarettes();
     renderGauge();
+}
+
+/** 카메라 위치를 #world 컨테이너에 반영. transform 으로 통째로 밀어 스크롤한다. */
+function renderWorld() {
+    // 화면좌표 = 월드 − camera.x → #world 를 왼쪽으로 camera.x 만큼 민다
+    $("world").style.transform = `translateX(${-STATE.camera.x}px)`;
 }
 
 /** 플레이어 위치/방향을 DOM 에 반영 */

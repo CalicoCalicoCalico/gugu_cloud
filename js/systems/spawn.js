@@ -54,3 +54,14 @@ function spawnOneCigarette(x) {
     const id = `cig_${STATE.cigaretteIdCounter++}`;
     STATE.cigarettesArray.push(new Cigarette(id, type, x));
 }
+
+/**
+ * 게임 시작 시 맵에 담배를 미리 여러 개 뿌린다 (빈 맵 방지).
+ * main.js 가 새 게임을 시작할 때 호출. count 만큼 맵 전체에 랜덤 배치한다.
+ * @param {number} count 미리 깔 담배 개수 (보통 MAX_ON_FIELD)
+ */
+function seedCigarettes(count) {
+    for (let i = 0; i < count; i++) {
+        spawnOneCigarette(); // 위치 미지정 → 맵 전체 랜덤
+    }
+}

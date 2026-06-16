@@ -35,11 +35,14 @@ class Cigarette {
         this.boxH = def.boxH;
         this.sprite = def.sprite; // render 가 사용
 
-        // x: 안 주면 무대 안 랜덤. (dev 버튼은 특정 x 를 넘김)
-        this.x = x ?? Math.random() * (DATA.CONFIG.FIELD.WIDTH - this.boxW);
-        // y: 담배 밑면이 바닥선(플레이어 발밑)과 같은 높이에 오도록.
+        // x: 안 주면 맵(월드) 전체에 랜덤 배치.
+        //    (화면 밖에도 생기고, 플레이어가 걸어가면 그때 만난다)
+        this.x = x ?? Math.random() * (DATA.CONFIG.MAP.WIDTH - this.boxW);
+        // y: 담배 밑면이 바닥선(플레이어 발밑)과 같은 높이에. (세로는 안 바뀜)
         this.y =
-            DATA.CONFIG.FIELD.GROUND_Y + DATA.CONFIG.PLAYER.BOX_H - this.boxH;
+            DATA.CONFIG.VIEWPORT.GROUND_Y +
+            DATA.CONFIG.PLAYER.BOX_H -
+            this.boxH;
 
         this.collected = false;
     }
