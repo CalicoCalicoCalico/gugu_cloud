@@ -31,9 +31,9 @@
 #scene-title {
     gap: var(--spacing-6);
     text-align: center;
-    position: relative;       /* 내부 요소들을 겹쳐 올릴 기준점이 됩니다 */
-    width: 100%;              /* 게임 화면 가로를 꽉 채웁니다 */
-    height: 440px;            /* 지정한 화면 높이 */
+    position: relative; /* 내부 요소들을 겹쳐 올릴 기준점이 됩니다 */
+    width: 100%; /* 게임 화면 가로를 꽉 채웁니다 */
+    height: 440px; /* 지정한 화면 높이 */
     margin: 0 auto;
     overflow: hidden;
 }
@@ -48,39 +48,38 @@
 }
 
 #btn-game-start {
-    z-index: 10;              /* 이미지보다 무조건 위에 보이도록 설정 */
+    z-index: 10; /* 이미지보다 무조건 위에 보이도록 설정 */
 }
 
 #btn-game-setting {
-    z-index: 10;              /* 이미지보다 무조건 위에 보이도록 설정 */
+    z-index: 10; /* 이미지보다 무조건 위에 보이도록 설정 */
 }
 
 .scene-title-image {
     display: block;
-    position: absolute;       /* 상자 안에서 배경처럼 바닥에 깔아둡니다 */
+    position: absolute; /* 상자 안에서 배경처럼 바닥에 깔아둡니다 */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;        /* 이미지가 절대 일그러지지 않게 보호합니다 */
-    z-index: 1;               /* 1층: 가장 바닥에 깔아둡니다 */
+    object-fit: cover; /* 이미지가 절대 일그러지지 않게 보호합니다 */
+    z-index: 1; /* 1층: 가장 바닥에 깔아둡니다 */
 }
 
 #scene-title .title-controls {
     position: absolute;
-    bottom: 20%;              /* 이미지 하단에서의 높이 조절 */
+    bottom: 20%; /* 이미지 하단에서의 높이 조절 */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10;              /* 이미지보다 위로 띄우기 */
+    z-index: 10; /* 이미지보다 위로 띄우기 */
 }
-
 
 #scene-title .btn-group {
     display: flex;
     justify-content: center; /* 버튼들을 화면 가운데로 예쁘게 모아줘 */
-    align-items: center;     /* 크기가 달라진 버튼들의 '상하 정렬'을 정중앙으로 일렬횡대 정렬! */ 
-    flex-direction: row;      /* ★ 버튼들을 좌우로 나란히 정렬합니다 */
-    gap: var(--spacing-3);     /* ★ 버튼과 버튼 사이의 가로 간격입니다 */
+    align-items: center; /* 크기가 달라진 버튼들의 '상하 정렬'을 정중앙으로 일렬횡대 정렬! */
+    flex-direction: row; /* ★ 버튼들을 좌우로 나란히 정렬합니다 */
+    gap: var(--spacing-3); /* ★ 버튼과 버튼 사이의 가로 간격입니다 */
 }
 
 .btn-ui-frame {
@@ -92,29 +91,27 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-     --btn-custom-width: 120px; /* ㅠㅠ 이 안에서 하니까 됩니다 왜일까요 ... */
+    --btn-custom-width: 120px; /* ㅠㅠ 이 안에서 하니까 됩니다 왜일까요 ... */
 
     transition: transform 0.2s ease-in-out; /* 크기 변화가 부드럽게 일어나도록 시간의 흐름을 줍니다 (0.2초 동안 부드럽게) */
     width: var(--btn-custom-width);
 }
-
 
 #btn-game-start img {
     width: 100%; /* 게임 시작 구름은 상자에 꽉 차게 100% */
 }
 
 #btn-game-setting img {
-    width: 70%;  /* 설정 이미지는 상자 안에서 70% 크기로 아담하게 줄여 */
+    width: 70%; /* 설정 이미지는 상자 안에서 70% 크기로 아담하게 줄여 */
 }
 
 #btn-game-credit img {
-    width: 70%;  /* 크레딧 이미지도 똑같이 70%로 줄여서 균형을 맞춰 */
+    width: 70%; /* 크레딧 이미지도 똑같이 70%로 줄여서 균형을 맞춰 */
 }
 
 .btn-ui-frame:hover {
     transform: scale(1.08);
 }
-
 
 /* ── 영상(이미지) 씬: introVideo / endingVideo ── */
 /* 이미지 한 장을 무대 크기에 맞춰 보여준다. 시간이 지나면 자동 전환(loop.js). */
@@ -132,7 +129,7 @@
 /* ── 플레이 씬 ── */
 #scene-play {
     gap: var(--spacing-4);
-    padding: var(--spacing-4);
+    /* padding: var(--spacing-4); */
 }
 
 /* 플레이 무대: 좌우 이동·담배가 놓이는 고정 크기 박스.
