@@ -86,9 +86,9 @@ const DATA = {
 
         // ── 폐 게이지 ──
         LUNG: {
-            SPRITE: "/ui/lung.png",
-            WIDTH: 80, // #lung-gauge 크기 (폐 이미지 비율에 맞게) 420 x 379
-            HEIGHT: (379 * 80) / 420,
+            SPRITE: "/img_assets/ui/lung.png",
+            WIDTH: 120, // #lung-gauge 크기 (폐 이미지 비율에 맞게) 420 x 379
+            HEIGHT: (379 * 120) / 420,
 
             // 채움이 멈추는 위쪽 천장 (이미지 높이의 %). 기관지(위 줄기)는 안 채워지고,
             // 폐가 시작되는 "핑크 지점"까지만 채운다.
@@ -116,21 +116,21 @@ const DATA = {
         cigar_s: {
             points: 5,
             percentage: 45,
-            boxW: 20,
+            boxW: 50,
             boxH: 30,
             sprite: "img_assets/items/cigar_s.png",
         }, // 단초
         cigar_m: {
             points: 10,
             percentage: 45,
-            boxW: 28,
+            boxW: 70,
             boxH: 30,
             sprite: "img_assets/items/cigar_m.png",
         }, // 중초
         cigar_l: {
             points: 20,
             percentage: 10,
-            boxW: 36,
+            boxW: 90,
             boxH: 30,
             sprite: "img_assets/items/cigar_l.png",
         }, // 장초

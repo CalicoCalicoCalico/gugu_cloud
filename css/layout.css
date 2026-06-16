@@ -175,3 +175,10 @@
     background-size: 100% 100%; /* 4400x440 칸에 꽉 채움. 원본과 같은 10:1 비율이라 왜곡 없음 */
     background-repeat: no-repeat;
 }
+
+.hud-lung-box {
+    position: absolute;
+    top: 24px;      /* 상단 테두리로부터 내려올 거리 */
+    right: 32px;    /* 오른쪽 테두리로부터 떨어질 거리 */
+    z-index: 100;   /* 게임 속 다른 요소들보다 항상 위에 보이도록 설정 */
+}
