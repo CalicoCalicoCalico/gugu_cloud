@@ -18,6 +18,10 @@ const STATE = {
     // 흐름(개발문서 참고): title → introVideo → play → endingVideo → end
     currentScene: "title",
 
+    // ── 카메라 (뷰포트가 맵의 어디를 보고 있는지) ──
+    // camera.x = 화면 왼쪽 끝이 가리키는 월드 x. 화면좌표 = 월드좌표 − camera.x.
+    camera: { x: 0 },
+
     // ── 플레이어 ──
     player: null, // Player 인스턴스 (resetGameState 에서 생성)
 
@@ -63,6 +67,9 @@ function resetGameState() {
 
     // 플레이어: 새 인스턴스 생성 (생성자가 위치·방향·상태를 초기화한다)
     STATE.player = new Player();
+
+    // 카메라: 맵 한가운데를 보도록 초기화 (배경이 가운데부터 보이게)
+    STATE.camera.x = (DATA.CONFIG.MAP.WIDTH - DATA.CONFIG.VIEWPORT.WIDTH) / 2;
 
     // 담배 · 상호작용 초기화
     STATE.cigarettesArray = [];

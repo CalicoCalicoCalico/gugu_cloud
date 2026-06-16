@@ -11,6 +11,7 @@
 function onTitleStart() {
     resetGameState();
     clearCigaretteLayer(); // 이전 게임의 담배 DOM 정리 (재시작 안전)
+    seedCigarettes(DATA.CONFIG.SPAWN.INITIAL_COUNT); // 맵에 시작 시 생성되어있는 담배 갯수
     switchScene("introVideo");
 }
 
@@ -18,12 +19,17 @@ window.addEventListener("DOMContentLoaded", () => {
     // 위생: 크기의 단일 출처 = DATA. CSS 변수로 주입 (tokens.css 의 복제 제거).
     const root = document.documentElement.style;
 
-    const { FIELD, PLAYER } = DATA.CONFIG;
-    root.setProperty("--field-width", `${FIELD.WIDTH}px`);
-    root.setProperty("--field-height", `${FIELD.HEIGHT}px`);
-    root.setProperty("--ground-height", `${FIELD.GROUND_HEIGHT}px`);
+    const { VIEWPORT, MAP, PLAYER } = DATA.CONFIG;
+    root.setProperty("--viewport-width", `${VIEWPORT.WIDTH}px`);
+    root.setProperty("--viewport-height", `${VIEWPORT.HEIGHT}px`);
+    root.setProperty("--ground-height", `${VIEWPORT.GROUND_HEIGHT}px`);
     root.setProperty("--player-width", `${PLAYER.BOX_W}px`);
     root.setProperty("--player-height", `${PLAYER.BOX_H}px`);
+
+    // 맵(월드) 크기 + 배경 이미지 경로를 CSS 변수로 주입
+    root.setProperty("--map-width", `${MAP.WIDTH}px`);
+    root.setProperty("--map-height", `${MAP.HEIGHT}px`);
+    root.setProperty("--map-sprite", `url("${MAP.SPRITE}")`);
 
     // 폐 이미지 경로·크기를 CSS 변수로 주입
     const { LUNG } = DATA.CONFIG;

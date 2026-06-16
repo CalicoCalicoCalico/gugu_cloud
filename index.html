@@ -15,21 +15,34 @@
     </head>
     <body>
         <!-- 모든 씬을 담는 박스. 씬 흐름: title → introVideo → play → endingVideo → end -->
-         
+
         <div id="game-container">
             <!-- ═══ 씬: 타이틀 ═══ -->
             <div id="scene-title" class="scene active">
-                <img class="scene-title-image" src="img_assets/bg/title.png" alt="타이틀" />
+                <img
+                    class="scene-title-image"
+                    src="img_assets/bg/title.png"
+                    alt="타이틀"
+                />
                 <div class="title-controls">
                     <div class="btn-group">
                         <button id="btn-game-setting" class="btn-ui-frame">
-                            <img src="img_assets/ui/gameSetting.png" alt="설정">
+                            <img
+                                src="img_assets/ui/gameSetting.png"
+                                alt="설정"
+                            />
                         </button>
                         <button id="btn-game-start" class="btn-ui-frame">
-                            <img src="img_assets/ui/gameStartButton.png" alt="게임 시작">
+                            <img
+                                src="img_assets/ui/gameStartButton.png"
+                                alt="게임 시작"
+                            />
                         </button>
                         <button id="btn-game-credit" class="btn-ui-frame">
-                            <img src="img_assets/ui/gameCredit.png" alt="크레딧">
+                            <img
+                                src="img_assets/ui/gameCredit.png"
+                                alt="크레딧"
+                            />
                         </button>
                     </div>
                 </div>
@@ -39,7 +52,11 @@
             <!-- 이미지 한 장을 보여주고 잠시 후 자동으로 play 로 넘어간다.
                  ⚠ TODO(에셋): src 를 실제 인트로 이미지 경로로 교체. -->
             <div id="scene-introVideo" class="scene">
-                <img class="scene-image" src="img_assets/bg/opening.png" alt="인트로" />
+                <img
+                    class="scene-image"
+                    src="img_assets/bg/opening.png"
+                    alt="인트로"
+                />
             </div>
 
             <!-- ═══ 씬: 플레이 ═══ -->
@@ -55,19 +72,28 @@
                     <span id="gauge-value">0 / 100</span>
                 </div>
 
-                <!-- 플레이 무대: 플레이어 + 담배가 여기 absolute 배치됨 -->
+                <!-- 플레이 무대(뷰포트): 고정 크기 창. 이 안에서 #world 가 스크롤된다. -->
                 <div id="play-field">
-                    <!-- 담배 레이어 (render 가 자식 노드 생성/관리) -->
-                    <div id="cigarette-layer"></div>
-                    <!-- 플레이어 (render 가 left/top 설정) -->
-                    <div id="player"></div>
+                    <!-- 월드(맵 전체 크기). render 가 transform 으로 좌우로 민다. -->
+                    <div id="world">
+                        <!-- 배경 맵 이미지 (월드 맨 뒤 레이어) -->
+                        <div id="map-bg"></div>
+                        <!-- 담배 레이어 (render 가 자식 노드 생성/관리) -->
+                        <div id="cigarette-layer"></div>
+                        <!-- 플레이어 (render 가 left/top 설정) -->
+                        <div id="player"></div>
+                    </div>
                 </div>
             </div>
 
             <!-- ═══ 씬: 엔딩 영상(이미지) ═══ -->
             <!-- ⚠ TODO(에셋): src 를 실제 엔딩 이미지 경로로 교체. -->
             <div id="scene-endingVideo" class="scene">
-                <img class="scene-image" src="img_assets/bg/ending.png" alt="엔딩" />
+                <img
+                    class="scene-image"
+                    src="img_assets/bg/ending.png"
+                    alt="엔딩"
+                />
             </div>
 
             <!-- ═══ 씬: 엔딩 화면 end ═══ -->
@@ -88,6 +114,7 @@
         <script src="js/state.js"></script>
         <script src="js/systems/input.js"></script>
         <script src="js/systems/movement.js"></script>
+        <script src="js/systems/camera.js"></script>
         <script src="js/systems/interaction.js"></script>
         <script src="js/systems/spawn.js"></script>
         <!-- anim.js: 현재 보류(주석 처리됨). 다음 스코프에서 부활 예정이라 로드만 유지. -->
