@@ -13,6 +13,7 @@ function onTitleStart() {
     clearCigaretteLayer(); // 이전 게임의 담배 DOM 정리 (재시작 안전)
     seedCigarettes(DATA.CONFIG.SPAWN.INITIAL_COUNT); // 맵에 시작 시 생성되어있는 담배 갯수
     switchScene("introVideo");
+    startBgm(); // 사용자 클릭 시점 → 자동재생 정책 통과
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -39,6 +40,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // ── 입력 리스너 등록 ──
     initInput();
+    initSettings(); // 설정 팝업(esc) 초기화
+    initAudio(); // BGM 준비 (Audio 객체 생성 + 초기 볼륨)
 
     // ── 버튼 연결 ──
     $("btn-game-start").addEventListener("click", onTitleStart);

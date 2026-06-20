@@ -18,6 +18,9 @@ const STATE = {
     // 흐름(개발문서 참고): title → introVideo → play → endingVideo → end
     currentScene: "title",
 
+    // ── 일시정지 (설정 팝업이 열려 있는 동안 true) ──
+    paused: false,
+
     // ── 카메라 (뷰포트가 맵의 어디를 보고 있는지) ──
     // camera.x = 화면 왼쪽 끝이 가리키는 월드 x. 화면좌표 = 월드좌표 − camera.x.
     camera: { x: 0 },
@@ -84,6 +87,9 @@ function resetGameState() {
     STATE.input.right = false;
     STATE.input.interactDown = false;
     STATE.input.interactPressed = false;
+
+    // 일시정지 해제 (재시작 안전)
+    STATE.paused = false;
 
     // 타이머 초기화 (씬 진입 시점에 씬 시스템이 다시 세팅한다)
     STATE.framesSinceLastSpawn = 0;
