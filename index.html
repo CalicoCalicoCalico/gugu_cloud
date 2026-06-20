@@ -103,6 +103,36 @@
                 <h2>폐가 담배연기로 가득찬 구구는 멀리멀리 날아갔대요.</h2>
                 <button id="btn-restart" class="btn-primary">다시 줍기</button>
             </div>
+
+            <!-- ═══ 설정 팝업 (esc 로 열고 닫음, play 중에만) ═══ -->
+            <!-- '씬'이 아니라 게임 화면 위에 뜨는 오버레이다. 평소엔 .hidden 으로 숨김. -->
+            <div id="settings-overlay" class="overlay hidden">
+                <div id="settings-popup">
+                    <h2 class="settings-title">설정</h2>
+                    <!-- 다시 시작: 타이틀 화면으로 돌아간다 (다시 시작하면 게임 초기화됨) -->
+                    <button id="btn-settings-restart" class="btn-primary">
+                        다시 시작
+                    </button>
+
+                    <!-- TODO(다음): BGM 볼륨 슬라이더가 여기 들어옴 -->
+                    <!-- BGM 볼륨 슬라이더 -->
+                    <div class="settings-row">
+                        <label for="bgm-volume" class="settings-label"
+                            >BGM</label
+                        >
+                        <!-- value 는 폴백. JS가 DATA.CONFIG.AUDIO.BGM_VOLUME 로 덮어씀 -->
+                        <input
+                            id="bgm-volume"
+                            class="bgm-slider"
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value="0.5"
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ═══ 스크립트 로드 (의존성 순서) ═══ -->
@@ -123,7 +153,12 @@
         <script src="js/systems/anim.js"></script>
         <script src="js/systems/judge.js"></script>
         <script src="js/systems/render.js"></script>
+        <!-- BGM -->
+        <script src="js/audio.js"></script>
         <script src="js/loop.js"></script>
+        <!-- 설정 팝업 (esc 토글 + 다시 시작) -->
+        <script src="js/settings.js"></script>
+
         <script src="js/main.js"></script>
     </body>
 </html>

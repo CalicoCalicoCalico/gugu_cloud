@@ -119,3 +119,80 @@
 .cigarette.collected {
     display: none;
 }
+
+/* ── 설정 팝업 오버레이 ── */
+/* 게임 화면 전체를 덮는 반투명 막. .hidden 이면 숨김. */
+.overlay {
+    position: absolute; /* #game-container 기준으로 꽉 채움 */
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55); /* 뒤 화면을 어둡게 */
+    z-index: 100; /* 모든 씬 위에 */
+}
+.overlay.hidden {
+    display: none; /* 평소엔 안 보임 */
+}
+
+/* 팝업 박스 */
+#settings-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-6);
+    padding: var(--spacing-8);
+    background: var(--bg-stage);
+    border: 2px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+.settings-title {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+}
+
+/* ── 설정: BGM 볼륨 슬라이더 ── */
+.settings-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+.settings-label {
+    font-family: var(--font-display);
+    color: var(--text-secondary);
+}
+
+/* 기본 슬라이더 (단순 막대 + 동그란 손잡이) */
+/* TODO(주디): 트랙 색을 게임 톤에 맞게 교체, 사이즈도 */
+.bgm-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 160px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--gauge-track);
+    outline: none;
+    cursor: pointer;
+}
+
+/* 손잡이(잡고 움직이는 공) — WebKit(Chrome/Safari) */
+.bgm-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-full);
+    background: var(--accent-500);
+    border: none;
+    /* TODO(주디): fire 로 교체 */
+}
+
+/* 손잡이 — Firefox */
+.bgm-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: var(--radius-full);
+    background: var(--accent-500); /* TODO(주디): fire로 교체 (위와 동일) */
+}

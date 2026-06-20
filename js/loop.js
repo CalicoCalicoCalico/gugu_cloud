@@ -56,6 +56,9 @@ function tick() {
             break;
 
         case "play":
+            // 설정 팝업이 열려 있으면(일시정지) 시뮬레이션을 멈춘다
+            if (STATE.paused) break;
+
             // ── play 루프 순서 ──
             // 1. 입력 수집
             handleInput();
