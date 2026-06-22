@@ -181,7 +181,6 @@
     appearance: none;
     width: 32px;
     height: 32px;
-     /* border-radius: var(--radius-full); */
     background: url('../img_assets/ui/flame_normal.png') no-repeat center center;
     background-size: contain;
     border: none;
@@ -198,3 +197,16 @@
     background: url('../img_assets/ui/flame_right.png') no-repeat center center;
     background-size: contain;
 }
+
+/* 3. 파이어폭스 브라우저용 - 불꽃 모양 조절 단추 설정 */
+.bgm-slider::-moz-range-thumb {
+    width: 32px;
+    height: 32px;
+    background: url('../img_assets/ui/flame_normal.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+}
+
+/* 파이어폭스(Firefox)*/
+.bgm-slider.move-right::-moz-range-thumb { background: url('../img_assets/ui/flame_left.png') no-repeat center center; background-size: contain; }
+.bgm-slider.move-left::-moz-range-thumb { background: url('../img_assets/ui/flame_right.png') no-repeat center center; background-size: contain; }
