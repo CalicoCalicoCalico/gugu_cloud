@@ -164,14 +164,13 @@
 }
 
 /* 기본 슬라이더 (단순 막대 + 동그란 손잡이) */
-/* TODO(주디): 트랙 색을 게임 톤에 맞게 교체, 사이즈도 */
 .bgm-slider {
     -webkit-appearance: none;
     appearance: none;
     width: 160px;
-    height: 6px;
-    border-radius: var(--radius-full);
-    background: var(--gauge-track);
+    height: 12px;
+    /* border-radius: var(--radius-full); */
+    background: #c69c6d;
     outline: none;
     cursor: pointer;
 }
@@ -180,19 +179,22 @@
 .bgm-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: var(--radius-full);
-    background: var(--accent-500);
+    width: 32px;
+    height: 32px;
+     /* border-radius: var(--radius-full); */
+    background: url('../img_assets/ui/flame_normal.png') no-repeat center center;
+    background-size: contain;
     border: none;
-    /* TODO(주디): fire 로 교체 */
 }
 
-/* 손잡이 — Firefox */
-.bgm-slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border: none;
-    border-radius: var(--radius-full);
-    background: var(--accent-500); /* TODO(주디): fire로 교체 (위와 동일) */
+/* [오른쪽 이동 시] 불꽃이 왼쪽으로 휘날리는 이미지 */
+.bgm-slider.move-right::-webkit-slider-thumb {
+    background: url('../img_assets/ui/flame_left.png') no-repeat center center;
+    background-size: contain;
+}
+
+/* [왼쪽 이동 시] 불꽃이 오른쪽으로 휘날리는 이미지 */
+.bgm-slider.move-left::-webkit-slider-thumb {
+    background: url('../img_assets/ui/flame_right.png') no-repeat center center;
+    background-size: contain;
 }
