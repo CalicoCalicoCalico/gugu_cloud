@@ -103,7 +103,7 @@ const DATA = {
         // ── 오디오 ──
         AUDIO: {
             // TODO(에셋): 실제 BGM 파일 경로로 교체
-            BGM: "audio/bgm.mp3", // 걍 임시경로임
+            BGM: "../audio_assets/mainBGM.mp3", // 걍 임시경로임
             BGM_VOLUME: 0.5, // 시작 볼륨 (0~1). 슬라이더 초기값과 동기화됨
         },
     },
