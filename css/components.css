@@ -198,3 +198,16 @@
     background: url('../img_assets/ui/flame_right.png') no-repeat center center;
     background-size: contain;
 }
+
+/* 파이어폭스 브라우저용 */
+.bgm-slider::-moz-range-thumb {
+    width: 32px;
+    height: 32px;
+    background:  url('../img_assets/ui/flame_normal.png') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+    border: none;
+}
+
+.bgm-slider.move-right::-moz-range-thumb { background: url('../img_assets/ui/flame_left.png') no-repeat center center; background-size: contain; } 
+.custom-slider.move-left::-moz-range-thumb { background: url('../img_assets/ui/flame_right.png') no-repeat center center; background-size: contain; } 
