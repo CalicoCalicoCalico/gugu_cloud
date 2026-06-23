@@ -70,6 +70,13 @@ function renderCigarettes() {
         el.style.left = `${cig.x}px`;
         el.style.top = `${cig.y}px`;
 
+        // (Phase 2) 회전 반영 ── TODO(주림)
+        //   air: 떨어지며 빙글빙글. ground: faceDirection 각도로 누운 채 고정. (고정 될거같은데 이미 함 go live로 확인)
+        // el.style.transform = `rotate(${cig.angle}deg)`;
+
+        // ⚠ 회전 중심 기본값은 center. 담배가 길쭉해 어색하면
+        //   components.css 의 .cigarette { transform-origin: center; } 로 조절. (이게 다 뭔소리인지)
+
         // 주웠으면 숨김 (CSS .collected → display:none)
         el.classList.toggle("collected", cig.collected);
     }

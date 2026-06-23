@@ -64,7 +64,11 @@ function smoke() {
 
     // 겹쳤고 아직 안 주운 담배 찾기. (담배도 자기 박스를 getBox() 로 알려줌)
     const c = STATE.cigarettesArray.find(
-        (cig) => !cig.collected && isColliding(playerBox, cig.getBox()),
+        // ground(땅에 닿은) 담배만 주울 수 있다. 공중(air) 담배는 줍기 대상이 아님.
+        (cig) =>
+            !cig.collected &&
+            cig.cigarStatus === "ground" &&
+            isColliding(playerBox, cig.getBox()),
     );
     if (!c) return; // 대상 없음 → 중단
 

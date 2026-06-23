@@ -23,9 +23,26 @@ function clamp(value, min, max) {
  */
 function aabbOverlap(a, b) {
     return (
-        a.x < b.x + b.w &&
-        a.x + a.w > b.x &&
-        a.y < b.y + b.h &&
-        a.y + a.h > b.y
+        a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
     );
+}
+
+/**
+ * 배열에서 무작위 원소 하나를 고른다. (여러 적이 공용으로 쓰는 헬퍼)
+ * 예: pickRandomElement(["fast", "slow"]) → "fast" 또는 "slow"
+ * @param {Array} inputArray
+ * @returns {*} 배열의 무작위 원소
+ */
+function pickRandomElement(inputArray) {
+    // TODO(주림): inputArray 길이로 랜덤 인덱스(0 ~ length-1)를 만들어 그 원소를 반환.
+}
+
+/**
+ * 주어진 확률(chance, 0~1)로 true 를 돌려준다. (여러 적이 공용으로 쓰는 헬퍼)
+ * 예: pickRandomBool(0.5) → 절반 확률로 true
+ * @param {number} chance 0~1 사이 확률
+ * @returns {boolean}
+ */
+function pickRandomBool(chance) {
+    // TODO(주림): Math.random() 과 chance 를 비교해 true/false 반환.
 }
