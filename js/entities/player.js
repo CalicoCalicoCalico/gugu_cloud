@@ -22,7 +22,14 @@ class Player {
         this.x = MAP.WIDTH / 2 - PLAYER.BOX_W / 2; // 맵(월드) 가로 한가운데에서 시작
         this.y = VIEWPORT.GROUND_Y; // 바닥에 서기 (세로는 안 바뀜)
         this.looking = "right";
-        this.playerStatus = "idle";
+
+        // ── 상태(FSM) + 애니메이션 ──
+        this.playerStatus = "idle"; // idle | picking | smoking | stunned
+        this.isMoving = false; // 걷기 애니 판단용 (지금 움직이는 중인가)
+        this.smokeType = null; // 피우는 중인 담배 종류 (smoking 클립 선택용)
+        this.animFrame = 0; // 현재 클립에서 몇 번째 그림인가
+        this.animFrameTimer = 0; // 다음 그림으로 넘어가기까지 남은 프레임
+        this.animTimer = 0; // picking/smoking/stunned 남은 지속 프레임
     }
 
     // ─────────────────────────────────────────
@@ -34,6 +41,8 @@ class Player {
      * @param {number} dir 이동 방향: -1(왼쪽) | 0(정지) | +1(오른쪽)
      */
     walk(dir) {
+        this.isMoving = dir !== 0; // 걷기 애니 판단용 (0이면 정지로 본다)
+
         if (dir === 0) return; // 안 움직임
 
         const { WIDTH } = DATA.CONFIG.MAP; // 이동 한계는 화면이 아니라 맵(월드) 전체
@@ -46,6 +55,19 @@ class Player {
     // ─────────────────────────────────────────
     // 조회
     // ─────────────────────────────────────────
+
+    /**
+     * 상태(playerStatus)를 바꾸고 애니메이션을 처음부터 다시 시작한다.
+     * picking/smoking/stunned 처럼 시간이 정해진 상태는 지속 프레임도 세팅한다.
+     * (idle 은 STATUS_DURATION 에 없으므로 animTimer = 0 → 시간 제한 없음)
+     * @param {("idle"|"picking"|"smoking"|"stunned")} status
+     */
+    enterStatus(status) {
+        this.playerStatus = status;
+        this.animFrame = 0; // 새 클립은 항상 첫 그림부터 (gif 와 달리 재시작 보장됨)
+        this.animFrameTimer = DATA.CONFIG.ANIM.FRAME_DURATION;
+        this.animTimer = DATA.CONFIG.ANIM.STATUS_DURATION[status] ?? 0;
+    }
 
     /**
      * 충돌 판정용 박스. 위치는 자신, 크기는 DATA.CONFIG.PLAYER 에서 가져온다.

@@ -84,6 +84,61 @@ const DATA = {
             interact: ["e"],
         },
 
+        // ── 플레이어 애니메이션 (FSM 상태별 이미지/시간) ──
+        // 주니어가 여기 파일명·프레임·시간만 고치면 애니가 바뀐다. (로직 코드는 안 건드려도 됨)
+        ANIM: {
+            // 모든 플레이어 프레임 이미지가 들어있는 폴더 (index.html 기준 경로)
+            DIR: "img_assets/characters/",
+
+            // 한 '그림'이 화면에 보이는 시간(프레임). 작을수록 애니가 빨라짐.
+            // 60fps 기준 8 ≈ 0.13초/장. TODO: 보면서 조절.
+            FRAME_DURATION: 8,
+
+            // 시간이 정해진 상태가 끝나 다음 상태로 자동 전환되기까지의 시간(프레임, 60fps 기준).
+            STATUS_DURATION: {
+                picking: 60, // ≈1초.  개발문서엔 "?초"로 미정 → 임시 1초. TODO 확정
+                smoking: 60, // ≈1초.  개발문서엔 "2초 강제 유지" → 120 으로 늘릴 수 있음. TODO
+                stunned: 180, // ≈3초. 개발문서: 밟히면 스턴 3초 → 180 추정. TODO 확정
+                // idle 은 시간 제한 없음 (다음 행동 전까지 유지) → 여기 없음
+            },
+
+            // 상태별 '클립' = 순서대로 보여줄 이미지 파일 목록.
+            // ⚠ TODO(에셋): 아래 파일명은 개발문서 기준 placeholder. 실제 파일 생기면 교체.
+            CLIPS: {
+                idle: ["99_default.png"], // 정적 1장 (멈춰 있을 때)
+                // 걷기 3프레임: walk1 - default - walk2 (개발문서 순서)
+                walk: [
+                    "99_default_left1.png",
+                    "99_default.png",
+                    "99_default_left2.png",
+                ],
+                // 줍기 2프레임 (개발문서: picking - picking2)
+                picking: ["99_default_picking1.png", "99_default_picking2.png"], // TODO 파일명 확인
+                // 스턴: 일단 기본 이미지로 placeholder
+                stunned: ["99_default.png"], // TODO 스턴 전용 이미지로 교체
+            },
+
+            // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).
+            // smokeType(= 주운 담배 type) 으로 골라 쓴다.
+            SMOKE_CLIPS: {
+                // 단초: 2프레임
+                cigar_s: ["99_default_smokeS1.png", "99_default_smokeS2.png"],
+                // 중초: 3프레임 TODO  파일명
+                cigar_m: [
+                    "99_default_smokeM1.png",
+                    "99_default_smokeM2.png",
+                    "99_default_smokeM2.png",
+                ],
+                // 장초: 4프레임 TODO  파일명
+                cigar_l: [
+                    "99_default_smokeL1.png",
+                    "99_default_smokeL2.png",
+                    "99_default_smokeL2.png",
+                    "99_default_smokeL2.png",
+                ],
+            },
+        },
+
         // ── 폐 게이지 ──
         LUNG: {
             SPRITE: "/img_assets/ui/lung.png",
