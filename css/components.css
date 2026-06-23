@@ -181,21 +181,21 @@
     appearance: none;
     width: 32px;
     height: 32px;
-     /* border-radius: var(--radius-full); */
-    background: url('../img_assets/ui/flame_normal.png') no-repeat center center;
+    /* border-radius: var(--radius-full); */
+    background: url("../img_assets/ui/flame_normal.png") no-repeat center center;
     background-size: contain;
     border: none;
 }
 
 /* [오른쪽 이동 시] 불꽃이 왼쪽으로 휘날리는 이미지 */
 .bgm-slider.move-right::-webkit-slider-thumb {
-    background: url('../img_assets/ui/flame_left.png') no-repeat center center;
+    background: url("../img_assets/ui/flame_left.png") no-repeat center center;
     background-size: contain;
 }
 
 /* [왼쪽 이동 시] 불꽃이 오른쪽으로 휘날리는 이미지 */
 .bgm-slider.move-left::-webkit-slider-thumb {
-    background: url('../img_assets/ui/flame_right.png') no-repeat center center;
+    background: url("../img_assets/ui/flame_right.png") no-repeat center center;
     background-size: contain;
 }
 
@@ -203,11 +203,16 @@
 .bgm-slider::-moz-range-thumb {
     width: 32px;
     height: 32px;
-    background:  url('../img_assets/ui/flame_normal.png') no-repeat center center;
+    background: url("../img_assets/ui/flame_normal.png") no-repeat center center;
     background-size: contain;
-    cursor: pointer;
     border: none;
 }
 
-.bgm-slider.move-right::-moz-range-thumb { background: url('../img_assets/ui/flame_left.png') no-repeat center center; background-size: contain; } 
-.custom-slider.move-left::-moz-range-thumb { background: url('../img_assets/ui/flame_right.png') no-repeat center center; background-size: contain; } 
+.bgm-slider.move-right::-moz-range-thumb {
+    background: url("../img_assets/ui/flame_left.png") no-repeat center center;
+    background-size: contain;
+}
+.bgm-slider.move-left::-moz-range-thumb {
+    background: url("../img_assets/ui/flame_right.png") no-repeat center center;
+    background-size: contain;
+}

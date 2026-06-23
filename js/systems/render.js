@@ -32,8 +32,9 @@ function renderPlayer() {
     const el = $("player");
     el.style.left = `${STATE.player.x}px`;
     el.style.top = `${STATE.player.y}px`;
-    el.style.backgroundImage = `url("${DATA.CONFIG.PLAYER.SPRITE}")`;
+    el.style.backgroundImage = `url("${getPlayerSpriteUrl(STATE.player)}")`; // 현재 프레임
     el.dataset.looking = STATE.player.looking;
+    el.dataset.status = STATE.player.playerStatus; // 디버깅용 (DOM 에서 상태 보임)
 }
 
 /**

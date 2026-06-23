@@ -57,7 +57,7 @@ function smoke() {
     if (!STATE.input.interactPressed) return;
 
     // (다음 스코프) 피우는 중엔 재진입 금지 — 줍기/피우기 상태가 들어오면 부활.
-    // if (STATE.player.playerStatus !== "idle") return;
+    if (STATE.player.playerStatus !== "idle") return;
 
     // 플레이어 충돌 박스는 플레이어가 스스로 알려준다.
     const playerBox = STATE.player.getBox();
@@ -69,11 +69,14 @@ function smoke() {
     if (!c) return; // 대상 없음 → 중단
 
     // ── 트랜잭션 본체 (순서 고정) ──
-    c.collect(); // (1) 먼저 주운 것으로 표시 → 이중 가산 차단
-    addGauge(c.points); // (2) 담배가 가진 점수만큼 게이지 가산
-
-    // (다음 스코프) 줍기/피우기 상태·애니 + currentCigarette 세팅이 여기 들어온다.
-    // STATE.currentCigarette = c;
-    // STATE.player.playerStatus = "smoking";
-    // STATE.player.animTimer = ...;
+    // (1) 먼저 주운 것으로 표시 → 이중 가산 차단
+    c.collect();
+    // (2) 담배 점수만큼 게이지 가산
+    addGauge(c.points);
+    // (3) 지금 피우는 담배 기억
+    STATE.currentCigarette = c;
+    // (4) 피우기 애니에 쓸 종류 저장 (단/중/장)
+    STATE.player.smokeType = c.type;
+    // (5) 대기 → 줍기 (이후 자동으로 피우기 → 대기)
+    STATE.player.enterStatus("picking");
 }
