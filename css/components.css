@@ -137,30 +137,67 @@
 
 /* 팝업 박스 */
 #settings-popup {
+    position: relative;     /* 타이틀을 상단에 고정하기 위한 기준점 */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-6);
+    justify-content: center; /* 추가: 내부 요소들을 '세로 정중앙'으로 모으는 */
+    
+    width: 340px;
+    min-height: 260px; /* 팝업창의 최소 높이를 살짝 잡아줘야 세로로 움직일 공간 */
+    gap: 25px; /* ── 개별 조절을 위해 기존 gap은 0으로 ── */
+    
     padding: var(--spacing-8);
-    background: var(--bg-stage);
-    border: 2px solid var(--border-primary);
+    background: #CAE1FF;
+    border: none;
+    box-shadow: 0 12px 36px rgba(164, 193, 230, 0.45);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+    transform: scale(1.1);
+
+    transform-origin: center;
 }
 .settings-title {
+    position: absolute;
+    top: 25px;
     font-family: var(--font-display);
-    color: var(--text-primary);
+    font-size: 1.5rem;
+    color: #5c7594;
+    margin: 0;
+}
+
+.btn-image-style {
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    background-color: #FFF9D5; 
+    color: #2627FF;           
+    border-radius: var(--radius-full);         
+    padding: 15px 30px;       
+    font-size: 1.5rem;        
+    text-align: center;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    margin: 0;
+}
+
+.btn-settings-restart {
+    margin: 0;
+    text-align: center;
 }
 
 /* ── 설정: BGM 볼륨 슬라이더 ── */
 .settings-row {
+    margin: 0;
     display: flex;
     align-items: center;
-    gap: var(--spacing-3);
+    justify-content: center;
+    gap: 15px;
+    width: 100%;           /* 좌우 밸런스를 맞추기 위해 너비 확보 */
 }
 .settings-label {
     font-family: var(--font-display);
-    color: var(--text-secondary);
+    color: #5c7594;
 }
 
 /* 기본 슬라이더 (단순 막대 + 동그란 손잡이) */
