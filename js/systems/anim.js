@@ -37,7 +37,9 @@ function getPlayerClip(p) {
  */
 function getPlayerSpriteUrl(p) {
     const clip = getPlayerClip(p);
-    const file = clip[p.animFrame % clip.length]; // % 로 범위 안전하게 가둠
+    const frameData = clip[p.animFrame % clip.length]; // % 로 범위 안전하게 가둠
+    /*만약 frameData가 상자(객체) 형태라면 .img를 꺼내고, 문자열이면 그대로 쓴다!*/
+    const file = typeof frameData === "object" ? frameData.img : frameData;
     return DATA.CONFIG.ANIM.DIR + file;
 }
 
@@ -63,9 +65,32 @@ function updateAnim() {
     // ── 2. 현재 클립 안에서 다음 그림으로 진행 ──
     //   정적 클립(길이 1)은 % 1 = 0 이라 그림이 안 바뀐다 (안전).
     const clip = getPlayerClip(p);
+    const frameData = clip[p.animFrame % clip.length];
+
+    /*현재 프레임에 고유의 duration이 적혀있으면 그걸 쓰고, 없으면 기본값(8)을 쓴다! */
+    const currentDuration = (typeof frameData === "object" && frameData.duration) 
+        ? frameData.duration 
+        : DATA.CONFIG.ANIM.FRAME_DURATION;
+
+    /* 캐릭터의 이전 상태를 기억할 비밀 주머니(_lastStatus)를 만든다.
+     * 상태가 "막 바뀌는 순간"을 감지해서, enterStatus가 멋대로 꽂아둔 8을 진짜 시간으로 덮어쓴다!*/
+    if (!p._lastStatus) p._lastStatus = p.playerStatus;
+    
+    if (p._lastStatus !== p.playerStatus) {
+        // 상태가 방금 막 바뀌었다면, 첫 프레임의 타이머를 완벽하게 초기화!
+        p.animFrameTimer = currentDuration;
+        p._lastStatus = p.playerStatus; // 현재 상태를 기억해둔다.
+    }
+
     p.animFrameTimer -= 1;
     if (p.animFrameTimer <= 0) {
-        p.animFrameTimer = DATA.CONFIG.ANIM.FRAME_DURATION;
+        // 다음 프레임으로 넘어갈 때 시간 주입
+        const nextFrameData = clip[(p.animFrame + 1) % clip.length];
+        const nextDuration = (typeof nextFrameData === "object" && nextFrameData.duration)
+            ? nextFrameData.duration
+            : DATA.CONFIG.ANIM.FRAME_DURATION;
+
+        p.animFrameTimer = nextDuration;
         p.animFrame = (p.animFrame + 1) % clip.length;
     }
 }
