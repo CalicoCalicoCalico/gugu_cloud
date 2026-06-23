@@ -34,13 +34,19 @@ function spawnCigarette() {
  * @returns {("cigar_s"|"cigar_m"|"cigar_l")}
  */
 function pickRandomCigaretteType() {
-    let cigaTypesArray = ["cigar_s", "cigar_m", "cigar_l"];
-    // 랜덤 인덱스 만들기 0, 1, 2 중 하나
-    let randIndex = Math.floor(Math.random() * 3);
+    let cigaTypesArray = ["cigar_s", "cigar_m", "cigar_l"]; // 1. 담배 종류 어레이 만들기
+    let cigaTypesWeights = [45, 45, 10]; // 2. 각 담배의 가중치 어레이 만들기
+    let totalCigaTypesWeights = 100; // 3. 가중치의 총합 변수 설정하기
+    let randomValue = Math.random() * totalCigaTypesWeights; // 4. 0부터 가중치 총합 사이의 랜덤 숫자 뽑기
 
-    // TODO: 학률 추가하기
-
-    return cigaTypesArray[randIndex];
+    // 5. for문을 이용해 가중치를 더해가며 랜덤숫자가 어디에 있는지 확인하기(뽑은 랜덤 숫자가 누적된 가중치 보다 작으면 해당 담배 출력, 크면 다시 for loop)
+    let cumulativeWeights = 0; // 누적된 가중치 변수 설정
+    for (let i = 0; i < cigaTypesArray.length; i++) {
+        cumulativeWeights += cigaTypesWeights[i];
+        if (randomValue < cumulativeWeights) {
+            return cigaTypesArray[i];
+        }
+    }
 }
 
 /**

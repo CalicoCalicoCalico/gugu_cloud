@@ -34,7 +34,8 @@ function aabbOverlap(a, b) {
  * @returns {*} 배열의 무작위 원소
  */
 function pickRandomElement(inputArray) {
-    // TODO(주림): inputArray 길이로 랜덤 인덱스(0 ~ length-1)를 만들어 그 원소를 반환.
+    let randomIndex = Math.floor(Math.random()*inputArray.length); // 1. 랜덤 인덱스 만들기
+    return inputArray[randomIndex]; // 2. 배열 안 랜덤 요소 리턴
 }
 
 /**
@@ -44,5 +45,11 @@ function pickRandomElement(inputArray) {
  * @returns {boolean}
  */
 function pickRandomBool(chance) {
-    // TODO(주림): Math.random() 과 chance 를 비교해 true/false 반환.
+    let randomValue = Math.random(); // 1. 랜덤 숫자 뽑아줄 변수 설정
+    // 2. 랜덤으로 뽑힌 숫자가 chance에 들어온 숫자보다 작으면 true, 크면 false 출력
+    if (randomValue < chance) {
+        return true;
+    } else {
+        return false;
+    }
 }
