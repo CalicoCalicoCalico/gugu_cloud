@@ -24,7 +24,7 @@ class Player {
         this.looking = "right";
 
         // ── 상태(FSM) + 애니메이션 ──
-        this.playerStatus = "idle"; // idle | picking | smoking | stunned
+        this.playerStatus = "idle"; // idle | picking | smoking | stunned | onFire
         this.isMoving = false; // 걷기 애니 판단용 (지금 움직이는 중인가)
         this.smokeType = null; // 피우는 중인 담배 종류 (smoking 클립 선택용)
         this.animFrame = 0; // 현재 클립에서 몇 번째 그림인가
@@ -60,7 +60,7 @@ class Player {
      * 상태(playerStatus)를 바꾸고 애니메이션을 처음부터 다시 시작한다.
      * picking/smoking/stunned 처럼 시간이 정해진 상태는 지속 프레임도 세팅한다.
      * (idle 은 STATUS_DURATION 에 없으므로 animTimer = 0 → 시간 제한 없음)
-     * @param {("idle"|"picking"|"smoking"|"stunned")} status
+     * @param {("idle"|"picking"|"smoking"|"stunned"|"onFire")} status
      */
     enterStatus(status) {
         this.playerStatus = status;

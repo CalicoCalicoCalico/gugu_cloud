@@ -57,6 +57,8 @@ const DATA = {
             BOX_H: 360,
             SPEED: 4, // 프레임당 이동 픽셀
             SPRITE: "img_assets/characters/99_default.png", // ⚠ index.html 기준 경로
+            // 폐 게이지가 이 값 "이상"이면 뚱띠(round) 이미지로 바뀜 (개발문서: 50 넘으면 round)
+            ROUND_GAUGE_THRESHOLD: 50, // TODO(밸런스): 보면서 조절
         },
 
         // ── 담배 생성 규칙 ──
@@ -123,6 +125,7 @@ const DATA = {
                 picking: 25, // ≈0.25초.  개발문서엔 "?초"로 미정 → 임시 1초. TODO 확정
                 smoking: 120, // ≈2초.  개발문서엔 "2초 강제 유지" → 120 으로 늘릴 수 있음. TODO
                 stunned: 180, // ≈3초. 개발문서: 밟히면 스턴 3초 → 180 추정. TODO 확정
+                onFire: 90, // ≈1.5초. 불붙은 상태 유지 시간. idle 처럼 움직임/줍기 가능. TODO 밸런스 확정
                 // idle 은 시간 제한 없음 (다음 행동 전까지 유지) → 여기 없음
             },
 
@@ -143,6 +146,8 @@ const DATA = {
                 ],
                 // 스턴: 일단 기본 이미지로 placeholder
                 stunned: ["99_default_stepOn.png"], // TODO 스턴 전용 이미지로 교체
+                // 불붙음: idle 과 동작은 같고 이미지만 다름. 정적 1장.
+                onFire: ["99_default_onFire.png"], // TODO 에셋: 실제 불붙은 이미지로 교체
             },
 
             // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).
@@ -268,3 +273,11 @@ DATA.CONFIG.VIEWPORT.GROUND_Y =
     for (const key in SMOKE_CLIPS)
         SMOKE_CLIPS[key] = SMOKE_CLIPS[key].map(toFrame);
 })();
+
+// ── (미래) 뚱띠 전용 클립 ─────────────────────────────
+// 접두사만 바꾸는 applyBodyCondition() 으로 충분하면 이건 필요 없다.
+// round 가 default 와 프레임 수/시간이 "다를 때만" 채워서 쓴다.
+// TODO: 채우게 되면 normalizeAnimClips() 의 루프에도 ROUND_CLIPS/
+//   ROUND_SMOKE_CLIPS 를 추가하고, getPlayerClip() 에서 몸 상태로 분기할 것.
+// ROUND_CLIPS: { /* idle: [...], walk: [...], ... */ },
+// ROUND_SMOKE_CLIPS: { /* cigar_s: [...], ... */ },

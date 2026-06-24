@@ -56,8 +56,10 @@ function smoke() {
     // 사전 조건 1: E 를 "막 눌렀나" (홀드로는 발동 안 함 — 한 번 누를 때마다 한 개)
     if (!STATE.input.interactPressed) return;
 
-    // (다음 스코프) 피우는 중엔 재진입 금지 — 줍기/피우기 상태가 들어오면 부활.
-    if (STATE.player.playerStatus !== "idle") return;
+    // idle 과 onFire 일 때만 주울 수 있다 (picking/smoking/stunned 중엔 금지).
+    // onFire 는 idle 과 동작 동일 — 주우면 picking 으로 넘어가 불붙음 상태는 끊긴다.
+    const s = STATE.player.playerStatus;
+    if (s !== "idle" && s !== "onFire") return;
 
     // 플레이어 충돌 박스는 플레이어가 스스로 알려준다.
     const playerBox = STATE.player.getBox();
