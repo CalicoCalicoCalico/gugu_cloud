@@ -137,8 +137,10 @@ const DATA = {
                     "99_default_left3.png",
                 ],
                 // 줍기 2프레임 (개발문서: picking - picking2)
-                picking: [{ img:"99_default_picking2.png", duration: 10 },
-                        { img:"99_default_picking1.png", duration: 10 }],
+                picking: [
+                    { img: "99_default_picking2.png", duration: 10 },
+                    { img: "99_default_picking1.png", duration: 10 },
+                ],
                 // 스턴: 일단 기본 이미지로 placeholder
                 stunned: ["99_default_stepOn.png"], // TODO 스턴 전용 이미지로 교체
             },
@@ -147,19 +149,22 @@ const DATA = {
             // smokeType(= 주운 담배 type) 으로 골라 쓴다.
             SMOKE_CLIPS: {
                 // 단초: 2프레임
-                cigar_s: [{ img:"99_default_smokeS1.png", duration: 64 }, // 1초(60프레임) 동안 유지
-                        { img:"99_default_smokeS2.png", duration: 64 }
+                cigar_s: [
+                    { img: "99_default_smokeS1.png", duration: 64 }, // 1초(60프레임) 동안 유지
+                    { img: "99_default_smokeS2.png", duration: 64 },
                 ],
                 // 중초: 3프레임
-                cigar_m: [{ img:"99_default_smokeM1.png", duration: 45},
-                    { img:"99_default_smokeM2.png", duration: 45},
-                    { img:"99_default_smokeS2.png", duration: 45},
+                cigar_m: [
+                    { img: "99_default_smokeM1.png", duration: 45 },
+                    { img: "99_default_smokeM2.png", duration: 45 },
+                    { img: "99_default_smokeS2.png", duration: 45 },
                 ],
                 // 장초: 4프레임
-                cigar_l: [{ img:"99_default_smokeL1.png", duration: 33},
-                    { img:"99_default_smokeL2.png", duration: 33},
-                    { img:"99_default_smokeM2.png", duration: 33},
-                    { img:"99_default_smokeS2.png", duration: 33},
+                cigar_l: [
+                    { img: "99_default_smokeL1.png", duration: 33 },
+                    { img: "99_default_smokeL2.png", duration: 33 },
+                    { img: "99_default_smokeM2.png", duration: 33 },
+                    { img: "99_default_smokeS2.png", duration: 33 },
                 ],
             },
         },
@@ -246,3 +251,20 @@ DATA.CONFIG.VIEWPORT.GROUND_Y =
     DATA.CONFIG.VIEWPORT.HEIGHT -
     DATA.CONFIG.VIEWPORT.GROUND_HEIGHT -
     DATA.CONFIG.PLAYER.BOX_H;
+
+// ── 애니메이션 클립 정규화  ───────────────────────────────
+// 모든 프레임을 { img, duration } 한 모양으로 통일한다.
+// data 엔 문자열로 적어도 되고("99_default.png"), 특정 프레임만 객체로 duration 을 줘도 된다.
+// 여기서 한 번에 객체로 바꿔두므로 anim.js·player.js 는 항상 { img, duration } 만 본다.
+(function normalizeAnimClips() {
+    const DEFAULT = DATA.CONFIG.ANIM.FRAME_DURATION;
+    const toFrame = (f) =>
+        typeof f === "string"
+            ? { img: f, duration: DEFAULT }
+            : { img: f.img, duration: f.duration ?? DEFAULT };
+
+    const { CLIPS, SMOKE_CLIPS } = DATA.CONFIG.ANIM;
+    for (const key in CLIPS) CLIPS[key] = CLIPS[key].map(toFrame);
+    for (const key in SMOKE_CLIPS)
+        SMOKE_CLIPS[key] = SMOKE_CLIPS[key].map(toFrame);
+})();
