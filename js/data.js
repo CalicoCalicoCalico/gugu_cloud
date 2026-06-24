@@ -76,16 +76,16 @@ const DATA = {
             // 숫자 정해야함. 낙하 속도(프레임당 px). spinSpeed("fast"|"slow")로 골라 쓴다 → FALL_SPEED[spinSpeed]
             //   즉 회전이 빠른 담배는 빨리 떨어지고, 느린 담배는 천천히 떨어진다.
             FALL_SPEED: {
-                fast: 4, // TODO(밸런스): 빠른 낙하
-                slow: 4, // TODO(밸런스): 느린 낙하 (fast 보다 작게)
+                fast: 1, // TODO(밸런스): 빠른 낙하
+                slow: 0.5, // TODO(밸런스): 느린 낙하 (fast 보다 작게)
             },
 
             // ── (Phase 2) 회전 ──
             //  숫자 채워야함 보기 좋은걸로 'fast'/'slow' 두 종류의 프레임당 회전 각도(도).
             //   주림: 담배의 spinSpeed("fast"|"slow")로 여기를 골라 쓴다 → SPIN[spinSpeed]
             SPIN: {
-                fast: 0, // TODO(밸런스): 빠른 회전 — 프레임당 각도(도)
-                slow: 0, // TODO(밸런스): 느린 회전 — 프레임당 각도(도)
+                fast: 7.5, // TODO(밸런스): 빠른 회전 — 프레임당 각도(도)
+                slow: 2.5, // TODO(밸런스): 느린 회전 — 프레임당 각도(도)
             },
             AIR_DAMAGE: 5, // air 담배가 플레이어에 닿을 때 깎이는 폐 게이지
             SPAWN_Y: 0, // 생성 시작 y(월드 맨 위). 음수면 화면 밖에서 떨어짐
