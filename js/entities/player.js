@@ -65,7 +65,9 @@ class Player {
     enterStatus(status) {
         this.playerStatus = status;
         this.animFrame = 0; // 새 클립은 항상 첫 그림부터 (gif 와 달리 재시작 보장됨)
-        this.animFrameTimer = DATA.CONFIG.ANIM.FRAME_DURATION;
+        // 첫 프레임의 duration 으로 타이머를 맞춘다 (모든 프레임은 { img, duration })
+        const clip = getPlayerClip(this);
+        this.animFrameTimer = clip[0].duration;
         this.animTimer = DATA.CONFIG.ANIM.STATUS_DURATION[status] ?? 0;
     }
 
