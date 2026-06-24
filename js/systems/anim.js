@@ -24,6 +24,11 @@ function getPlayerClip(p) {
             return CLIPS.picking;
         case "stunned":
             return CLIPS.stunned;
+        case "onFire":
+            // 불붙음: 움직여도/주워도 idle 과 동일. 차이는 오직 이미지.
+            // 지금은 움직임과 무관하게 onFire 이미지 1장만 보여준다.
+            // (걸을 때 '불붙은 걷기' 애니가 필요하면 말해주세요 → walk 처럼 분기 가능)
+            return CLIPS.onFire;
         case "idle":
         default:
             // 대기: 움직이는 중이면 걷기, 멈춰 있으면 기본 이미지

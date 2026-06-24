@@ -123,6 +123,7 @@ const DATA = {
                 picking: 25, // ≈0.25초.  개발문서엔 "?초"로 미정 → 임시 1초. TODO 확정
                 smoking: 120, // ≈2초.  개발문서엔 "2초 강제 유지" → 120 으로 늘릴 수 있음. TODO
                 stunned: 180, // ≈3초. 개발문서: 밟히면 스턴 3초 → 180 추정. TODO 확정
+                onFire: 90, // ≈1.5초. 불붙은 상태 유지 시간. idle 처럼 움직임/줍기 가능. TODO 밸런스 확정
                 // idle 은 시간 제한 없음 (다음 행동 전까지 유지) → 여기 없음
             },
 
@@ -143,6 +144,8 @@ const DATA = {
                 ],
                 // 스턴: 일단 기본 이미지로 placeholder
                 stunned: ["99_default_stepOn.png"], // TODO 스턴 전용 이미지로 교체
+                // 불붙음: idle 과 동작은 같고 이미지만 다름. 정적 1장.
+                onFire: ["99_default_onFire.png"], // TODO 에셋: 실제 불붙은 이미지로 교체
             },
 
             // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).

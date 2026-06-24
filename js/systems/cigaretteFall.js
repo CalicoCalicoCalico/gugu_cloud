@@ -36,8 +36,14 @@ function updateCigarettes() {
         ) {
             cig.hasHitPlayer = true; // 먼저 잠가 다음 프레임 재타격 차단
             addGauge(-DATA.CONFIG.CIGARETTE.AIR_DAMAGE); // 폐 게이지 -5 (clamp 내장)
-            // (Phase 2) 여기서 플레이어 스턴 추가 예정:
-            //   STATE.player.enterStatus("stunned");
+            // 떨어지는 담배에 맞으면 '불붙음(onFire)' 상태로.
+
+            // onFire 는 idle 과 동작 동일(이동·줍기 가능), 이미지만 다르고 시간 지나면 자동 idle 복귀.
+            // ⚠ 줍기/피우기 중(picking/smoking)에 맞으면 그 애니가 끊기지 않도록 idle/onFire 일 때만 덮어쓴다.
+            const s = STATE.player.playerStatus;
+            if (s === "idle" || s === "onFire") {
+                STATE.player.enterStatus("onFire");
+            }
         }
     }
 }
