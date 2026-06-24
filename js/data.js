@@ -57,6 +57,8 @@ const DATA = {
             BOX_H: 360,
             SPEED: 4, // 프레임당 이동 픽셀
             SPRITE: "img_assets/characters/99_default.png", // ⚠ index.html 기준 경로
+            // 폐 게이지가 이 값 "이상"이면 뚱띠(round) 이미지로 바뀜 (개발문서: 50 넘으면 round)
+            ROUND_GAUGE_THRESHOLD: 50, // TODO(밸런스): 보면서 조절
         },
 
         // ── 담배 생성 규칙 ──
@@ -271,3 +273,11 @@ DATA.CONFIG.VIEWPORT.GROUND_Y =
     for (const key in SMOKE_CLIPS)
         SMOKE_CLIPS[key] = SMOKE_CLIPS[key].map(toFrame);
 })();
+
+// ── (미래) 뚱띠 전용 클립 ─────────────────────────────
+// 접두사만 바꾸는 applyBodyCondition() 으로 충분하면 이건 필요 없다.
+// round 가 default 와 프레임 수/시간이 "다를 때만" 채워서 쓴다.
+// TODO: 채우게 되면 normalizeAnimClips() 의 루프에도 ROUND_CLIPS/
+//   ROUND_SMOKE_CLIPS 를 추가하고, getPlayerClip() 에서 몸 상태로 분기할 것.
+// ROUND_CLIPS: { /* idle: [...], walk: [...], ... */ },
+// ROUND_SMOKE_CLIPS: { /* cigar_s: [...], ... */ },
