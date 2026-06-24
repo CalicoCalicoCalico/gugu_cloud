@@ -4,13 +4,17 @@
    씬 흐름(개발문서): title → introVideo → play → endingVideo → end
    ═══════════════════════════════════════════════════════ */
 
+body {
+    background-color: #d0ebff;
+    margin: 0;
+}
+
 #game-container {
     position: relative;
     width: var(--viewport-width); /* 보이는 게임 = 뷰포트 폭 */
     background: var(--bg-stage);
-    border: 2px solid var(--border-primary);
+    border: 2px solid #d0ebff;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
     overflow: hidden;
 }
 
