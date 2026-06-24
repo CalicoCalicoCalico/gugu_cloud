@@ -65,9 +65,9 @@ class Cigarette {
         //     angle         : 현재 각도(도). air 동안 누적, ground 되면 눕는 각도로 고정
 
         // 여기 얘들 3개가 랜덤적용되어야하는 얘들. 지금은 걍 이 값으로 고정해둠
-        this.spinSpeed = "slow"; // 여기에 그 랜덤함수 써서 네
-        this.spinDir = 1;
-        this.faceDirection = "right";
+        this.spinSpeed = pickRandomBool(0.5) ? "slow" : "fast";
+        this.spinDir = pickRandomBool(0.5) ? 1 : -1;
+        this.faceDirection = pickRandomBool(0.5) ? "left" : "right";
         this.angle = 0;
 
         this.collected = false;
@@ -95,6 +95,7 @@ class Cigarette {
 
         // (Phase 2) 회전: air 동안 각도 누적 ── TODO(주림)
         //   회전 빠르기 종류(spinSpeed) 방향(spinDir)를 DATA 에서 쓰면 될듯?!
+        this.angle += DATA.CONFIG.CIGARETTE.SPIN[this.spinSpeed] * this.spinDir;
 
         // 착지: 목표 y 도달 → 딱 맞춰 세우고 ground 로 전환
         if (this.y >= this.groundY) {
