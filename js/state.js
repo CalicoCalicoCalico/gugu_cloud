@@ -31,8 +31,10 @@ const STATE = {
     // ── 바닥에 있는 담배들 ──
     // 각 원소(지금은 평범한 객체): { id, type, x, y, boxW, boxH, collected }
     //   type 은 DATA.CIGARETTE_TYPES 의 키 ("cigar_s" | "cigar_m" | "cigar_l")
-    // TODO(다음 스코프): Cigarette 클래스 인스턴스 배열로 전환 예정.
     cigarettesArray: [],
+
+    // 인간 발(적) 인스턴스들
+    humansArray: [],
 
     // 현재 플레이어와 상호작용 중인 담배 (없으면 null).
     // 지금은 사용 안 함 — 줍기/상호작용 흐름(picking)이 들어오는 다음 스코프용 자리.
@@ -53,6 +55,8 @@ const STATE = {
 
     // ── 내부 카운터 / 타이머 (런타임에 변하므로 STATE 에 둔다) ──
     cigaretteIdCounter: 0, // 담배 id 발급용 (계속 증가). 예: "cig_0", "cig_1"...
+    humanIdCounter: 0, // 사람 id 발급용
+    framesSinceLastHuman: 0, // ← 추가: 마지막 사람 생성 후 지난 프레임 (자동 스폰용)
     framesSinceLastSpawn: 0, // 마지막 담배 생성 후 지난 프레임 수 (spawn 이 사용)
     framesInCurrentScene: 0, // 현재 씬에 머문 프레임 수 (영상 씬 자동 전환용)
 };
@@ -78,6 +82,11 @@ function resetGameState() {
     STATE.cigarettesArray = [];
     STATE.currentCigarette = null;
     STATE.cigaretteIdCounter = 0;
+
+    // 인간 발 초기화
+    STATE.humansArray = [];
+    STATE.humanIdCounter = 0;
+    STATE.framesSinceLastHuman = 0;
 
     // 게이지 비우기
     STATE.playerLungGauge = 0;

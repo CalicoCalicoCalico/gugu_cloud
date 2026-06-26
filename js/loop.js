@@ -68,6 +68,12 @@ function tick() {
             spawnCigarette();
             // 4. 담배 갱신 (낙하 + 공중 담배 데미지, air→ground 전환)
             updateCigarettes();
+
+            // 4-1. 인간 발 자동 생성 (간격은 DATA.HUMAN.SPAWN_INTERVAL)
+            spawnHuman();
+            // 4-2. 인간 발 갱신 (낙하 + 데미지/스턴 + 벽, 맵 밖 제거)
+            updateHumans();
+
             // 5. 상호작용(줍기) — 내부에서 충돌 판정 (ground 담배만 주움)
             smoke();
 

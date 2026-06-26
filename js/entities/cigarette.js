@@ -113,6 +113,8 @@ class Cigarette {
      * @returns {{x:number, y:number, w:number, h:number}}
      */
     getBox() {
-        return { x: this.x, y: this.y, w: this.boxW, h: this.boxH };
+        const { offsetX, offsetY, w, h } =
+            DATA.CIGARETTE_TYPES[this.type].hitbox;
+        return { x: this.x + offsetX, y: this.y + offsetY, w, h };
     }
 }

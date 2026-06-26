@@ -59,6 +59,15 @@ const DATA = {
             SPRITE: "img_assets/characters/99_default.png", // ⚠ index.html 기준 경로
             // 폐 게이지가 이 값 "이상"이면 뚱띠(round) 이미지로 바뀜 (개발문서: 50 넘으면 round)
             ROUND_GAUGE_THRESHOLD: 50, // TODO(밸런스): 보면서 조절
+
+            // ── 실제 충돌 판정 영역(히트박스) ──
+            // 이미지 박스 좌상단(this.x, this.y) 기준 오프셋 + 크기. 숫자만 바꾸면 끝.
+            HITBOX: {
+                offsetX: 120, // 이미지 왼쪽 끝에서 안쪽으로
+                offsetY: 160, // 이미지 위쪽 끝에서 아래로
+                w: 120,
+                h: 180,
+            },
         },
 
         // ── 담배 생성 규칙 ──
@@ -91,6 +100,36 @@ const DATA = {
             },
             AIR_DAMAGE: 5, // air 담배가 플레이어에 닿을 때 깎이는 폐 게이지
             SPAWN_Y: 0, // 생성 시작 y(월드 맨 위). 음수면 화면 밖에서 떨어짐
+        },
+
+        // ── 적: 인간 발(walk) ──
+        // FSM(한 발): idle → down → ground → up → idle. 박자/교대는 여기 숫자로 조절.
+        HUMAN: {
+            // down/up 수직 이동 속도(px/frame). 같은 값 → "떨어지는 속도 = 올라가는 속도".
+            // walkSpeed("fast"|"slow")로 골라 쓴다 → STEP_SPEED[walkSpeed]
+            STEP_SPEED: {
+                fast: 12, // TODO(밸런스): 빠른 발
+                slow: 6, // TODO(밸런스): 느린 발
+            },
+            GROUND_FRAMES: 40, // 땅을 밟고 '벽'으로 서 있는 시간(프레임). TODO
+            IDLE_FRAMES: 20, // up 후 다음 down 까지 쉬는 시간(프레임). TODO
+
+            // 두 발의 박자 차이. 0.5 = 반 박자(완전 교대). 0 = 동시. 0.25 등으로 리듬 조절.
+            PHASE_OFFSET: 0.5,
+
+            // 보폭: 한 발이 설 때마다 사람이 앞으로 가는 거리(px) = 연속 착지 간격.
+            //   normal = 비둘기 너비*2 (아래 파생블록에서 채움). close = 발너비 + CLOSE_EXTRA.
+            STRIDE: {
+                normal: 0, // ← 파생블록에서 PLAYER.BOX_W * 2 로 채움
+                CLOSE_EXTRA: 24, // 개발문서: 최소 보폭 = 발너비 + 24px(임의)
+            },
+
+            SPAWN_Y: 0, // 발 시작 y(월드 위). 음수면 화면 위 밖에서 내려옴.
+            SPAWN_MARGIN: 300, // 맵 좌우 바깥 여유. 이만큼 밖에서 걷고/나가면 사라짐.
+            SPAWN_INTERVAL: 1800, // 자동 생성 간격(프레임). 1800 ≈ 30초 @60fps. TODO(밸런스)
+
+            AIR_DAMAGE: 5, // down/up(공중) 발이 닿을 때 깎이는 폐 게이지
+            STUN_STATUS: "stunned", // 맞으면 들어갈 플레이어 상태 (player FSM 에 이미 있음)
         },
 
         // ── 영상(이미지) 씬 지속 시간 ──
@@ -147,7 +186,7 @@ const DATA = {
                 // 스턴: 일단 기본 이미지로 placeholder
                 stunned: ["99_default_stepOn.png"], // TODO 스턴 전용 이미지로 교체
                 // 불붙음: idle 과 동작은 같고 이미지만 다름. 정적 1장.
-                onFire: ["99_default_onFire.png"], // TODO 에셋: 실제 불붙은 이미지로 교체
+                onFire: ["99_default_smokeFire.png"], // TODO 에셋: 실제 불붙은 이미지로 교체
             },
 
             // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).
@@ -216,30 +255,81 @@ const DATA = {
             boxW: 50,
             boxH: 30,
             sprite: "img_assets/items/cigar_s.png",
-        }, // 단초
+            hitbox: { offsetX: 6, offsetY: 8, w: 38, h: 14 }, // 이미지 박스 좌상단 기준
+        },
         cigar_m: {
             points: 10,
             percentage: 45,
             boxW: 70,
             boxH: 30,
             sprite: "img_assets/items/cigar_m.png",
-        }, // 중초
+            hitbox: { offsetX: 6, offsetY: 8, w: 58, h: 14 },
+        },
         cigar_l: {
             points: 20,
             percentage: 10,
             boxW: 90,
             boxH: 30,
             sprite: "img_assets/items/cigar_l.png",
-        }, // 장초
+            hitbox: { offsetX: 6, offsetY: 8, w: 78, h: 14 },
+        },
     },
 
-    // ── (구버전) 단일 담배 정의 — CIGARETTE_TYPES 로 대체됨.
-    //    다음 정리 때 완전히 제거 예정. 지금은 참고용으로 주석 처리만.
-    // CIGARETTE: {
-    //     score: 10,
-    //     w: 16,
-    //     h: 16,
-    // },
+    // ═══════════════════════════════════════════════
+    // 3. HUMAN_TYPES — 인간 발 종류표 (데이터 레코드)
+    //    R1/R2/R3 = down/ground/up, L 도 동일. 종류당 6장.
+    //    ⚠ TODO(에셋): 경로·boxW/boxH 실제 값으로 교체. 지금은 placeholder.
+    // ═══════════════════════════════════════════════
+    HUMAN_TYPES: {
+        training: {
+            boxW: 120,
+            boxH: 360,
+            sprites: {
+                R: {
+                    down: "img_assets/enemies/foot/human_walking_trainingR1.png",
+                    ground: "img_assets/enemies/foot/human_walking_trainingR2.png",
+                    up: "img_assets/enemies/foot/human_walking_trainingR3.png",
+                },
+                L: {
+                    down: "img_assets/enemies/foot/human_walking_trainingL1.png",
+                    ground: "img_assets/enemies/foot/human_walking_trainingL2.png",
+                    up: "img_assets/enemies/foot/human_walking_trainingL3.png",
+                },
+            },
+        },
+        suit: {
+            boxW: 120,
+            boxH: 360,
+            sprites: {
+                R: {
+                    down: "img_assets/enemies/foot/human_walking_suitR1.png",
+                    ground: "img_assets/enemies/foot/human_walking_suitR2.png",
+                    up: "img_assets/enemies/foot/human_walking_suitR3.png",
+                },
+                L: {
+                    down: "img_assets/enemies/foot/human_walking_suitL1.png",
+                    ground: "img_assets/enemies/foot/human_walking_suitL2.png",
+                    up: "img_assets/enemies/foot/human_walking_suitL3.png",
+                },
+            },
+        },
+        jean: {
+            boxW: 120,
+            boxH: 360,
+            sprites: {
+                R: {
+                    down: "img_assets/enemies/foot/human_walking_jeanR1.png",
+                    ground: "img_assets/enemies/foot/human_walking_jeanR2.png",
+                    up: "img_assets/enemies/foot/human_walking_jeanR3.png",
+                },
+                L: {
+                    down: "img_assets/enemies/foot/human_walking_jeanL1.png",
+                    ground: "img_assets/enemies/foot/human_walking_jeanL2.png",
+                    up: "img_assets/enemies/foot/human_walking_jeanL3.png",
+                },
+            },
+        },
+    },
 };
 
 // ── 파생 상수 ──────────────────────────────────────────
@@ -281,3 +371,6 @@ DATA.CONFIG.VIEWPORT.GROUND_Y =
 //   ROUND_SMOKE_CLIPS 를 추가하고, getPlayerClip() 에서 몸 상태로 분기할 것.
 // ROUND_CLIPS: { /* idle: [...], walk: [...], ... */ },
 // ROUND_SMOKE_CLIPS: { /* cigar_s: [...], ... */ },
+
+// 인간 보폭 normal = 비둘기 너비 * 2 (PLAYER 정의 후에 계산)
+DATA.CONFIG.HUMAN.STRIDE.normal = DATA.CONFIG.PLAYER.BOX_W * 2;
