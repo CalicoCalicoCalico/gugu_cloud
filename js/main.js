@@ -17,6 +17,19 @@ function onTitleStart() {
     startBgm(); // 사용자 클릭 시점 → 자동재생 정책 통과
 }
 
+/**
+ * 타이틀 "시작하기" → STATE 리셋 + 담배 DOM 정리 후 인트로 영상 씬으로.
+ * (인트로 영상 씬은 시간이 지나면 자동으로 play 로 넘어간다)
+ */
+function onPlayReStart() {
+    resetGameState();
+    clearCigaretteLayer(); // 이전 게임의 담배 DOM 정리 (재시작 안전)
+    clearHumanLayer(); // (이전 게임의 발 DOM 정리)
+    seedCigarettes(DATA.CONFIG.SPAWN.INITIAL_COUNT); // 맵에 시작 시 생성되어있는 담배 갯수
+    switchScene("play");
+    startBgm(); // 사용자 클릭 시점 → 자동재생 정책 통과
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     // 위생: 크기의 단일 출처 = DATA. CSS 변수로 주입 (tokens.css 의 복제 제거).
     const root = document.documentElement.style;
@@ -56,6 +69,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // 엔딩 "다시하기" → 타이틀로
     $("btn-restart").addEventListener("click", () => switchScene("title"));
+
+    // 인트로 건너뛰기: 현재 영상 씬의 done() 을 호출 → 안전하게 다음 씬으로
+    $("btn-skip-intro").addEventListener("click", () => {
+        if (_skipSceneVideo) _skipSceneVideo();
+    });
 
     // dev 버튼: 담배를 한 개씩 수동 생성 (테스트용)
     // $("btn-dev-spawn").addEventListener("click", () => {

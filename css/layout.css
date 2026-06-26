@@ -123,7 +123,8 @@ body {
 #scene-endingVideo {
     padding: 0; /* 이미지를 무대에 꽉 맞추기 위해 패딩 제거 */
 }
-.scene-image {
+.scene-image,
+.scene-video {
     display: block;
     width: var(--viewport-width);
     height: var(--viewport-height);
@@ -182,7 +183,7 @@ body {
 
 .hud-lung-box {
     position: absolute;
-    top: 24px;      /* 상단 테두리로부터 내려올 거리 */
-    right: 32px;    /* 오른쪽 테두리로부터 떨어질 거리 */
-    z-index: 100;   /* 게임 속 다른 요소들보다 항상 위에 보이도록 설정 */
+    top: 24px; /* 상단 테두리로부터 내려올 거리 */
+    right: 32px; /* 오른쪽 테두리로부터 떨어질 거리 */
+    z-index: 100; /* 게임 속 다른 요소들보다 항상 위에 보이도록 설정 */
 }

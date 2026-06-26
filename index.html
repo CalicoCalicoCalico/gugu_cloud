@@ -49,14 +49,18 @@
             </div>
 
             <!-- ═══ 씬: 인트로 영상(이미지) ═══ -->
-            <!-- 이미지 한 장을 보여주고 잠시 후 자동으로 play 로 넘어간다.
-                 ⚠ TODO(에셋): src 를 실제 인트로 이미지 경로로 교체. -->
             <div id="scene-introVideo" class="scene">
-                <img
-                    class="scene-image"
-                    src="img_assets/bg/opening.png"
-                    alt="인트로"
-                />
+                <!-- poster: 영상이 재생되기 전/실패했을 때 대신 보여줄 이미지 (= 최소 1장 보장) -->
+                <video
+                    id="intro-video"
+                    class="scene-video"
+                    src="video_assets/intro.mp4"
+                    poster="img_assets/bg/opening.png"
+                    playsinline
+                    preload="auto"
+                ></video>
+                <!-- 인트로 건너뛰기 버튼 (영상 위에 떠 있음) -->
+                <button id="btn-skip-intro" class="btn-skip">건너뛰기 ▸</button>
             </div>
 
             <!-- ═══ 씬: 플레이 ═══ -->
@@ -97,13 +101,15 @@
             </div>
 
             <!-- ═══ 씬: 엔딩 영상(이미지) ═══ -->
-            <!-- ⚠ TODO(에셋): src 를 실제 엔딩 이미지 경로로 교체. -->
             <div id="scene-endingVideo" class="scene">
-                <img
-                    class="scene-image"
-                    src="img_assets/bg/ending.png"
-                    alt="엔딩"
-                />
+                <video
+                    id="ending-video"
+                    class="scene-video"
+                    src="video_assets/ending.mp4"
+                    poster="img_assets/bg/ending.png"
+                    playsinline
+                    preload="auto"
+                ></video>
             </div>
 
             <!-- ═══ 씬: 엔딩 화면 end ═══ -->

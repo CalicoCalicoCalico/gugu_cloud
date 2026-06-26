@@ -18,14 +18,20 @@ class Human {
         this.dead = false; // true 면 다음 갱신에서 제거
 
         // ── 랜덤 traits (생성 시 1회) ──
-        this.type = pickRandomElement(["training", "suit", "jean"]);
-        this.walkSpeed = pickRandomBool(0.5) ? "fast" : "slow";
-        this.direction = "right"; // 좌→우. (3차: "left" 추가)
+        //     type             : 그 세가지 ["suit", "jean" 하나 더 뭐드라]
+        //     walkSpeed        : "fast" | "slow"     (걷기 속도)
+        //     walkPacing       : "normal" | "close" (노말이 그 둘기너비*2, 가까이는 얼마나 가까이인지..)
+        //     direction        : "left" | "right"    (입장 방향)
+        //     stepSpeed        : 발이 내려오는 속도 (walkSpeed와 같음)
+
+        this.type = "suit"; //여기 랜덤
+        this.walkSpeed = "slow"; //여기 랜덤
+        this.direction = "right"; // 여기 랜덤
 
         const def = TYPES[this.type];
-        const strideKind = pickRandomBool(0.5) ? "normal" : "close";
+        const walkPacing = "normal"; // 여기 랜덤
         this.stride =
-            strideKind === "normal"
+            walkPacing === "normal"
                 ? HUMAN.STRIDE.normal // 비둘기 너비 * 2
                 : def.boxW + HUMAN.STRIDE.CLOSE_EXTRA; // 발 너비 + 24
 
