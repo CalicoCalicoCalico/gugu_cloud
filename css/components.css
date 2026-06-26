@@ -31,6 +31,27 @@
     background: var(--button-dev-hover);
 }
 
+/* ── 인트로 건너뛰기 버튼 ── */
+/* 영상 씬은 position:relative 가 아니므로, 무대(#game-container) 기준으로 띄운다.
+   영상 위 오른쪽 아래 구석에 배치. */
+.btn-skip {
+    position: absolute;
+    right: var(--spacing-4);
+    bottom: var(--spacing-4);
+    z-index: 50; /* 영상보다 위 */
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    color: var(--paper-0);
+    background: rgba(0, 0, 0, 0.45);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.btn-skip:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
 /* ── HUD: 폐 게이지 ── */
 #hud {
     position: absolute;

@@ -26,6 +26,60 @@ function switchScene(name) {
 
     STATE.currentScene = name;
     STATE.framesInCurrentScene = 0; // 새 씬에 막 들어왔으니 0 부터 센다
+
+    // ── 영상 씬이면 재생 시작 (fallbackMs = 영상이 안 끝날 때 강제 전환 시간) ──
+    if (name === "introVideo") playSceneVideo($("intro-video"), "play", 1200);
+    if (name === "endingVideo") playSceneVideo($("ending-video"), "end", 1200);
+    if (name === "play") {
+        startBgm();
+    }
+}
+
+// 현재 재생 중인 영상 씬의 "건너뛰기" 함수를 여기 담아둔다.
+// 건너뛰기 버튼(main.js)이 이걸 호출한다. 영상 씬이 아니면 null.
+let _skipSceneVideo = null;
+
+/**
+ * 영상 씬용: 영상을 0초부터 재생하고, 끝나면 다음 씬으로 넘긴다.
+ * 전환을 일으키는 길은 4가지 — (1)영상 정상 종료 (2)건너뛰기 버튼
+ * (3)안전 타이머 만료 (4)로드/디코드 실패. 어느 쪽이 먼저 와도
+ * done() 이 단 한 번만 실행되도록 막는다(이중 전환 방지).
+ *
+ * 영상이 없거나 멈춰서 onended/onerror 가 영영 안 올 때:
+ *   → poster 이미지가 화면에 남아 있고, fallbackMs 후 안전 타이머가 넘긴다.
+ *
+ * @param {HTMLVideoElement} videoEl
+ * @param {string} nextScene 끝나면 갈 씬
+ * @param {number} fallbackMs 영상이 끝나지 않을 때 강제로 넘길 최대 시간(ms)
+ */
+function playSceneVideo(videoEl, nextScene, fallbackMs) {
+    if (!videoEl) {
+        switchScene(nextScene);
+        return;
+    } // 안전장치
+
+    let finished = false; // 이미 넘어갔는지 (이중 전환 차단)
+    let safetyTimer = null; // 안전 타이머 id
+
+    function done() {
+        if (finished) return; // 두 번째 호출부턴 무시
+        finished = true;
+        clearTimeout(safetyTimer); // 남은 타이머 해제
+        videoEl.onended = null; // 리스너 정리
+        videoEl.onerror = null;
+        videoEl.pause(); // 영상 음향 멈춤 (다음 씬으로 새어나가지 않게)
+        _skipSceneVideo = null; // 건너뛰기 핸들 비우기
+        switchScene(nextScene); // 진짜 전환은 여기 한 곳에서만
+    }
+
+    _skipSceneVideo = done; // 건너뛰기 버튼이 부를 수 있게 노출
+    safetyTimer = setTimeout(done, fallbackMs); // (3) 멈춰도 결국 넘어가게
+
+    videoEl.onended = done; // (1) 정상 종료
+    videoEl.onerror = () => {}; // (4) 실패: 즉시 안 넘김 → poster 보이고 타이머가 넘김
+
+    videoEl.currentTime = 0; // 재시작 대비 처음으로
+    videoEl.play().catch(() => {}); // 자동재생 막혀도 poster 보이고 타이머가 넘김
 }
 
 // ─────────────────────────────────────────
@@ -52,7 +106,7 @@ function tick() {
 
     switch (STATE.currentScene) {
         case "introVideo":
-            advanceTimedScene(SCENE.INTRO_FRAMES, "play");
+            // 전환은 video.onended 가 담당(switchScene 에서 등록). 루프는 할 일 없음.
             break;
 
         case "play":
@@ -88,7 +142,7 @@ function tick() {
             break;
 
         case "endingVideo":
-            advanceTimedScene(SCENE.ENDING_FRAMES, "end");
+            // 전환은 video.onended 가 담당. 루프는 할 일 없음.
             break;
 
         case "title":

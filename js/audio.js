@@ -20,6 +20,12 @@ function startBgm() {
     bgm.play().catch(() => {}); // 자동재생이 막히면 조용히 무시
 }
 
+/** BGM 일시정지 (영상 씬 동안 겹치지 않게) */
+function pauseBgm() {
+    if (!bgm) return;
+    bgm.pause();
+}
+
 /** 볼륨 설정 (0~1 로 가둠). 슬라이더 input 이 호출. */
 function setBgmVolume(volume) {
     if (!bgm) return;
