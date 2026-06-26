@@ -120,6 +120,17 @@
     display: none;
 }
 
+/* ── 엔티티: 인간 발(적) ── */
+/* 크기·이미지는 종류/상태마다 다르므로 render() 가 인라인으로 설정한다(DATA 단일 출처). */
+.human-foot {
+    position: absolute;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10; /* 플레이어/담배 위로 (밟는 느낌). 뒤로 보내려면 낮추기 */
+    /* left/top/width/height/background-image/display 는 render() 가 설정 */
+}
+
 /* ── 설정 팝업 오버레이 ── */
 /* 게임 화면 전체를 덮는 반투명 막. .hidden 이면 숨김. */
 .overlay {
@@ -137,18 +148,18 @@
 
 /* 팝업 박스 */
 #settings-popup {
-    position: relative;     /* 타이틀을 상단에 고정하기 위한 기준점 */
+    position: relative; /* 타이틀을 상단에 고정하기 위한 기준점 */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center; /* 추가: 내부 요소들을 '세로 정중앙'으로 모으는 */
-    
+
     width: 340px;
     min-height: 260px; /* 팝업창의 최소 높이를 살짝 잡아줘야 세로로 움직일 공간 */
     gap: 25px; /* ── 개별 조절을 위해 기존 gap은 0으로 ── */
-    
+
     padding: var(--spacing-8);
-    background: #CAE1FF;
+    background: #cae1ff;
     border: none;
     box-shadow: 0 12px 36px rgba(164, 193, 230, 0.45);
     border-radius: var(--radius-lg);
@@ -169,11 +180,11 @@
 .btn-image-style {
     font-family: var(--font-display);
     font-size: var(--font-size-lg);
-    background-color: #FFF9D5; 
-    color: #2627FF;           
-    border-radius: var(--radius-full);         
-    padding: 15px 30px;       
-    font-size: 1.5rem;        
+    background-color: #fff9d5;
+    color: #2627ff;
+    border-radius: var(--radius-full);
+    padding: 15px 30px;
+    font-size: 1.5rem;
     text-align: center;
     border: none;
     box-shadow: none;
@@ -200,7 +211,7 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
-    width: 100%;           /* 좌우 밸런스를 맞추기 위해 너비 확보 */
+    width: 100%; /* 좌우 밸런스를 맞추기 위해 너비 확보 */
 }
 .settings-label {
     font-family: var(--font-display);

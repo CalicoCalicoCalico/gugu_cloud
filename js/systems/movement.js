@@ -24,5 +24,12 @@ function movePlayer() {
     if (STATE.input.left) dir -= 1;
     if (STATE.input.right) dir += 1;
 
+    // 이동 전 위치 기억 → 벽(ground 발)에 부딪히면 되돌린다
+    const oldX = p.x;
     p.walk(dir);
+
+    // ground 상태의 발과 겹치면 그 방향으로는 못 지나감 (이동 취소)
+    if (typeof isBlockedByFoot === "function" && isBlockedByFoot(p.getBox())) {
+        p.x = oldX;
+    }
 }

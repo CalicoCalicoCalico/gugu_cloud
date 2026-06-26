@@ -11,6 +11,7 @@
 function onTitleStart() {
     resetGameState();
     clearCigaretteLayer(); // 이전 게임의 담배 DOM 정리 (재시작 안전)
+    clearHumanLayer(); // (이전 게임의 발 DOM 정리)
     seedCigarettes(DATA.CONFIG.SPAWN.INITIAL_COUNT); // 맵에 시작 시 생성되어있는 담배 갯수
     switchScene("introVideo");
     startBgm(); // 사용자 클릭 시점 → 자동재생 정책 통과
@@ -42,6 +43,13 @@ window.addEventListener("DOMContentLoaded", () => {
     initInput();
     initSettings(); // 설정 팝업(esc) 초기화
     initAudio(); // BGM 준비 (Audio 객체 생성 + 초기 볼륨)
+
+    // ⚠ dev: play 중 'h' 키 → 인간 발 1명 생성 (테스트용. 정식 스포너 생기면 제거)
+    window.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === "h" && STATE.currentScene === "play") {
+            spawnOneHuman();
+        }
+    });
 
     // ── 버튼 연결 ──
     $("btn-game-start").addEventListener("click", onTitleStart);

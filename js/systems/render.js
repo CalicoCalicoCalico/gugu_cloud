@@ -11,6 +11,9 @@
 // 담배 id → DOM 요소 캐시 (render 전용 살림. STATE 아님)
 const cigDomCache = new Map();
 
+// 발 id → DOM 요소 캐시 (render 전용 살림. STATE 아님)
+const footDomCache = new Map();
+
 /**
  * 한 프레임의 화면을 STATE 로부터 그린다. STATE 는 읽기만.
  */
@@ -18,6 +21,7 @@ function render() {
     renderWorld(); // 카메라 위치를 #world 에 반영 (배경·담배·플레이어가 함께 스크롤)
     renderPlayer();
     renderCigarettes();
+    renderHumans();
     renderGauge();
 }
 
@@ -80,6 +84,53 @@ function renderCigarettes() {
         // 주웠으면 숨김 (CSS .collected → display:none)
         el.classList.toggle("collected", cig.collected);
     }
+}
+
+/** 인간 발들을 DOM 과 동기화. idle 발은 숨김. */
+function renderHumans() {
+    const layer = $("human-layer");
+
+    for (const human of STATE.humansArray) {
+        for (const foot of human.feet) {
+            let el = footDomCache.get(foot.id);
+            if (!el) {
+                el = document.createElement("div");
+                el.className = "human-foot";
+                el.dataset.id = foot.id;
+                el.style.width = `${foot.boxW}px`; // 종류별 크기 (생성 시 1회)
+                el.style.height = `${foot.boxH}px`;
+                layer.appendChild(el);
+                footDomCache.set(foot.id, el);
+            }
+
+            const sprite = foot.currentSprite(); // idle → null
+            if (!sprite) {
+                el.style.display = "none"; // idle: 안 보임
+                continue;
+            }
+            el.style.display = "block";
+            el.style.left = `${foot.x}px`;
+            el.style.top = `${foot.y}px`;
+            el.style.backgroundImage = `url("${sprite}")`;
+            el.dataset.status = foot.stepStatus; // 디버깅용
+        }
+    }
+}
+
+/** 맵 밖으로 나간 사람의 발 DOM 을 제거 (humanWalk 가 호출). */
+function removeHumanDom(human) {
+    for (const foot of human.feet) {
+        const el = footDomCache.get(foot.id);
+        if (el) el.remove();
+        footDomCache.delete(foot.id);
+    }
+}
+
+/** 새 게임 시작 시 발 DOM 전부 비우기 (main.js 가 호출). */
+function clearHumanLayer() {
+    footDomCache.clear();
+    const layer = $("human-layer");
+    if (layer) layer.innerHTML = "";
 }
 
 /** 폐 게이지 채움/숫자 반영. clip-path로 아래서 위로 채운다 */
