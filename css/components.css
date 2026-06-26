@@ -179,6 +179,13 @@
     box-shadow: none;
     cursor: pointer;
     margin: 0;
+    will-change: filter;
+    transform: translateZ(0);
+    transition: filter 0.2s ease;
+}
+
+.btn-image-style:hover {
+    filter: brightness(90%);
 }
 
 .btn-settings-restart {
