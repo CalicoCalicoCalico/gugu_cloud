@@ -24,11 +24,11 @@ function getPlayerClip(p) {
             return CLIPS.picking;
         case "stunned":
             return CLIPS.stunned;
-        case "onFire":
+        case "smokeFire":
             // 불붙음: 움직여도/주워도 idle 과 동일. 차이는 오직 이미지.
-            // 지금은 움직임과 무관하게 onFire 이미지 1장만 보여준다.
+            // 지금은 움직임과 무관하게 smokeFire 이미지 1장만 보여준다.
             // (걸을 때 '불붙은 걷기' 애니가 필요하면 말해주세요 → walk 처럼 분기 가능)
-            return CLIPS.onFire;
+            return CLIPS.smokeFire;
         case "idle":
         default:
             // 대기: 움직이는 중이면 걷기, 멈춰 있으면 기본 이미지
@@ -40,7 +40,7 @@ function getPlayerClip(p) {
  * 몸 상태(default ↔ round)에 따라 파일명 접두사를 바꾼다.
  * 폐 게이지가 임계값 "이상"이면 '99_default' → '99_round' 로 통째 교체.
  * (round 전용 클립을 따로 두지 않고, 같은 클립의 파일명만 바꿔 재사용한다.
- *  → 모든 동작(idle/walk/picking/smoking/stunned/onFire)이 자동으로 round 로 바뀜)
+ *  → 모든 동작(idle/walk/picking/smoking/stunned/smokeFire)이 자동으로 round 로 바뀜)
  * @param {string} filename 예: "99_default_smokeS1.png"
  * @returns {string} 예: "99_round_smokeS1.png" (임계값 미만이면 원본 그대로)
  */
