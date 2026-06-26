@@ -12,8 +12,8 @@
 function movePlayer() {
     const p = STATE.player;
 
-    // 이동 가능 상태: idle 과 onFire(불붙음). 줍기/피우기/스턴은 이동 잠금.
-    const canMove = p.playerStatus === "idle" || p.playerStatus === "onFire";
+    // 이동 가능 상태: idle 과 smokeFire(불붙음). 줍기/피우기/스턴은 이동 잠금.
+    const canMove = p.playerStatus === "idle" || p.playerStatus === "smokeFire";
     if (!canMove) {
         p.walk(0); // 멈춤(isMoving=false → 걷기 애니 해제)
         return;
