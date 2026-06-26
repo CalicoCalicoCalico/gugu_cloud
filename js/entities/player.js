@@ -77,7 +77,12 @@ class Player {
      * @returns {{x:number, y:number, w:number, h:number}}
      */
     getBox() {
-        const { BOX_W, BOX_H } = DATA.CONFIG.PLAYER;
-        return { x: this.x, y: this.y, w: BOX_W, h: BOX_H };
+        const { HITBOX } = DATA.CONFIG.PLAYER;
+        return {
+            x: this.x + HITBOX.offsetX,
+            y: this.y + HITBOX.offsetY,
+            w: HITBOX.w,
+            h: HITBOX.h,
+        };
     }
 }

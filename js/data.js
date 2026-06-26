@@ -59,6 +59,15 @@ const DATA = {
             SPRITE: "img_assets/characters/99_default.png", // ⚠ index.html 기준 경로
             // 폐 게이지가 이 값 "이상"이면 뚱띠(round) 이미지로 바뀜 (개발문서: 50 넘으면 round)
             ROUND_GAUGE_THRESHOLD: 50, // TODO(밸런스): 보면서 조절
+
+            // ── 실제 충돌 판정 영역(히트박스) ──
+            // 이미지 박스 좌상단(this.x, this.y) 기준 오프셋 + 크기. 숫자만 바꾸면 끝.
+            HITBOX: {
+                offsetX: 120, // 이미지 왼쪽 끝에서 안쪽으로
+                offsetY: 160, // 이미지 위쪽 끝에서 아래로
+                w: 120,
+                h: 180,
+            },
         },
 
         // ── 담배 생성 규칙 ──
@@ -177,7 +186,7 @@ const DATA = {
                 // 스턴: 일단 기본 이미지로 placeholder
                 stunned: ["99_default_stepOn.png"], // TODO 스턴 전용 이미지로 교체
                 // 불붙음: idle 과 동작은 같고 이미지만 다름. 정적 1장.
-                onFire: ["99_default_onFire.png"], // TODO 에셋: 실제 불붙은 이미지로 교체
+                onFire: ["99_default_smokeFire.png"], // TODO 에셋: 실제 불붙은 이미지로 교체
             },
 
             // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).
@@ -246,21 +255,24 @@ const DATA = {
             boxW: 50,
             boxH: 30,
             sprite: "img_assets/items/cigar_s.png",
-        }, // 단초
+            hitbox: { offsetX: 6, offsetY: 8, w: 38, h: 14 }, // 이미지 박스 좌상단 기준
+        },
         cigar_m: {
             points: 10,
             percentage: 45,
             boxW: 70,
             boxH: 30,
             sprite: "img_assets/items/cigar_m.png",
-        }, // 중초
+            hitbox: { offsetX: 6, offsetY: 8, w: 58, h: 14 },
+        },
         cigar_l: {
             points: 20,
             percentage: 10,
             boxW: 90,
             boxH: 30,
             sprite: "img_assets/items/cigar_l.png",
-        }, // 장초
+            hitbox: { offsetX: 6, offsetY: 8, w: 78, h: 14 },
+        },
     },
 
     // ═══════════════════════════════════════════════
