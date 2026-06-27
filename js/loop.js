@@ -28,8 +28,13 @@ function switchScene(name) {
     STATE.framesInCurrentScene = 0; // 새 씬에 막 들어왔으니 0 부터 센다
 
     // ── 영상 씬이면 재생 시작 (fallbackMs = 영상이 안 끝날 때 강제 전환 시간) ──
-    if (name === "introVideo") playSceneVideo($("intro-video"), "play", 1200);
-    if (name === "endingVideo") playSceneVideo($("ending-video"), "end", 1200);
+    if (name === "introVideo"){
+        playSceneVideo($("intro-video"), "play", 20000);
+    } 
+    if (name === "endingVideo"){
+        pauseBgm();
+        playSceneVideo($("ending-video"), "end", 35000);
+    } 
     if (name === "play") {
         startBgm();
     }
