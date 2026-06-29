@@ -35,8 +35,6 @@ class Human {
                 ? HUMAN.STRIDE.normal // 비둘기 너비 * 2
                 : def.boxW + HUMAN.STRIDE.CLOSE_EXTRA; // 발 너비 + 24
 
-        const stepSpeed = HUMAN.STEP_SPEED[this.walkSpeed];
-
         // 진행 방향 + 시작 위치(맵 바깥에서 걸어 들어옴)
         this.dirSign = this.direction === "right" ? 1 : -1;
         this.x =
@@ -46,20 +44,22 @@ class Human {
 
         // ── 두 발 ──
         this.feet = [
-            new HumanFoot(`${id}_R`, "R", this.type, stepSpeed),
-            new HumanFoot(`${id}_L`, "L", this.type, stepSpeed),
+            new HumanFoot(`${id}_R`, "R", this.type, this.walkSpeed),
+            new HumanFoot(`${id}_L`, "L", this.type, this.walkSpeed),
         ];
         // 반 박자 엇갈림: L 발만 처음에 더 기다렸다 내려온다
-        const cycle = this._cycleFrames(stepSpeed);
+        const cycle = this._cycleFrames();
         this.feet[1].animTimer = Math.round(HUMAN.PHASE_OFFSET * cycle);
     }
 
     /** 한 발의 전체 주기(프레임). 위상 오프셋 계산용. */
-    _cycleFrames(stepSpeed) {
+    _cycleFrames() {
         const { GROUND_FRAMES, IDLE_FRAMES } = DATA.CONFIG.HUMAN;
-        const f = this.feet[0];
-        const downF = Math.ceil((f.groundY - f.spawnY) / stepSpeed);
-        return downF * 2 + GROUND_FRAMES + IDLE_FRAMES;
+        const f = this.feet[0]; // 두 발이 같은 walkSpeed 라 한쪽 기준이면 충분
+        const downF = Math.ceil((f.groundY - f.spawnY) / f.stepSpeed);
+        return (
+            downF * 2 + GROUND_FRAMES[f.walkSpeed] + IDLE_FRAMES[f.walkSpeed]
+        );
     }
 
     /** 발이 착지할 때 호출 → 현재 착지 x 주고, 사람을 한 보폭 전진시킨다. */
