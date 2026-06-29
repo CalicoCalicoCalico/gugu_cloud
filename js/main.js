@@ -87,7 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
     //    이렇게 하면 기존의 '프레임 단위' 속도/타이머 값을 하나도 안 바꿔도 된다.
 
     // const FIXED_DT = 1000 / 60; // 한 논리 스텝의 길이(ms). 60fps 기준 = 약 16.67ms
-    const FIXED_DT = 1000 / 100; // 한 논리 스텝의 길이(ms). 60fps 기준 = 약 16.67ms
+    const FIXED_DT = 1000 / 115; // 한 논리 스텝의 길이(ms). 60fps 기준 = 약 16.67ms
 
     let _lastTime = performance.now(); // 직전 프레임 시각
     let _accumulator = 0; // 아직 처리 못한 누적 시간(ms)

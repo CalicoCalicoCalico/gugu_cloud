@@ -40,16 +40,18 @@
     bottom: var(--spacing-4);
     z-index: 50; /* 영상보다 위 */
     font-family: var(--font-display);
-    font-size: var(--font-size-sm);
-    color: var(--paper-0);
-    background: rgba(0, 0, 0, 0.45);
+    font-size: var(--font-size-base);
+    color: var(--btn-text);
+    background-color: var(--btn-bg);
     padding: var(--spacing-2) var(--spacing-4);
     border-radius: var(--radius-full);
     cursor: pointer;
-    transition: background 0.15s ease;
+    will-change: filter;
+    transform: translateZ(0);
+    transition: background 0.15s ease, filter 0.2s ease;
 }
 .btn-skip:hover {
-    background: rgba(0, 0, 0, 0.7);
+    filter: brightness(50%);
 }
 
 /* ── HUD: 폐 게이지 ── */
@@ -163,11 +165,12 @@
 .human-foot {
     position: absolute;
     background-position: center;
-    background-size: contain;
     background-repeat: no-repeat;
     z-index: 10; /* 플레이어/담배 위로 (밟는 느낌). 뒤로 보내려면 낮추기 */
     /* left/top/width/height/background-image/display 는 render() 가 설정 */
     border: solid 1px blue;
+    /* [추가] 원하는 배율 */
+    background-size: 300px 400px;
 }
 
 /* ── 설정 팝업 오버레이 ── */
@@ -219,8 +222,8 @@
 .btn-image-style {
     font-family: var(--font-display);
     font-size: var(--font-size-lg);
-    background-color: #fff9d5;
-    color: #2627ff;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
     border-radius: var(--radius-full);
     padding: 15px 30px;
     font-size: 1.5rem;

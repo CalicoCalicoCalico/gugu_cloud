@@ -19,6 +19,9 @@
     --smoke-300: #b8c0c4;
     --smoke-500: #8a949a;
 
+    --btn-bg: #fff9d5;
+    --btn-text: #2627ff;
+
     /* 게이지(폐) — 차오를수록 탁해지는 느낌의 강조색 */
     /* --gauge-fill: #d8654f; */
     --gauge-fill: #e0c7b6;
