@@ -3,10 +3,10 @@
 //
 // "지금 어느 씬인가(STATE.currentScene)" 가 매 프레임 무엇이 도는지를 정한다.
 //
-// 씬 흐름 (개발문서): title → introVideo → play → endingVideo → end
+// 씬 흐름 (개발문서): title → introVideo → play → endingVideo → title
 //   - introVideo / endingVideo : 이미지 한 장을 보여주고 시간이 지나면 자동 전환
 //   - play                     : 실제 게임 루프
-//   - title / end              : 정적 화면 (버튼 클릭이 전환을 담당)
+//   - title              : 정적 화면 (버튼 클릭이 전환을 담당)
 // ═══════════════════════════════════════════════════════
 
 // ─────────────────────────────────────────
@@ -16,7 +16,7 @@
 /**
  * 씬을 전환한다. .active 클래스를 토글하고 STATE.currentScene 을 갱신한다.
  * 씬에 머문 시간(framesInCurrentScene)도 0 으로 리셋한다.
- * @param {("title"|"introVideo"|"play"|"endingVideo"|"end")} name
+ * @param {("title"|"introVideo"|"play"|"endingVideo")} name
  */
 function switchScene(name) {
     document
@@ -34,7 +34,7 @@ function switchScene(name) {
     if (name === "endingVideo") {
         pauseBgm();
         pauseAmbience();
-        playSceneVideo($("ending-video"), "end", 35000);
+        playSceneVideo($("ending-video"), "title", 35000);
     }
     if (name === "play") {
         startBgm();
@@ -153,7 +153,7 @@ function tick() {
             break;
 
         case "title":
-        case "end":
+
         default:
             // 정적 화면 — 루프에서 할 일 없음 (버튼 클릭이 전환을 담당)
             break;

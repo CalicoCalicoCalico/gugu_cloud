@@ -68,7 +68,7 @@ window.addEventListener("DOMContentLoaded", () => {
     $("btn-game-start").addEventListener("click", onTitleStart);
 
     // 엔딩 "다시하기" → 타이틀로
-    $("btn-restart").addEventListener("click", () => switchScene("title"));
+    // $("btn-restart").addEventListener("click", () => switchScene("title"));
 
     // 인트로 건너뛰기: 현재 영상 씬의 done() 을 호출 → 안전하게 다음 씬으로
     $("btn-skip-intro").addEventListener("click", () => {
