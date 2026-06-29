@@ -240,9 +240,56 @@ const DATA = {
 
         // ── 오디오 ──
         AUDIO: {
-            // TODO(에셋): 실제 BGM 파일 경로로 교체
             BGM: "../audio_assets/mainBGM.mp3",
-            BGM_VOLUME: 0.3, // 시작 볼륨 (0~1). 슬라이더 초기값과 동기화됨
+            BGM_VOLUME: 0.3,
+
+            // 환경음(ambience) — play 씬에서 항상 깔리는 배경 소리.
+            // ⚠ BGM 과 달리 설정 슬라이더로 못 줄인다(고정 볼륨). 끄려면 여기 값만 바꿈.
+            AMBIENCE: "", //"../audio_assets/ambience.mp3", // TODO(에셋): 실제 경로로 교체
+            AMBIENCE_VOLUME: 0.4, // 고정 볼륨 (슬라이더 영향 없음)
+
+            // ── 효과음(SFX) ─────────────────────────────
+            // ⚠ TODO(에셋): mp3 가 생기면 src 의 ""(빈 경로)에 실제 파일 경로를 채운다.
+            //    src 가 비어 있는 동안 playSfx() 는 조용히 아무것도 안 한다(에러 없음).
+            //
+            // 각 효과음 설정:
+            //   src          : 파일 경로 (비면 안 울림)
+            //   volume       : 0~1 음량 (이 소리만 작게/크게)
+            //   frames       : (걷기/대시 전용) 클립의 몇 번째 프레임에서 울릴지 [인덱스 배열]
+            //                  → 소리가 너무 촘촘하면 개수를 줄인다. 예: [0,2] → [0]
+            //   everyNCycles : (걷기/대시 전용) 몇 바퀴에 한 번 울릴지. 1=매 바퀴, 2=두 바퀴에 한 번
+            //                  → frames 를 [0] 으로 줄여도 빠르면 이걸 2,3 으로 키운다.
+            SFX: {
+                // 걷기: 3프레임 걷기 클립. 0·2번에서 '챱' 두 번. (anim.js)
+                // 비둘기 발 챱챱 소리
+                walkStep: {
+                    src: "",
+                    volume: 1,
+                    frames: [0, 2],
+                    everyNCycles: 1,
+                },
+
+                // 대시(3차): 6프레임. 0·1·3·4번에서 '챱' 네 번. (anim.js)
+                dash: {
+                    src: "",
+                    volume: 1,
+                    frames: [0, 1, 3, 4],
+                    everyNCycles: 1,
+                },
+
+                // ── 단발 효과음 (프레임 박자 없음 — src·volume 만) ──
+                // 사람 발 소리 3종류: DATA.HUMAN_TYPES[type].sound 참고
+                smokePickup: { src: "", volume: 1 }, // 담배 줍고 피우기 (interaction.js)
+                hitByFoot: { src: "", volume: 1 }, // 발에 밟힘 (humanWalk.js)
+                hitByCigarette: { src: "", volume: 1 }, // 담배에 맞음 (cigaretteFall.js)
+                cigaretteFalling: { src: "", volume: 1 }, // 적담배 낙하 (spawn.js)
+
+                // // 3차 사운드들
+                // hitByKick: { src: "", volume: 1 }, // 걷어차임 (3차)
+                // humanKick: { src: "", volume: 1 }, // 사람이 걷어참 (3차)
+                // pigeonIn: { src: "", volume: 1 }, // 적 비둘기 날아옴 (3차)
+                // pigeonOut: { src: "", volume: 1 }, // 적 비둘기 날아감 (3차)
+            },
         },
     },
 
@@ -306,6 +353,7 @@ const DATA = {
                     up: "img_assets/enemies/foot/human_walking_trainingL3.png",
                 },
             },
+            sound: { src: "", volume: 1 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
         suit: {
             boxW: 260,
@@ -323,6 +371,7 @@ const DATA = {
                     up: "img_assets/enemies/foot/human_walking_suitL3.png",
                 },
             },
+            sound: { src: "", volume: 1 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
         jean: {
             boxW: 260,
@@ -340,6 +389,7 @@ const DATA = {
                     up: "img_assets/enemies/foot/human_walking_jeanL3.png",
                 },
             },
+            sound: { src: "", volume: 1 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
     },
 };

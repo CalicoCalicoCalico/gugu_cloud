@@ -10,6 +10,9 @@
 //   '걷기'는 상태가 아니라 "idle 인데 움직이는 중"일 뿐 → 여기서 판단한다.
 // ═══════════════════════════════════════════════════════
 
+// 걷기/대시 발소리 박자용 — 클립이 한 바퀴 돌 때마다 +1 (everyNCycles 판정에 씀)
+const _sfxCycle = { walk: 0, dash: 0 };
+
 /**
  * 지금 보여줄 클립(이미지 파일 배열)을 고른다.
  * @returns {string[]} DATA.CONFIG.ANIM.DIR 기준 파일명 목록
@@ -78,5 +81,22 @@ function updateAnim() {
     if (p.animFrameTimer <= 0) {
         p.animFrame = (p.animFrame + 1) % clip.length;
         p.animFrameTimer = clip[p.animFrame].duration; // 새 프레임의 duration 주입
+
+        // 클립이 0번으로 돌아오면 한 바퀴 돈 것 → 사이클 카운터 +1
+        if (p.animFrame === 0) {
+            if (p.playerStatus === "idle" && p.isMoving) _sfxCycle.walk++;
+            if (p.playerStatus === "dashing") _sfxCycle.dash++; // 3차
+        }
+
+        // ── SFX: 걷기 발소리 (박자는 data.js 의 frames/everyNCycles) ──
+        // mp3 생기면 주석 해제.
+        // if (p.playerStatus === "idle" && p.isMoving) {
+        //     playStepSfx("walkStep", p.animFrame, _sfxCycle.walk);
+        // }
+
+        // ── SFX: 대시 발소리 (3차) ──
+        // if (p.playerStatus === "dashing") {
+        //     playStepSfx("dash", p.animFrame, _sfxCycle.dash);
+        // }
     }
 }

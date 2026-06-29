@@ -27,6 +27,9 @@ function updateHumans() {
 
                 // 스턴: 어떤 상태든(줍기·피우기·불붙음 포함) 무조건 스턴으로 덮어쓴다.
                 STATE.player.enterStatus(DATA.CONFIG.HUMAN.STUN_STATUS);
+
+                // ── SFX: 발에 밟힘 (공격당함) ──
+                // playSfx("hitByFoot");
             }
         }
     }
