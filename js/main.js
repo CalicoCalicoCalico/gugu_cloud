@@ -14,7 +14,6 @@ function onTitleStart() {
     clearHumanLayer(); // (이전 게임의 발 DOM 정리)
     seedCigarettes(DATA.CONFIG.SPAWN.INITIAL_COUNT); // 맵에 시작 시 생성되어있는 담배 갯수
     switchScene("introVideo");
-    startBgm(); // 사용자 클릭 시점 → 자동재생 정책 통과
 }
 
 /**
