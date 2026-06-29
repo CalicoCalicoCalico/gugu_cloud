@@ -5,13 +5,20 @@
 // 설정 팝업의 슬라이더가 setBgmVolume() 을 호출해 볼륨을 바꾼다.
 // ═══════════════════════════════════════════════════════
 
-let bgm = null; // BGM Audio 인스턴스 (initAudio 에서 생성)
+let bgm = null;
+let ambience = null; // ← 추가: 환경음 Audio (고정 볼륨, 슬라이더 영향 없음)
 
-/** 초기화 — main.js 부팅 때 한 번 호출. Audio 객체 생성 + 초기 볼륨. */
+/** 초기화 — main.js 부팅 때 한 번 호출. */
 function initAudio() {
     bgm = new Audio(DATA.CONFIG.AUDIO.BGM);
-    bgm.loop = true; // 끝나면 다시 재생 (배경음악이니까)
-    bgm.volume = DATA.CONFIG.AUDIO.BGM_VOLUME; // 초기 볼륨 (슬라이더와 같은 값)
+    bgm.loop = true;
+    bgm.volume = DATA.CONFIG.AUDIO.BGM_VOLUME;
+
+    // 환경음: 똑같이 루프. 단, 볼륨은 DATA 고정값으로만 정한다.
+    // setBgmVolume() 는 bgm 만 건드리므로 슬라이더로는 절대 안 바뀐다.
+    ambience = new Audio(DATA.CONFIG.AUDIO.AMBIENCE);
+    ambience.loop = true;
+    ambience.volume = DATA.CONFIG.AUDIO.AMBIENCE_VOLUME;
 }
 
 /** BGM 재생 시작. 브라우저 자동재생 정책상 '사용자 클릭' 시점에 불러야 한다. */
@@ -32,6 +39,17 @@ function setBgmVolume(volume) {
     bgm.volume = clamp(volume, 0, 1); // helpers.js 의 clamp
 }
 
+/** 환경음 재생 시작. (play 씬 진입 시) */
+function startAmbience() {
+    if (!ambience) return;
+    ambience.play().catch(() => {}); // 자동재생 막히면 조용히 무시
+}
+
+/** 환경음 일시정지. (엔딩 영상 등에서 끌 때) */
+function pauseAmbience() {
+    if (!ambience) return;
+    ambience.pause();
+}
 // ═══════════════════════════════════════════════════════
 // 효과음(SFX)
 //

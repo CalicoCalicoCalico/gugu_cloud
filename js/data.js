@@ -243,6 +243,11 @@ const DATA = {
             BGM: "../audio_assets/mainBGM.mp3",
             BGM_VOLUME: 0.3,
 
+            // 환경음(ambience) — play 씬에서 항상 깔리는 배경 소리.
+            // ⚠ BGM 과 달리 설정 슬라이더로 못 줄인다(고정 볼륨). 끄려면 여기 값만 바꿈.
+            AMBIENCE: "", //"../audio_assets/ambience.mp3", // TODO(에셋): 실제 경로로 교체
+            AMBIENCE_VOLUME: 0.4, // 고정 볼륨 (슬라이더 영향 없음)
+
             // ── 효과음(SFX) ─────────────────────────────
             // ⚠ TODO(에셋): mp3 가 생기면 src 의 ""(빈 경로)에 실제 파일 경로를 채운다.
             //    src 가 비어 있는 동안 playSfx() 는 조용히 아무것도 안 한다(에러 없음).
@@ -256,6 +261,7 @@ const DATA = {
             //                  → frames 를 [0] 으로 줄여도 빠르면 이걸 2,3 으로 키운다.
             SFX: {
                 // 걷기: 3프레임 걷기 클립. 0·2번에서 '챱' 두 번. (anim.js)
+                // 비둘기 발 챱챱 소리
                 walkStep: {
                     src: "",
                     volume: 1,
