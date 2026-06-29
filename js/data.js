@@ -114,8 +114,8 @@ const DATA = {
 
             // 땅을 밟고 '벽'으로 서 있는 시간(프레임). walkSpeed 별로 따로. TODO(밸런스)
             GROUND_FRAMES: {
-                fast: 60,
-                slow: 60,
+                fast: 120,
+                slow: 120,
             },
             // up 후 다음 down 까지 쉬는 시간(프레임). walkSpeed 별로 따로. TODO(밸런스)
             IDLE_FRAMES: {
@@ -338,7 +338,7 @@ const DATA = {
     // ═══════════════════════════════════════════════
     HUMAN_TYPES: {
         training: {
-            boxW: 260,
+            boxW: 280,
             boxH: 420,
             hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
@@ -356,7 +356,7 @@ const DATA = {
             sound: { src: "", volume: 1 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
         suit: {
-            boxW: 260,
+            boxW: 280,
             boxH: 420,
             hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
@@ -374,7 +374,7 @@ const DATA = {
             sound: { src: "", volume: 1 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
         jean: {
-            boxW: 260,
+            boxW: 280,
             boxH: 420,
             hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
