@@ -111,8 +111,17 @@ const DATA = {
                 fast: 6, // TODO(밸런스): 빠른 발
                 slow: 3, // TODO(밸런스): 느린 발
             },
-            GROUND_FRAMES: 60, // 땅을 밟고 '벽'으로 서 있는 시간(프레임). TODO
-            IDLE_FRAMES: 120, // up 후 다음 down 까지 쉬는 시간(프레임). TODO
+
+            // 땅을 밟고 '벽'으로 서 있는 시간(프레임). walkSpeed 별로 따로. TODO(밸런스)
+            GROUND_FRAMES: {
+                fast: 60,
+                slow: 60,
+            },
+            // up 후 다음 down 까지 쉬는 시간(프레임). walkSpeed 별로 따로. TODO(밸런스)
+            IDLE_FRAMES: {
+                fast: 120,
+                slow: 120,
+            },
 
             // 두 발의 박자 차이. 0.5 = 반 박자(완전 교대). 0 = 동시. 0.25 등으로 리듬 조절.
             PHASE_OFFSET: 0.5,
@@ -284,6 +293,7 @@ const DATA = {
         training: {
             boxW: 260,
             boxH: 420,
+            hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_trainingR1.png",
@@ -300,6 +310,7 @@ const DATA = {
         suit: {
             boxW: 260,
             boxH: 420,
+            hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_suitR1.png",
@@ -316,6 +327,7 @@ const DATA = {
         jean: {
             boxW: 260,
             boxH: 420,
+            hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_jeanR1.png",

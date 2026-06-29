@@ -11,6 +11,7 @@
 // 담배 id → DOM 요소 캐시 (render 전용 살림. STATE 아님)
 const cigDomCache = new Map();
 const cigHitboxCache = new Map(); // 담배 디버그 히트박스 (render 전용 살림)
+const footHitboxCache = new Map(); // 발 디버그 히트박스 (render 전용 살림)
 
 // 발 id → DOM 요소 캐시 (render 전용 살림. STATE 아님)
 const footDomCache = new Map();
@@ -147,6 +148,26 @@ function renderHumans() {
             el.style.top = `${foot.y}px`;
             el.style.backgroundImage = `url("${sprite}")`;
             el.dataset.status = foot.stepStatus; // 디버깅용
+
+            // ── 디버그 히트박스 ──
+            const fdbgLayer = $("foot-hitbox-layer");
+            let fdbg = footHitboxCache.get(foot.id);
+            if (!fdbg) {
+                fdbg = document.createElement("div");
+                fdbg.className = "foot-hitbox";
+                fdbgLayer.appendChild(fdbg);
+                footHitboxCache.set(foot.id, fdbg);
+            }
+            if (!sprite) {
+                fdbg.style.display = "none"; // idle: 박스도 숨김
+            } else {
+                const fb = foot.getBox();
+                fdbg.style.display = "block";
+                fdbg.style.left = `${fb.x}px`;
+                fdbg.style.top = `${fb.y}px`;
+                fdbg.style.width = `${fb.w}px`;
+                fdbg.style.height = `${fb.h}px`;
+            }
         }
     }
 }
@@ -157,6 +178,11 @@ function removeHumanDom(human) {
         const el = footDomCache.get(foot.id);
         if (el) el.remove();
         footDomCache.delete(foot.id);
+
+        // 디버그 히트박스도 제거
+        const fdbg = footHitboxCache.get(foot.id);
+        if (fdbg) fdbg.remove();
+        footHitboxCache.delete(foot.id);
     }
 }
 
@@ -165,6 +191,11 @@ function clearHumanLayer() {
     footDomCache.clear();
     const layer = $("human-layer");
     if (layer) layer.innerHTML = "";
+
+    // 디버그 히트박스도 정리
+    footHitboxCache.clear();
+    const fdbgLayer = $("foot-hitbox-layer");
+    if (fdbgLayer) fdbgLayer.innerHTML = "";
 }
 
 /** 폐 게이지 채움/숫자 반영. clip-path로 아래서 위로 채운다 */

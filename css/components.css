@@ -48,7 +48,9 @@
     cursor: pointer;
     will-change: filter;
     transform: translateZ(0);
-    transition: background 0.15s ease, filter 0.2s ease;
+    transition:
+        background 0.15s ease,
+        filter 0.2s ease;
 }
 .btn-skip:hover {
     filter: brightness(50%);
@@ -168,9 +170,18 @@
     background-repeat: no-repeat;
     z-index: 10; /* 플레이어/담배 위로 (밟는 느낌). 뒤로 보내려면 낮추기 */
     /* left/top/width/height/background-image/display 는 render() 가 설정 */
-    border: solid 1px blue;
+    /* border: solid 1px blue; 이건 이미지 전체 테두리*/
     /* [추가] 원하는 배율 */
     background-size: 300px 400px;
+}
+
+/* 디버그: 발 실제 히트박스 (충돌과 1:1) */
+.foot-hitbox {
+    position: absolute;
+    border: 2px solid red;
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 30;
 }
 
 /* ── 설정 팝업 오버레이 ── */

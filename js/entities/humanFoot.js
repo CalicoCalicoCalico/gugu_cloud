@@ -17,7 +17,7 @@ class HumanFoot {
      * @param {string} type      DATA.HUMAN_TYPES 의 키 (training|suit|jean)
      * @param {number} stepSpeed 수직 이동 속도(px/frame) — down/up 공용
      */
-    constructor(id, side, type, stepSpeed) {
+    constructor(id, side, type, walkSpeed) {
         const def = DATA.HUMAN_TYPES[type];
         const { VIEWPORT, PLAYER, HUMAN } = DATA.CONFIG;
 
@@ -26,8 +26,10 @@ class HumanFoot {
         this.type = type;
         this.boxW = def.boxW;
         this.boxH = def.boxH;
+        this.hitbox = def.hitbox; // 충돌 판정용 (이미지보다 작은 영역)
         this.sprites = def.sprites[side]; // { down, ground, up }
-        this.stepSpeed = stepSpeed;
+        this.walkSpeed = walkSpeed; // "fast" | "slow" — 프레임 수 룩업용
+        this.stepSpeed = HUMAN.STEP_SPEED[walkSpeed]; // 수직 이동 속도(px/frame)
 
         // 시작 y(월드 위) / 착지 y(발 밑면이 바닥선과 같은 높이 — 담배·플레이어와 동일 공식)
         this.spawnY = HUMAN.SPAWN_Y;
@@ -44,19 +46,22 @@ class HumanFoot {
     enterStatus(status) {
         const { GROUND_FRAMES, IDLE_FRAMES } = DATA.CONFIG.HUMAN;
         this.stepStatus = status;
+        // 이 발의 속도 종류(fast|slow)에 맞는 프레임 수
+        const groundF = GROUND_FRAMES[this.walkSpeed];
+        const idleF = IDLE_FRAMES[this.walkSpeed];
 
         if (status === "down") {
             this.y = this.spawnY;
             this.hasHitPlayer = false; // 내려오며 1번 때릴 수 있음
         } else if (status === "ground") {
             this.y = this.groundY; // 딱 맞춰 세움
-            this.animTimer = GROUND_FRAMES;
+            this.animTimer = groundF;
         } else if (status === "up") {
             this.hasHitPlayer = false; // 올라가며 다시 1번 때릴 수 있음
         } else {
             // idle
             this.y = this.spawnY;
-            this.animTimer = IDLE_FRAMES;
+            this.animTimer = idleF;
         }
     }
 
@@ -98,6 +103,7 @@ class HumanFoot {
     }
 
     getBox() {
-        return { x: this.x, y: this.y, w: this.boxW, h: this.boxH };
+        const { offsetX, offsetY, w, h } = this.hitbox;
+        return { x: this.x + offsetX, y: this.y + offsetY, w, h };
     }
 }
