@@ -231,13 +231,40 @@
 }
 
 #settings-close {
-    color: var(--btn-text);
+    color: #5c7594;
+    border: none;
+
+    padding: 6px 14px;
+    border-radius: 20px;       /* 둥글둥글하고 부드러운 모서리 */
+    font-size: 14px;           /* 글씨 크기도 살짝 아담하게 */
+    font-weight: bold;
+    cursor: pointer;
+
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 22px;
+    right: 20px;
+
+    cursor: pointer;          /* 마우스를 올리면 손가락 모양으로 변합니다 */
+    user-select: none;        /* 더블클릭했을 때 글자가 파랗게 드래그되는 현상을 막아줍니다 */
+    
+    /* 부드러운 상호작용 효과 */
+    transition: background-color 0.2s, transform 0.1s;
 }
+
+/* 마우스 올렸을 때 & 클릭했을 때 효과 */
+#settings-close:hover {
+    filter: brightness(90%);
+}
+
+#settings-close:active {
+    transform: scale(0.95);    /* 누르면 슥 들어가는 쫀득한 손맛 */
+}
+
 .settings-buttons-container {
     display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;     /* 세로 기준 정중앙 정렬 */
+    gap: 10px;
 }
 
 .btn-image-style {
@@ -246,8 +273,8 @@
     background-color: var(--btn-bg);
     color: var(--btn-text);
     border-radius: var(--radius-full);
-    padding: 15px 30px;
-    font-size: 1.5rem;
+    padding: 12px 24px;
+    font-size: 1.1rem;
     text-align: center;
     border: none;
     box-shadow: none;
@@ -256,6 +283,9 @@
     will-change: filter;
     transform: translateZ(0);
     transition: filter 0.2s ease;
+
+    /* ★ 글자가 한 줄로 예쁘게 쭉 뻗도록 만듭니다 */
+    white-space: nowrap;
 }
 
 .btn-image-style:hover {
@@ -265,6 +295,10 @@
 .btn-settings-restart {
     margin: 0;
     text-align: center;
+    padding: 12px 24px;
+
+    * ★ 글자가 한 줄로 예쁘게 쭉 뻗도록 만듭니다 */
+    white-space: nowrap;
 }
 
 /* ── 설정: BGM 볼륨 슬라이더 ── */
