@@ -59,6 +59,12 @@ function spawnOneCigarette(x) {
     // 위치 계산·크기 설정은 Cigarette 생성자가 알아서 한다 (x 안 주면 랜덤).
     const id = `cig_${STATE.cigaretteIdCounter++}`;
     STATE.cigarettesArray.push(new Cigarette(id, type, x));
+
+    // ── SFX: 적담배가 하늘에서 떨어질 때 ──
+    // (생성된 담배는 air 상태로 시작해 떨어진다)
+    // ⚠ seedCigarettes()(게임 시작 시 미리 깔기)도 이 함수를 부르니,
+    //    시작 순간 소리를 안 내려면 seed 쪽엔 별도 플래그가 필요. 일단 켤 땐 보면서 조절.
+    // playSfx("cigaretteFalling");
 }
 
 /**

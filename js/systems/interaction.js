@@ -85,4 +85,7 @@ function smoke() {
     STATE.player.smokeType = c.type;
     // (5) 대기 → 줍기 (이후 자동으로 피우기 → 대기)
     STATE.player.enterStatus("picking");
+
+    // ── SFX: 담배 줍고 피우기 (한 묶음) ──
+    // playSfx("smokePickup");
 }
