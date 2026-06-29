@@ -175,7 +175,7 @@ const DATA = {
 
             // 시간이 정해진 상태가 끝나 다음 상태로 자동 전환되기까지의 시간(프레임, 60fps 기준).
             STATUS_DURATION: {
-                picking: 25, // ≈0.25초.  개발문서엔 "?초"로 미정 → 임시 1초. TODO 확정
+                picking: 28, // ≈0.25초.  개발문서엔 "?초"로 미정 → 임시 1초. TODO 확정
                 smoking: 120, // ≈2초.  개발문서엔 "2초 강제 유지" → 120 으로 늘릴 수 있음. TODO
                 stunned: 180, // ≈3초. 개발문서: 밟히면 스턴 3초 → 180 추정. TODO 확정
                 smokeFire: 90, // ≈1.5초. 불붙은 상태 유지 시간. idle 처럼 움직임/줍기 가능. TODO 밸런스 확정
@@ -185,22 +185,24 @@ const DATA = {
             // 상태별 '클립' = 순서대로 보여줄 이미지 파일 목록.
             // ⚠ TODO(에셋): 아래 파일명은 개발문서 기준 placeholder. 실제 파일 생기면 교체.
             CLIPS: {
-                idle: ["99_default.png"], // 정적 1장 (멈춰 있을 때)
+                idle: [{img:"99_default.png", duration: 8}], // 정적 1장 (멈춰 있을 때)
                 // 걷기 3프레임: walk1 - walk2 - walk3 (개발문서 순서)
                 walk: [
-                    "99_default_left1.png",
-                    "99_default_left2.png",
-                    "99_default_left3.png",
+                    {img:"99_default_left1.png", duration: 8 },  
+                    {img:"99_default_left2.png", duration: 8 },
+                    {img:"99_default_left3.png", duration: 8 }
                 ],
                 // 줍기 2프레임 (개발문서: picking - picking2)
                 picking: [
-                    { img: "99_default_picking2.png", duration: 10 },
-                    { img: "99_default_picking1.png", duration: 10 },
+                    { img: "99_default_picking2.png", duration: 7 },
+                    { img: "99_default_picking1.png", duration: 7 },
+                    { img: "99_default_picking2.png", duration: 7 },
+                    { img: "99_default_picking1.png", duration: 7 },
                 ],
                 // 스턴: 일단 기본 이미지로 placeholder
-                stunned: ["99_default_stepOn.png"], // TODO 스턴 전용 이미지로 교체
+                stunned: [{img:"99_default_stepOn.png", duration: 8}], // TODO 스턴 전용 이미지로 교체
                 // 불붙음: idle 과 동작은 같고 이미지만 다름. 정적 1장.
-                smokeFire: ["99_default_smokeFire.png"], // TODO 에셋: 실제 불붙은 이미지로 교체
+                smokeFire: [{img:"99_default_smokeFire.png", duration: 8}], // TODO 에셋: 실제 불붙은 이미지로 교체
             },
 
             // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).
