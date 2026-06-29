@@ -38,10 +38,21 @@ function initSettings() {
         openSettings();
     });
 
-    // '다시 시작' 버튼: 팝업 닫고 타이틀로. (시작하기 누르면 resetGameState 로 전부 초기화)
+    // '다시 시작' 버튼: 팝업 닫고 처음부터 다시 플레이. (resetGameState 로 전부 초기화)
+    $("settings-close").addEventListener("click", () => {
+        closeSettings(); // 일시정지 해제
+    });
+
+    // '다시 시작' 버튼: 팝업 닫고 처음부터 다시 플레이. (resetGameState 로 전부 초기화)
     $("btn-settings-restart").addEventListener("click", () => {
         closeSettings(); // 일시정지 해제
         onPlayReStart(); // 플레이 화면으로 복귀
+    });
+
+    // '타이틀로 나가기' 버튼: 팝업 닫고 타이틀로. (시작하기 누르면 resetGameState 로 전부 초기화)
+    $("btn-settings-title").addEventListener("click", () => {
+        closeSettings(); // 일시정지 해제
+        switchScene("title"); // 타이틀 화면으로 복귀
     });
 
     // 타이틀의 '설정' 버튼: 클릭하면 같은 팝업을 연다

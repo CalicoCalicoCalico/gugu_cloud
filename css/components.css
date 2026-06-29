@@ -230,6 +230,16 @@
     margin: 0;
 }
 
+#settings-close {
+    color: var(--btn-text);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.settings-buttons-container {
+    display: flex;
+}
+
 .btn-image-style {
     font-family: var(--font-display);
     font-size: var(--font-size-lg);

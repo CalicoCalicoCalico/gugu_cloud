@@ -44,11 +44,18 @@ class Player {
         this.isMoving = dir !== 0; // 걷기 애니 판단용 (0이면 정지로 본다)
 
         if (dir === 0) return; // 안 움직임
-
         const { WIDTH } = DATA.CONFIG.MAP; // 이동 한계는 화면이 아니라 맵(월드) 전체
-        const { BOX_W, SPEED } = DATA.CONFIG.PLAYER;
-        const maxX = WIDTH - BOX_W; // 맵 오른쪽 끝 한계
-        this.x = clamp(this.x + dir * SPEED, 0, maxX); // helpers.js 의 clamp
+        const { SPEED, HITBOX } = DATA.CONFIG.PLAYER;
+
+        // 이미지 박스(BOX_W=360)가 아니라 '실제 몸(HITBOX)' 기준으로 가둔다.
+        //   → 큰 투명 이미지는 맵 밖으로 살짝 넘어가도 되고,
+        //     비둘기 몸(히트박스)은 맵 양 끝(0 ~ WIDTH)까지 닿을 수 있다.
+        //   이제 맵 끝에 떨어진 담배도 주울 수 있게 된다.ㅎ
+        const minX = -HITBOX.offsetX + 30; // 히트박스 왼쪽이 0 + 30px 에 닿게
+        const maxX = WIDTH - HITBOX.offsetX - HITBOX.w - 30; // 히트박스 오른쪽이 WIDTH 에 닿게 + 30px
+        this.x = clamp(this.x + dir * SPEED, minX, maxX); // helpers.js 의 clamp
+
+        // 보는 방향 바꾸기
         this.looking = dir < 0 ? "left" : "right";
     }
 

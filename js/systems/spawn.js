@@ -50,15 +50,59 @@ function pickRandomCigaretteType() {
 }
 
 /**
+ * 겹치지 않는 x 좌표를 골라 돌려준다. (rejection sampling — 업계 표준)
+ *
+ * 방법: 랜덤 x 를 하나 뽑아 → 이미 있는 담배들과 x 가 너무 가까운지 검사 →
+ *       가까우면 버리고 다시 뽑는다. 최대 MAX_TRIES 번까지만 시도한다.
+ *   (무한 루프 방지용으로 횟수를 제한. MAX_ON_FIELD 로 담배 수가 적어서
+ *    대부분 몇 번 안에 빈자리를 찾는다.)
+ *
+ * x(가로)만 검사한다 — 담배는 전부 같은 바닥선에 놓이므로 가로 간격만 보면 충분.
+ * air(떨어지는 중)·ground(땅) 가리지 않고, 아직 안 주운 담배는 모두 검사한다.
+ *   (둘이 가까운 x 로 떨어지면 착지 후 겹쳐 보이기 때문)
+ *
+ * @param {number} boxW 새로 놓을 담배의 가로 크기(px)
+ * @returns {number} 겹치지 않는 x (못 찾으면 마지막 후보를 그냥 반환)
+ */
+function pickNonOverlappingX(boxW) {
+    const { MIN_GAP } = DATA.CONFIG.SPAWN;
+    const maxX = DATA.CONFIG.MAP.WIDTH - boxW; // x 가 가질 수 있는 최대값
+    const MAX_TRIES = 30; // 빈자리 못 찾으면 포기할 횟수
+
+    for (let i = 0; i < MAX_TRIES; i++) {
+        const candidateX = Math.random() * maxX; // 1. 후보 x 하나 뽑기
+
+        // 2. 이미 있는(안 주운) 담배 중 하나라도 너무 가까우면 → 겹침
+        //    후보가 차지하는 가로 범위 [candidateX, candidateX + boxW] 를
+        //    MIN_GAP 만큼 양쪽으로 부풀려서 상대 담배 범위와 겹치는지 본다.
+        const overlaps = STATE.cigarettesArray.some((c) => {
+            if (c.collected) return false; // 주운 담배는 자리 안 차지함
+            return (
+                candidateX < c.x + c.boxW + MIN_GAP &&
+                candidateX + boxW + MIN_GAP > c.x
+            );
+        });
+
+        if (!overlaps) return candidateX; // 3. 빈자리 발견 → 그대로 사용
+    }
+
+    // 30번 안에 못 찾으면(맵이 거의 꽉 참) 마지막 후보를 그냥 쓴다.
+    //   MAX_ON_FIELD 가 담배 수를 제한하므로 여기까지 오는 일은 드물다.
+    return Math.random() * maxX;
+}
+
+/**
  * 담배 인스턴스 하나를 만들어 STATE.cigarettesArray 에 추가한다.
  * main.js 의 dev 버튼도 이 함수를 직접 호출한다(수동 생성 테스트용).
  * @param {number} [x] 배치 x. 없으면 무대 안 랜덤.
  */
 function spawnOneCigarette(x) {
     const type = pickRandomCigaretteType();
-    // 위치 계산·크기 설정은 Cigarette 생성자가 알아서 한다 (x 안 주면 랜덤).
+    // x 를 안 주면(자동 생성) 겹치지 않는 자리를 직접 골라 넘긴다.
+    //   x 를 준 경우(dev 수동 생성 등)는 그 자리를 그대로 존중한다.
+    const placeX = x ?? pickNonOverlappingX(DATA.CIGARETTE_TYPES[type].boxW);
     const id = `cig_${STATE.cigaretteIdCounter++}`;
-    STATE.cigarettesArray.push(new Cigarette(id, type, x));
+    STATE.cigarettesArray.push(new Cigarette(id, type, placeX));
 
     // ── SFX: 적담배가 하늘에서 떨어질 때 ──
     // (생성된 담배는 air 상태로 시작해 떨어진다)

@@ -118,11 +118,21 @@
             <!-- '씬'이 아니라 게임 화면 위에 뜨는 오버레이다. 평소엔 .hidden 으로 숨김. -->
             <div id="settings-overlay" class="overlay hidden">
                 <div id="settings-popup">
+                    <div id="settings-close">닫기(esc)</div>
                     <h2 class="settings-title">설정</h2>
-                    <!-- 다시 시작: 타이틀 화면으로 돌아간다 (다시 시작하면 게임 초기화됨) -->
-                    <button id="btn-settings-restart" class="btn-image-style">
-                        다시 줍기
-                    </button>
+                    <div class="settings-buttons-container">
+                        <!-- 다시 시작: 타이틀 화면으로 돌아간다 (다시 시작하면 게임 초기화됨) -->
+                        <button
+                            id="btn-settings-restart"
+                            class="btn-image-style"
+                        >
+                            다시 줍기
+                        </button>
+
+                        <button id="btn-settings-title" class="btn-image-style">
+                            타이틀로 나가기
+                        </button>
+                    </div>
 
                     <!-- TODO(다음): BGM 볼륨 슬라이더가 여기 들어옴 -->
                     <!-- BGM 볼륨 슬라이더 -->
