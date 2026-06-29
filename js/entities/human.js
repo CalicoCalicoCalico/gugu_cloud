@@ -80,4 +80,34 @@ class Human {
             this.dead = true;
         }
     }
+
+    // update() {
+    //     for (const foot of this.feet) foot.step(this);
+
+    //     const { MAP, HUMAN } = DATA.CONFIG;
+
+    // ── 디버그 로그 (문제 파악용. 끝나면 이 블록 통째로 지우기) ──
+    //   사람 x(월드 좌표) / 진행 방향 / 죽는 경계값 / 두 발 상태를 매 프레임 찍는다.
+    //   카메라 밖에서도 계속 찍히면 → 로직은 살아있음(렌더 문제).
+    //   경계에 닿기 전에 dead 가 되면 → 죽는 조건이 문제.
+    //     const rightLimit = MAP.WIDTH + HUMAN.SPAWN_MARGIN; // 오른쪽으로 갈 때 죽는 x
+    //     const leftLimit = -HUMAN.SPAWN_MARGIN; // 왼쪽으로 갈 때 죽는 x
+    //     console.log(
+    //         `[${this.id}] x=${Math.round(this.x)} dir=${this.dirSign} ` +
+    //             `limitR=${Math.round(rightLimit)} limitL=${Math.round(leftLimit)} ` +
+    //             `mapW=${MAP.WIDTH} feet=[${this.feet[0].stepStatus},${this.feet[1].stepStatus}]`,
+    //     );
+
+    //     if (this.dirSign > 0 && this.x > MAP.WIDTH + HUMAN.SPAWN_MARGIN) {
+    //         this.dead = true;
+    //         console.log(
+    //             `[${this.id}] ☠ DEAD (오른쪽 끝 넘어감) at x=${Math.round(this.x)}`,
+    //         ); // 디버그
+    //     } else if (this.dirSign < 0 && this.x < -HUMAN.SPAWN_MARGIN) {
+    //         this.dead = true;
+    //         console.log(
+    //             `[${this.id}] ☠ DEAD (왼쪽 끝 넘어감) at x=${Math.round(this.x)}`,
+    //         ); // 디버그
+    //     }
+    // }
 }
