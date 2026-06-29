@@ -108,7 +108,7 @@ function spawnOneCigarette(x) {
     // (생성된 담배는 air 상태로 시작해 떨어진다)
     // ⚠ seedCigarettes()(게임 시작 시 미리 깔기)도 이 함수를 부르니,
     //    시작 순간 소리를 안 내려면 seed 쪽엔 별도 플래그가 필요. 일단 켤 땐 보면서 조절.
-    // playSfx("cigaretteFalling");
+    playSfx("cigaretteFalling");
 }
 
 /**

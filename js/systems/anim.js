@@ -90,9 +90,9 @@ function updateAnim() {
 
         // ── SFX: 걷기 발소리 (박자는 data.js 의 frames/everyNCycles) ──
         // mp3 생기면 주석 해제.
-        // if (p.playerStatus === "idle" && p.isMoving) {
-        //     playStepSfx("walkStep", p.animFrame, _sfxCycle.walk);
-        // }
+        if (p.playerStatus === "idle" && p.isMoving) {
+            playStepSfx("walkStep", p.animFrame, _sfxCycle.walk);
+        }
 
         // ── SFX: 대시 발소리 (3차) ──
         // if (p.playerStatus === "dashing") {

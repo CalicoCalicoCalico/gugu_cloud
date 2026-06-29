@@ -61,7 +61,7 @@ class HumanFoot {
             this.animTimer = groundF;
 
             // ── SFX: 사람 발소리 (종류별로 다름 — this.type 으로 선택) ──
-            // playHumanWalkSfx(this.type);
+            playHumanWalkSfx(this.type);
         } else if (status === "up") {
             this.hasHitPlayer = false; // 올라가며 다시 1번 때릴 수 있음
         } else {

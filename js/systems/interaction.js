@@ -87,5 +87,5 @@ function smoke() {
     STATE.player.enterStatus("picking");
 
     // ── SFX: 담배 줍고 피우기 (한 묶음) ──
-    // playSfx("smokePickup");
+    playSfx("smokePickup");
 }

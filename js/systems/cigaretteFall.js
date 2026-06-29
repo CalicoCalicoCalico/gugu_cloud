@@ -39,7 +39,7 @@ function updateCigarettes() {
             // 떨어지는 담배에 맞으면 '불붙음(smokeFire)' 상태로.
 
             // ── SFX: 담배에 맞음 (공격당함) ──
-            // playSfx("hitByCigarette");
+            playSfx("hitByCigarette");
 
             // smokeFire 는 idle 과 동작 동일(이동·줍기 가능), 이미지만 다르고 시간 지나면 자동 idle 복귀.
             // ⚠ 줍기/피우기 중(picking/smoking)에 맞으면 그 애니가 끊기지 않도록 idle/smokeFire 일 때만 덮어쓴다.

@@ -29,7 +29,7 @@ function updateHumans() {
                 STATE.player.enterStatus(DATA.CONFIG.HUMAN.STUN_STATUS);
 
                 // ── SFX: 발에 밟힘 (공격당함) ──
-                // playSfx("hitByFoot");
+                playSfx("hitByFoot");
             }
         }
     }
