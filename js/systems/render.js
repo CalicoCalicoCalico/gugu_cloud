@@ -138,9 +138,24 @@ function renderHumans() {
                 footDomCache.set(foot.id, el);
             }
 
+            // ── ★ [위치 조정] 데이터 동기화 및 방향 계산은 탈출선(continue)보다 위에서 수행합니다. ──
+            if (human && human.startDirection) {
+                foot.direction = human.startDirection;
+            }
+
+            const currentDir = (foot.direction || "").toLowerCase();
+            
+            // 이제 발의 상태가 idle(숨김)이든 아니든, 콘솔창에서 발의 방향 상태를 완벽히 감시할 수 있습니다.
+            console.log(`발 ID: ${foot.id}, 현재상태: ${foot.stepStatus}, 방향: ${currentDir}`);
+
             const sprite = foot.currentSprite(); // idle → null
             if (!sprite) {
-                el.style.display = "none"; // idle: 안 보임
+                el.style.display = "none"; // idle: 안 보임\
+
+                // ★ 아래 디버그 히트박스 조건에서 탈출하기 위해, 여기서 디버그 박스도 숨겨줍니다.
+                const fdbg = footHitboxCache.get(foot.id);
+                if (fdbg) fdbg.style.display = "none";
+
                 continue;
             }
             el.style.display = "block";
@@ -148,6 +163,15 @@ function renderHumans() {
             el.style.top = `${foot.y}px`;
             el.style.backgroundImage = `url("${sprite}")`;
             el.dataset.status = foot.stepStatus; // 디버깅용
+
+            // ── ★ startDirection에 따른 CSS 반전 처리 ──
+            if (currentDir === "left") {
+                el.style.transform = "scaleX(-1)";
+                el.style.border = "3px solid red"; // ◀ 오른쪽 발이면 빨간 테두리 (확인 후 주석 처리하셔도 됩니다)
+            } else {
+                el.style.transform = "scaleX(1)";
+                el.style.border = "3px solid blue"; // ◀ 왼쪽 발이면 파란 테두리
+            }
 
             // ── 디버그 히트박스 ──
             const fdbgLayer = $("foot-hitbox-layer");

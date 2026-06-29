@@ -31,6 +31,9 @@ class HumanFoot {
         this.walkSpeed = walkSpeed; // "fast" | "slow" — 프레임 수 룩업용
         this.stepSpeed = HUMAN.STEP_SPEED[walkSpeed]; // 수직 이동 속도(px/frame)
 
+        // ★ CSS 반전 기준이 될 방향 속성 (기본값 "left")
+        this.direction = "left";
+
         // 시작 y(월드 위) / 착지 y(발 밑면이 바닥선과 같은 높이 — 담배·플레이어와 동일 공식)
         this.spawnY = HUMAN.SPAWN_Y;
         this.groundY = VIEWPORT.GROUND_Y + PLAYER.BOX_H - this.boxH;
@@ -70,6 +73,11 @@ class HumanFoot {
 
     /** 한 프레임 진행. 착지/복귀 같은 전환은 자체 처리, x 갱신은 Human 콜백으로. */
     step(human) {
+        // ★ 부모의 direction을 받아와 나의 direction에 저장합니다.
+        if (human && human.direction) {
+            this.direction = human.direction;
+        }
+
         switch (this.stepStatus) {
             case "down":
                 this.y += this.stepSpeed;
@@ -86,6 +94,11 @@ class HumanFoot {
             default:
                 if (--this.animTimer <= 0) {
                     this.x = human.claimNextX(); // 다음 착지 x 받기(+사람 전진)
+
+                    // ★ 착지하여 내려오기 직전, 다시 한번 방향을 확실히 체크합니다.
+                    if (human && human.direction) {
+                        this.direction = human.direction;
+                    }
                     this.enterStatus("down");
                 }
                 break;
@@ -107,6 +120,13 @@ class HumanFoot {
 
     getBox() {
         const { offsetX, offsetY, w, h } = this.hitbox;
-        return { x: this.x + offsetX, y: this.y + offsetY, w, h };
+
+        // ★ 이미지가 "left"일 때 뒤집히므로, offsetX 대칭 계산도 "left"일 때 수행합니다.
+        let finalOffsetX = offsetX;
+        if (this.direction && this.direction.toLowerCase() === "left") {
+            finalOffsetX = this.boxW - offsetX - w;
+        }
+
+        return { x: this.x + finalOffsetX, y: this.y + offsetY, w, h };
     }
 }
