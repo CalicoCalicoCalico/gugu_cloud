@@ -129,6 +129,10 @@ function renderHumans() {
                 el.dataset.id = foot.id;
                 el.style.width = `${foot.boxW}px`; // 종류별 크기 (생성 시 1회)
                 el.style.height = `${foot.boxH}px`;
+
+                // [추가] 크기를 조절해도 히트박스 중심에 이미지가 고정되도록 합니다.
+                el.style.transformOrigin = "center";
+
                 layer.appendChild(el);
                 footDomCache.set(foot.id, el);
             }

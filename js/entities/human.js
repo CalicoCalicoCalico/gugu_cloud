@@ -24,12 +24,12 @@ class Human {
         //     direction        : "left" | "right"    (입장 방향)
         //     stepSpeed        : 발이 내려오는 속도 (walkSpeed와 같음)
 
-        this.type = "suit"; //여기 랜덤
-        this.walkSpeed = "slow"; //여기 랜덤
-        this.direction = "right"; // 여기 랜덤
+        this.type = pickRandomElement(["suit", "jean", "training"]);
+        this.walkSpeed = pickRandomBool(0.5) ? "slow" : "fast";
+        this.direction = pickRandomBool(0.5) ? "right" : "left";
 
         const def = TYPES[this.type];
-        const walkPacing = "normal"; // 여기 랜덤
+        const walkPacing = "normal"; // 여기 랜덤 - 나중에 난이도 추가 후 pickRandomBool(0.5) ? "normal" : "좁은보폭";
         this.stride =
             walkPacing === "normal"
                 ? HUMAN.STRIDE.normal // 비둘기 너비 * 2

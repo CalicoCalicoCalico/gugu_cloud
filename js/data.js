@@ -108,11 +108,11 @@ const DATA = {
             // down/up 수직 이동 속도(px/frame). 같은 값 → "떨어지는 속도 = 올라가는 속도".
             // walkSpeed("fast"|"slow")로 골라 쓴다 → STEP_SPEED[walkSpeed]
             STEP_SPEED: {
-                fast: 12, // TODO(밸런스): 빠른 발
-                slow: 6, // TODO(밸런스): 느린 발
+                fast: 6, // TODO(밸런스): 빠른 발
+                slow: 3, // TODO(밸런스): 느린 발
             },
-            GROUND_FRAMES: 40, // 땅을 밟고 '벽'으로 서 있는 시간(프레임). TODO
-            IDLE_FRAMES: 20, // up 후 다음 down 까지 쉬는 시간(프레임). TODO
+            GROUND_FRAMES: 60, // 땅을 밟고 '벽'으로 서 있는 시간(프레임). TODO
+            IDLE_FRAMES: 120, // up 후 다음 down 까지 쉬는 시간(프레임). TODO
 
             // 두 발의 박자 차이. 0.5 = 반 박자(완전 교대). 0 = 동시. 0.25 등으로 리듬 조절.
             PHASE_OFFSET: 0.5,
@@ -124,7 +124,7 @@ const DATA = {
                 CLOSE_EXTRA: 24, // 개발문서: 최소 보폭 = 발너비 + 24px(임의)
             },
 
-            SPAWN_Y: 0, // 발 시작 y(월드 위). 음수면 화면 위 밖에서 내려옴.
+            SPAWN_Y: -360, // 발 시작 y(월드 위). 음수면 화면 위 밖에서 내려옴.
             SPAWN_MARGIN: 300, // 맵 좌우 바깥 여유. 이만큼 밖에서 걷고/나가면 사라짐.
             SPAWN_INTERVAL: 1800, // 자동 생성 간격(프레임). 1800 ≈ 30초 @60fps. TODO(밸런스)
 
@@ -282,8 +282,8 @@ const DATA = {
     // ═══════════════════════════════════════════════
     HUMAN_TYPES: {
         training: {
-            boxW: 120,
-            boxH: 360,
+            boxW: 260,
+            boxH: 420,
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_trainingR1.png",
@@ -298,8 +298,8 @@ const DATA = {
             },
         },
         suit: {
-            boxW: 120,
-            boxH: 360,
+            boxW: 260,
+            boxH: 420,
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_suitR1.png",
@@ -314,8 +314,8 @@ const DATA = {
             },
         },
         jean: {
-            boxW: 120,
-            boxH: 360,
+            boxW: 260,
+            boxH: 420,
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_jeanR1.png",
