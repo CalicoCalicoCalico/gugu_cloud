@@ -125,10 +125,16 @@
     transform: scaleX(-1);
 }
 
+/* 엔딩 연출: 비둘기가 위로 부드럽게 떠오르는 동안만 top 전환을 켠다.
+   (평소 좌우 이동은 left 라서 영향 없음. 그래서 연출 중에만 클래스로 켜준다) */
+#player.player-rising {
+    transition: top var(--ending-rise-duration, 600ms) ease-out;
+}
+
 /* 디버그: 실제 히트박스. render() 가 getBox() 값으로 위치·크기를 매 프레임 설정. */
 #player-hitbox {
     position: absolute;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     box-sizing: border-box; /* 테두리가 박스 크기를 키우지 않게 */
     pointer-events: none;
     z-index: 30;
@@ -153,7 +159,7 @@
 /* 디버그: 담배 실제 히트박스 (회전 안 함, 충돌과 1:1) */
 .cig-hitbox {
     position: absolute;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     box-sizing: border-box;
     pointer-events: none;
     z-index: 30;
@@ -178,7 +184,7 @@
 /* 디버그: 발 실제 히트박스 (충돌과 1:1) */
 .foot-hitbox {
     position: absolute;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     box-sizing: border-box;
     pointer-events: none;
     z-index: 30;
@@ -235,8 +241,8 @@
     border: none;
 
     padding: 6px 14px;
-    border-radius: 20px;       /* 둥글둥글하고 부드러운 모서리 */
-    font-size: 14px;           /* 글씨 크기도 살짝 아담하게 */
+    border-radius: 20px; /* 둥글둥글하고 부드러운 모서리 */
+    font-size: 14px; /* 글씨 크기도 살짝 아담하게 */
     font-weight: bold;
     cursor: pointer;
 
@@ -244,11 +250,13 @@
     top: 22px;
     right: 20px;
 
-    cursor: pointer;          /* 마우스를 올리면 손가락 모양으로 변합니다 */
-    user-select: none;        /* 더블클릭했을 때 글자가 파랗게 드래그되는 현상을 막아줍니다 */
-    
+    cursor: pointer; /* 마우스를 올리면 손가락 모양으로 변합니다 */
+    user-select: none; /* 더블클릭했을 때 글자가 파랗게 드래그되는 현상을 막아줍니다 */
+
     /* 부드러운 상호작용 효과 */
-    transition: background-color 0.2s, transform 0.1s;
+    transition:
+        background-color 0.2s,
+        transform 0.1s;
 }
 
 /* 마우스 올렸을 때 & 클릭했을 때 효과 */
@@ -257,13 +265,13 @@
 }
 
 #settings-close:active {
-    transform: scale(0.95);    /* 누르면 슥 들어가는 쫀득한 손맛 */
+    transform: scale(0.95); /* 누르면 슥 들어가는 쫀득한 손맛 */
 }
 
 .settings-buttons-container {
     display: flex;
     justify-content: center; /* 가운데 정렬 */
-    align-items: center;     /* 세로 기준 정중앙 정렬 */
+    align-items: center; /* 세로 기준 정중앙 정렬 */
     gap: 10px;
 }
 
@@ -297,7 +305,7 @@
     text-align: center;
     padding: 12px 24px;
 
-    * ★ 글자가 한 줄로 예쁘게 쭉 뻗도록 만듭니다 */
+    /* ★ 글자가 한 줄로 예쁘게 쭉 뻗도록 만듭니다 */
     white-space: nowrap;
 }
 
