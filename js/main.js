@@ -41,6 +41,12 @@ window.addEventListener("DOMContentLoaded", () => {
     root.setProperty("--player-width", `${PLAYER.BOX_W}px`);
     root.setProperty("--player-height", `${PLAYER.BOX_H}px`);
 
+    // 엔딩 떠오르기 애니 길이 → CSS 변수 (components.css 의 #player.player-rising 가 사용)
+    root.setProperty(
+        "--ending-rise-duration",
+        `${DATA.CONFIG.ENDING.RISE_DURATION_MS}ms`,
+    );
+
     // 맵(월드) 크기 + 배경 이미지 경로를 CSS 변수로 주입
     root.setProperty("--map-width", `${MAP.WIDTH}px`);
     root.setProperty("--map-height", `${MAP.HEIGHT}px`);

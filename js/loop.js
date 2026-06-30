@@ -120,6 +120,14 @@ function tick() {
             // 설정 팝업이 열려 있으면(일시정지) 시뮬레이션을 멈춘다
             if (STATE.paused) break;
 
+            // 엔딩 연출 중이면: 게임플레이(입력·이동·생성·발 등)는 전부 멈추고
+            // 비둘기 떠오르기 + 렌더만 돌린다. (설정 일시정지처럼 모든 게 멈춤)
+            if (STATE.ending.active) {
+                updateEnding();
+                render();
+                break;
+            }
+
             // ── play 루프 순서 ──
             // 1. 입력 수집
             handleInput();

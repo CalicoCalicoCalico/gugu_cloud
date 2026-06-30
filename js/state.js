@@ -59,6 +59,17 @@ const STATE = {
     framesSinceLastHuman: 0, // ← 추가: 마지막 사람 생성 후 지난 프레임 (자동 스폰용)
     framesSinceLastSpawn: 0, // 마지막 담배 생성 후 지난 프레임 수 (spawn 이 사용)
     framesInCurrentScene: 0, // 현재 씬에 머문 프레임 수 (영상 씬 자동 전환용)
+
+    framesInCurrentScene: 0, // 현재 씬에 머문 프레임 수 (영상 씬 자동 전환용)
+
+    // ── 엔딩 연출 상태 (게이지 가득 → 비둘기 떠오르기 → 엔딩 영상) ──
+    // active 가 true 인 동안엔 게임플레이가 멈추고 '떠오르기 연출'만 돈다.
+    ending: {
+        active: false, // 연출 진행 중인가
+        phase: "before", // "before"(멈춰 대기) | "after"(떠오른 뒤 유지)
+        phaseStartMs: 0, // 현재 단계가 시작된 시각 (performance.now)
+        risen: false, // 비둘기가 떠올랐는가 (render 가 위치 오프셋에 사용)
+    },
 };
 
 // ═══════════════════════════════════════════════
@@ -103,4 +114,10 @@ function resetGameState() {
     // 타이머 초기화 (씬 진입 시점에 씬 시스템이 다시 세팅한다)
     STATE.framesSinceLastSpawn = 0;
     STATE.framesInCurrentScene = 0;
+
+    // 엔딩 연출 초기화 (재시작 안전)
+    STATE.ending.active = false;
+    STATE.ending.phase = "before";
+    STATE.ending.phaseStartMs = 0;
+    STATE.ending.risen = false;
 }
