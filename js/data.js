@@ -154,6 +154,16 @@ const DATA = {
             ENDING_FRAMES: 180, // ≈3초 @60fps
         },
 
+        // ── 엔딩 연출 (폐 게이지 가득 → 엔딩 영상으로 넘어가기 전 비둘기 떠오르기) ──
+        // 흐름: (1) 잠깐 멈춤 → (2) 비둘기가 위로 떠오름 → (3) 잠깐 유지 → 엔딩 영상.
+        // 단위는 ms(밀리초). 1000 = 1초. 숫자만 바꾸면 연출 길이가 바뀐다.
+        ENDING: {
+            HOLD_BEFORE_MS: 1000, // (1) 가득 찬 직후 멈춰서 대기 (예: 2초로 하려면 2000)
+            RISE_OFFSET_PX: 60, // (2) 비둘기가 위로 떠오르는 높이(px)
+            RISE_DURATION_MS: 4000, // (2) 떠오르는 애니가 진행되는 시간 (부드럽게 떠오름)
+            HOLD_AFTER_MS: 2000, // (3) 다 떠오른 뒤 엔딩 영상으로 넘어가기까지 유지 시간
+        },
+
         // ── 키 설정 ──
         // 액션 이름(left/right/interact)은 STATE.input 의 필드명과 짝을 이루므로
         // 소문자로 둔다 (ALL_CAPS 아님). 값은 "눌렸는지" 비교할 키 목록(소문자).
@@ -185,12 +195,12 @@ const DATA = {
             // 상태별 '클립' = 순서대로 보여줄 이미지 파일 목록.
             // ⚠ TODO(에셋): 아래 파일명은 개발문서 기준 placeholder. 실제 파일 생기면 교체.
             CLIPS: {
-                idle: [{img:"99_default.png", duration: 8}], // 정적 1장 (멈춰 있을 때)
+                idle: [{ img: "99_default.png", duration: 8 }], // 정적 1장 (멈춰 있을 때)
                 // 걷기 3프레임: walk1 - walk2 - walk3 (개발문서 순서)
                 walk: [
-                    {img:"99_default_left1.png", duration: 8 },  
-                    {img:"99_default_left2.png", duration: 8 },
-                    {img:"99_default_left3.png", duration: 8 }
+                    { img: "99_default_left1.png", duration: 8 },
+                    { img: "99_default_left2.png", duration: 8 },
+                    { img: "99_default_left3.png", duration: 8 },
                 ],
                 // 줍기 2프레임 (개발문서: picking - picking2)
                 picking: [
@@ -200,9 +210,9 @@ const DATA = {
                     { img: "99_default_picking1.png", duration: 7 },
                 ],
                 // 스턴: 일단 기본 이미지로 placeholder
-                stunned: [{img:"99_default_stepOn.png", duration: 8}], // TODO 스턴 전용 이미지로 교체
+                stunned: [{ img: "99_default_stepOn.png", duration: 8 }], // TODO 스턴 전용 이미지로 교체
                 // 불붙음: idle 과 동작은 같고 이미지만 다름. 정적 1장.
-                smokeFire: [{img:"99_default_smokeFire.png", duration: 8}], // TODO 에셋: 실제 불붙은 이미지로 교체
+                smokeFire: [{ img: "99_default_smokeFire.png", duration: 8 }], // TODO 에셋: 실제 불붙은 이미지로 교체
             },
 
             // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).
@@ -271,7 +281,7 @@ const DATA = {
                 // 비둘기 발 챱챱 소리
                 walkStep: {
                     src: "/audio_assets/piegon_walk_sound.mp3",
-                    volume: 0.1,
+                    volume: 0.04,
                     frames: [0, 3],
                     everyNCycles: 1,
                 },

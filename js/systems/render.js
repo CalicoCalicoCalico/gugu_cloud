@@ -36,8 +36,17 @@ function renderWorld() {
 /** 플레이어 위치/방향을 DOM 에 반영 */
 function renderPlayer() {
     const el = $("player");
+
+    // 엔딩 연출: 떠올랐으면 위로 RISE_OFFSET_PX 만큼 올린다 (위로 = top 감소).
+    // 연출 중에만 transition 클래스(player-rising)를 켜서 부드럽게 떠오르게 한다.
+    const risen = STATE.ending.active && STATE.ending.risen;
+    const floatY = risen ? DATA.CONFIG.ENDING.RISE_OFFSET_PX : 0;
+    el.classList.toggle("player-rising", STATE.ending.active);
+
     el.style.left = `${STATE.player.x}px`;
-    el.style.top = `${STATE.player.y}px`;
+    el.style.top = `${STATE.player.y - floatY}px`;
+
+    // 플레이 중
     el.style.backgroundImage = `url("${getPlayerSpriteUrl(STATE.player)}")`; // 현재 프레임
     el.dataset.looking = STATE.player.looking;
     el.dataset.status = STATE.player.playerStatus; // 디버깅용 (DOM 에서 상태 보임)
@@ -144,9 +153,11 @@ function renderHumans() {
             }
 
             const currentDir = (foot.direction || "").toLowerCase();
-            
+
             // 이제 발의 상태가 idle(숨김)이든 아니든, 콘솔창에서 발의 방향 상태를 완벽히 감시할 수 있습니다.
-            console.log(`발 ID: ${foot.id}, 현재상태: ${foot.stepStatus}, 방향: ${currentDir}`);
+            console.log(
+                `발 ID: ${foot.id}, 현재상태: ${foot.stepStatus}, 방향: ${currentDir}`,
+            );
 
             const sprite = foot.currentSprite(); // idle → null
             if (!sprite) {
@@ -167,10 +178,10 @@ function renderHumans() {
             // ── ★ startDirection에 따른 CSS 반전 처리 ──
             if (currentDir === "left") {
                 el.style.transform = "scaleX(-1)";
-                el.style.border = "3px solid red"; // ◀ 오른쪽 발이면 빨간 테두리 (확인 후 주석 처리하셔도 됩니다)
+                // el.style.border = "3px solid red"; // ◀ 오른쪽 발이면 빨간 테두리 (확인 후 주석 처리하셔도 됩니다)
             } else {
                 el.style.transform = "scaleX(1)";
-                el.style.border = "3px solid blue"; // ◀ 왼쪽 발이면 파란 테두리
+                // el.style.border = "3px solid blue"; // ◀ 왼쪽 발이면 파란 테두리
             }
 
             // ── 디버그 히트박스 ──
