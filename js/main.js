@@ -31,6 +31,9 @@ function onPlayReStart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    // 타이틀 화면이 뜨는 시점에 모든 이미지를 미리 캐시에 태운다 (게임 중 끊김 방지)
+    preloadAllImages();
+
     // 위생: 크기의 단일 출처 = DATA. CSS 변수로 주입 (tokens.css 의 복제 제거).
     const root = document.documentElement.style;
 
