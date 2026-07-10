@@ -39,7 +39,7 @@ const DATA = {
         MAP: {
             WIDTH: 11000 * 0.4, // = 4400
             HEIGHT: 1100 * 0.4, // = 440 (= VIEWPORT.HEIGHT, 세로 스크롤 없음)
-            SPRITE: "/img_assets/map/map.png",
+            SPRITE: "img_assets/map/map.png",
         },
 
         // 카메라(스크롤) 설정
@@ -241,7 +241,7 @@ const DATA = {
 
         // ── 폐 게이지 ──
         LUNG: {
-            SPRITE: "/img_assets/ui/lung.png",
+            SPRITE: "img_assets/ui/lung.png",
             WIDTH: 120, // #lung-gauge 크기 (폐 이미지 비율에 맞게) 420 x 379
             HEIGHT: (379 * 120) / 420,
 
@@ -262,7 +262,7 @@ const DATA = {
 
             // 환경음(ambience) — play 씬에서 항상 깔리는 배경 소리.
             // ⚠ BGM 과 달리 설정 슬라이더로 못 줄인다(고정 볼륨). 끄려면 여기 값만 바꿈.
-            AMBIENCE: "/audio_assets/alley_ambience.mp3", //"../audio_assets/ambience.mp3", // TODO(에셋): 실제 경로로 교체
+            AMBIENCE: "audio_assets/alley_ambience.mp3", //"../audio_assets/ambience.mp3", // TODO(에셋): 실제 경로로 교체
             AMBIENCE_VOLUME: 0.2, // 고정 볼륨 (슬라이더 영향 없음)
 
             // ── 효과음(SFX) ─────────────────────────────
@@ -280,7 +280,7 @@ const DATA = {
                 // 걷기: 3프레임 걷기 클립. 0·2번에서 '챱' 두 번. (anim.js)
                 // 비둘기 발 챱챱 소리
                 walkStep: {
-                    src: "/audio_assets/piegon_walk_sound.mp3",
+                    src: "audio_assets/piegon_walk_sound.mp3",
                     volume: 0.04,
                     frames: [0, 3],
                     everyNCycles: 1,
@@ -297,19 +297,19 @@ const DATA = {
                 // ── 단발 효과음 (프레임 박자 없음 — src·volume 만) ──
                 // 사람 발 소리 3종류: DATA.HUMAN_TYPES[type].sound 참고
                 smokePickup: {
-                    src: "/audio_assets/smoking2.m4a",
+                    src: "audio_assets/smoking2.m4a",
                     volume: 1,
                 }, // 담배 줍고 피우기 (interaction.js)
                 hitByFoot: {
-                    src: "/audio_assets/piegon_attacked.mp3",
+                    src: "audio_assets/piegon_attacked.mp3",
                     volume: 0.5,
                 }, // 발에 밟힘 (humanWalk.js)
                 hitByCigarette: {
-                    src: "/audio_assets/piegon_attacked.mp3",
+                    src: "audio_assets/piegon_attacked.mp3",
                     volume: 0.5,
                 }, // 담배에 맞음 (cigaretteFall.js)
                 cigaretteFalling: {
-                    src: "/audio_assets/ciga_falling.mp3",
+                    src: "audio_assets/ciga_falling.mp3",
                     volume: 0.1,
                 }, // 적담배 낙하 (spawn.js)
 
@@ -382,7 +382,7 @@ const DATA = {
                     up: "img_assets/enemies/foot/human_walking_trainingL3.png",
                 },
             },
-            sound: { src: "/audio_assets/shoe_step1.mp3", volume: 0.5 }, // ← 추가: 이 종류 발소리 (TODO 경로)
+            sound: { src: "audio_assets/shoe_step1.mp3", volume: 0.5 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
         suit: {
             boxW: 280,
@@ -400,7 +400,7 @@ const DATA = {
                     up: "img_assets/enemies/foot/human_walking_suitL3.png",
                 },
             },
-            sound: { src: "/audio_assets/shoe_step1.mp3", volume: 0.5 }, // ← 추가: 이 종류 발소리 (TODO 경로)
+            sound: { src: "audio_assets/shoe_step1.mp3", volume: 0.5 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
         jean: {
             boxW: 280,
@@ -418,7 +418,7 @@ const DATA = {
                     up: "img_assets/enemies/foot/human_walking_jeanL3.png",
                 },
             },
-            sound: { src: "/audio_assets/shoe_step2.mp3", volume: 0.5 }, // ← 추가: 이 종류 발소리 (TODO 경로)
+            sound: { src: "audio_assets/shoe_step2.mp3", volume: 0.5 }, // ← 추가: 이 종류 발소리 (TODO 경로)
         },
     },
 };
