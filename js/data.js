@@ -257,7 +257,7 @@ const DATA = {
 
         // ── 오디오 ──
         AUDIO: {
-            BGM: "../audio_assets/mainBGM.mp3",
+            BGM: "audio_assets/mainBGM.mp3",
             BGM_VOLUME: 0.08,
 
             // 환경음(ambience) — play 씬에서 항상 깔리는 배경 소리.

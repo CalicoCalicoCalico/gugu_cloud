@@ -34,7 +34,7 @@ function aabbOverlap(a, b) {
  * @returns {*} 배열의 무작위 원소
  */
 function pickRandomElement(inputArray) {
-    let randomIndex = Math.floor(Math.random()*inputArray.length); // 1. 랜덤 인덱스 만들기
+    let randomIndex = Math.floor(Math.random() * inputArray.length); // 1. 랜덤 인덱스 만들기
     return inputArray[randomIndex]; // 2. 배열 안 랜덤 요소 리턴
 }
 
@@ -52,4 +52,11 @@ function pickRandomBool(chance) {
     } else {
         return false;
     }
+}
+
+// CSS var 로 넘길 이미지 경로를 "문서 기준 절대 URL" 로 바꿔주는 헬퍼.
+// data.js 의 상대경로("img_assets/...")는 그대로 두고, 실제 주입 시점에만 변환한다.
+// → css/ 폴더에서 쓰이든 index.html에서 쓰이든 항상 올바르게 resolve 됨.
+function assetUrl(path) {
+    return new URL(path, document.baseURI).href;
 }
