@@ -50,11 +50,11 @@ window.addEventListener("DOMContentLoaded", () => {
     // 맵(월드) 크기 + 배경 이미지 경로를 CSS 변수로 주입
     root.setProperty("--map-width", `${MAP.WIDTH}px`);
     root.setProperty("--map-height", `${MAP.HEIGHT}px`);
-    root.setProperty("--map-sprite", `url("${assetUrl(MAP.SPRITE)}")`);
-
+    root.setProperty("--map-sprite", `url("../${MAP.SPRITE}")`);
     // 폐 이미지 경로·크기를 CSS 변수로 주입
     const { LUNG } = DATA.CONFIG;
-    root.setProperty("--lung-sprite", `url("${assetUrl(LUNG.SPRITE)}")`);
+    // components.css 안에서 var(--lung-sprite) 로 쓰이므로, css/ 폴더 기준 상대경로로 한 단계 올려준다
+    root.setProperty("--lung-sprite", `url("../${LUNG.SPRITE}")`);
     root.setProperty("--lung-width", `${LUNG.WIDTH}px`);
     root.setProperty("--lung-height", `${LUNG.HEIGHT}px`);
 

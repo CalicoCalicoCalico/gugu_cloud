@@ -155,9 +155,9 @@ function renderHumans() {
             const currentDir = (foot.direction || "").toLowerCase();
 
             // 이제 발의 상태가 idle(숨김)이든 아니든, 콘솔창에서 발의 방향 상태를 완벽히 감시할 수 있습니다.
-            console.log(
-                `발 ID: ${foot.id}, 현재상태: ${foot.stepStatus}, 방향: ${currentDir}`,
-            );
+            // console.log(
+            //     `발 ID: ${foot.id}, 현재상태: ${foot.stepStatus}, 방향: ${currentDir}`,
+            // );
 
             const sprite = foot.currentSprite(); // idle → null
             if (!sprite) {
