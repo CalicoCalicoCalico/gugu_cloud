@@ -74,8 +74,8 @@ const DATA = {
         SPAWN: {
             // TODO: INTERVAL 을 랜덤하게 생성해야함 (스코프1)
             INTERVAL: 90, // 생성 간격(프레임). ≈1.5초 @60fps
-            MAX_ON_FIELD: 7, // 맵 전체에서 동시에 존재 가능한 최대 담배 수 (개발문서: 7)
-            INITIAL_COUNT: 2, // 게임 시작 시 맵에 미리 깔아둘 담배 수
+            MAX_ON_FIELD: 15, // 맵 전체에서 동시에 존재 가능한 최대 담배 수 (개발문서: 7) >>> 크레이지 모드 적용하면서 15개로 바뀜
+            INITIAL_COUNT: 4, // 게임 시작 시 맵에 미리 깔아둘 담배 수 >>> 크레이지 모드 적용하면서 2개-> 4개로 바뀜
 
             // 담배끼리 최소로 떨어져 있어야 하는 x 간격(px).
             //   새 담배를 놓을 때 이미 있는 담배와 이 거리보다 가까우면 겹친다고 보고 다른 자리를 다시 뽑는다.
@@ -92,16 +92,16 @@ const DATA = {
             // 숫자 정해야함. 낙하 속도(프레임당 px). spinSpeed("fast"|"slow")로 골라 쓴다 → FALL_SPEED[spinSpeed]
             //   즉 회전이 빠른 담배는 빨리 떨어지고, 느린 담배는 천천히 떨어진다.
             FALL_SPEED: {
-                fast: 1, // TODO(밸런스): 빠른 낙하
-                slow: 0.5, // TODO(밸런스): 느린 낙하 (fast 보다 작게)
+                fast: 5, // TODO(밸런스): 빠른 낙하
+                slow: 5, // TODO(밸런스): 느린 낙하 (fast 보다 작게)
             },
 
             // ── (Phase 2) 회전 ──
             //  숫자 채워야함 보기 좋은걸로 'fast'/'slow' 두 종류의 프레임당 회전 각도(도).
             //   주림: 담배의 spinSpeed("fast"|"slow")로 여기를 골라 쓴다 → SPIN[spinSpeed]
             SPIN: {
-                fast: 7.5, // TODO(밸런스): 빠른 회전 — 프레임당 각도(도)
-                slow: 2.5, // TODO(밸런스): 느린 회전 — 프레임당 각도(도)
+                fast: 10, // TODO(밸런스): 빠른 회전 — 프레임당 각도(도)
+                slow: 10, // TODO(밸런스): 느린 회전 — 프레임당 각도(도)
             },
             AIR_DAMAGE: 5, // air 담배가 플레이어에 닿을 때 깎이는 폐 게이지
             SPAWN_Y: 0, // 생성 시작 y(월드 맨 위). 음수면 화면 밖에서 떨어짐
@@ -113,8 +113,8 @@ const DATA = {
             // down/up 수직 이동 속도(px/frame). 같은 값 → "떨어지는 속도 = 올라가는 속도".
             // walkSpeed("fast"|"slow")로 골라 쓴다 → STEP_SPEED[walkSpeed]
             STEP_SPEED: {
-                fast: 6, // TODO(밸런스): 빠른 발
-                slow: 3, // TODO(밸런스): 느린 발
+                fast: 7, // TODO(밸런스): 빠른 발
+                slow: 7, // TODO(밸런스): 느린 발
             },
 
             // 땅을 밟고 '벽'으로 서 있는 시간(프레임). walkSpeed 별로 따로. TODO(밸런스)
@@ -336,7 +336,7 @@ const DATA = {
     CIGARETTE_TYPES: {
         cigar_s: {
             points: 5,
-            percentage: 45,
+            percentage: 80,
             boxW: 50,
             boxH: 30,
             sprite: "img_assets/items/cigar_s.png",
@@ -344,7 +344,7 @@ const DATA = {
         },
         cigar_m: {
             points: 10,
-            percentage: 45,
+            percentage: 19,
             boxW: 70,
             boxH: 30,
             sprite: "img_assets/items/cigar_m.png",
@@ -352,7 +352,7 @@ const DATA = {
         },
         cigar_l: {
             points: 20,
-            percentage: 10,
+            percentage: 1,
             boxW: 90,
             boxH: 30,
             sprite: "img_assets/items/cigar_l.png",
