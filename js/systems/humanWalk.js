@@ -23,13 +23,21 @@ function updateHumans() {
                 isColliding(playerBox, foot.getBox())
             ) {
                 foot.hasHitPlayer = true; // 먼저 잠가 재타격 차단
+
                 addGauge(-DATA.CONFIG.HUMAN.AIR_DAMAGE); // 폐 게이지 -5
 
-                // 스턴: 어떤 상태든(줍기·피우기·불붙음 포함) 무조건 스턴으로 덮어쓴다.
-                STATE.player.enterStatus(DATA.CONFIG.HUMAN.STUN_STATUS);
-
-                // ── SFX: 발에 밟힘 (공격당함) ──
+                // ── SFX: 발에 밟힘 (공격당함) ── (씬 전환 전에 소리 재생)
                 playSfx("hitByFoot");
+
+                // 밟힘 규칙:
+                //   - 이미 squashed 상태에서 또 밟히면 → 게임오버 씬
+                //   - 그 외 상태(idle/picking/smoking/smokeFire 등)에서 밟히면 → squashed 로 진입
+                //     (squashed 상태에서 담배를 주우면 picking→smoking→idle 로 자연 복귀)
+                if (STATE.player.playerStatus === "squashed") {
+                    switchScene("gameOver");
+                } else {
+                    STATE.player.enterStatus("squashed");
+                }
             }
         }
     }

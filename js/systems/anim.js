@@ -27,11 +27,15 @@ function getPlayerClip(p) {
             return CLIPS.picking;
         case "stunned":
             return CLIPS.stunned;
+        case "squashed":
+            // 밟힘: 다음 담배 줍기(picking) 또는 재타격(→gameOver) 전까지 이 이미지 유지.
+            return CLIPS.squashed;
         case "smokeFire":
             // 불붙음: 움직여도/주워도 idle 과 동일. 차이는 오직 이미지.
             // 지금은 움직임과 무관하게 smokeFire 이미지 1장만 보여준다.
             // (걸을 때 '불붙은 걷기' 애니가 필요하면 말해주세요 → walk 처럼 분기 가능)
             return CLIPS.smokeFire;
+
         case "idle":
         default:
             // 대기: 움직이는 중이면 걷기, 멈춰 있으면 기본 이미지
@@ -69,7 +73,12 @@ function updateAnim() {
         if (p.animTimer <= 0) {
             if (p.playerStatus === "picking") {
                 p.enterStatus("smoking");
+            } else if (p.playerStatus === "smokeFire") {
+                // 담배에 맞아 불붙은 상태의 타이머가 끝나면 → 게임오버 씬으로.
+                //   (개발자 요청: 담배 1대 맞으면 smokeFire 이미지 유지 후 게임오버)
+                switchScene("gameOver");
             } else {
+                // smoking / stunned 등은 idle 로 복귀
                 p.enterStatus("idle");
             }
         }

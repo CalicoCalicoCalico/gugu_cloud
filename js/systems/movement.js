@@ -13,7 +13,12 @@ function movePlayer() {
     const p = STATE.player;
 
     // 이동 가능 상태: idle 과 smokeFire(불붙음). 줍기/피우기/스턴은 이동 잠금.
-    const canMove = p.playerStatus === "idle" || p.playerStatus === "smokeFire";
+    // squashed 도 이동 가능 (밟힌 이미지 유지한 채 걸어다니며 담배 주울 수 있음)
+    const canMove =
+        p.playerStatus === "idle" ||
+        p.playerStatus === "smokeFire" ||
+        p.playerStatus === "squashed";
+
     if (!canMove) {
         p.walk(0); // 멈춤(isMoving=false → 걷기 애니 해제)
         return;

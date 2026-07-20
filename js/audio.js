@@ -7,6 +7,7 @@
 
 let bgm = null;
 let ambience = null; // ← 추가: 환경음 Audio (고정 볼륨, 슬라이더 영향 없음)
+let gameOverBgm = null; // 게임오버 씬 전용 BGM (mainBGM 과 별도 Audio 객체)
 
 /** 초기화 — main.js 부팅 때 한 번 호출. */
 function initAudio() {
@@ -19,6 +20,11 @@ function initAudio() {
     ambience = new Audio(DATA.CONFIG.AUDIO.AMBIENCE);
     ambience.loop = true;
     ambience.volume = DATA.CONFIG.AUDIO.AMBIENCE_VOLUME;
+
+    // 게임오버 BGM: 루프. 볼륨은 DATA 고정값(설정 슬라이더 영향 없음 — bgm 만 슬라이더가 조절).
+    gameOverBgm = new Audio(DATA.CONFIG.AUDIO.GAME_OVER_BGM);
+    gameOverBgm.loop = true;
+    gameOverBgm.volume = DATA.CONFIG.AUDIO.GAME_OVER_BGM_VOLUME;
 }
 
 /** BGM 재생 시작. 브라우저 자동재생 정책상 '사용자 클릭' 시점에 불러야 한다. */
@@ -49,6 +55,19 @@ function startAmbience() {
 function pauseAmbience() {
     if (!ambience) return;
     ambience.pause();
+}
+
+/** 게임오버 BGM 재생 시작. (gameOver 씬 진입 시 호출) */
+function startGameOverBgm() {
+    if (!gameOverBgm) return;
+    gameOverBgm.currentTime = 0; // 매번 처음부터 (재도전 시 자연스럽게 재시작)
+    gameOverBgm.play().catch(() => {}); // 자동재생 막히면 조용히 무시
+}
+
+/** 게임오버 BGM 일시정지. (gameOver 씬을 떠날 때 호출) */
+function pauseGameOverBgm() {
+    if (!gameOverBgm) return;
+    gameOverBgm.pause();
 }
 // ═══════════════════════════════════════════════════════
 // 효과음(SFX)

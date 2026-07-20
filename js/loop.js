@@ -40,6 +40,17 @@ function switchScene(name) {
         startBgm();
         startAmbience();
     }
+    // 게임오버 씬: 정적 화면. 오디오 정지하고 버튼 입력을 기다린다.
+    // 게임오버 씬: 정적 화면. 메인 BGM/환경음은 멈추고 게임오버 전용 BGM 재생.
+    if (name === "gameOver") {
+        pauseBgm();
+        pauseAmbience();
+        startGameOverBgm();
+    } else {
+        // 다른 어떤 씬으로 가든(타이틀·인트로·플레이·엔딩) 게임오버 BGM 은 확실히 멈춘다.
+        //   (gameOver → title, gameOver → play 재도전 등 모든 경로에서 안전)
+        pauseGameOverBgm();
+    }
 }
 
 // 현재 재생 중인 영상 씬의 "건너뛰기" 함수를 여기 담아둔다.
@@ -154,6 +165,10 @@ function tick() {
             updateCamera();
             // 9. 렌더 (맨 끝, 읽기 전용)
             render();
+            break;
+
+        case "gameOver":
+            // 게임오버 화면 — 정적. 다시하기/타이틀 버튼이 씬 전환을 담당.
             break;
 
         case "endingVideo":
