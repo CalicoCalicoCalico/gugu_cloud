@@ -35,7 +35,7 @@ function spawnCigarette() {
  */
 function pickRandomCigaretteType() {
     let cigaTypesArray = ["cigar_s", "cigar_m", "cigar_l"]; // 1. 담배 종류 어레이 만들기
-    let cigaTypesWeights = [45, 45, 10]; // 2. 각 담배의 가중치 어레이 만들기
+    let cigaTypesWeights = [80, 19, 1]; // 2. 각 담배의 가중치 어레이 만들기
     let totalCigaTypesWeights = 100; // 3. 가중치의 총합 변수 설정하기
     let randomValue = Math.random() * totalCigaTypesWeights; // 4. 0부터 가중치 총합 사이의 랜덤 숫자 뽑기
 

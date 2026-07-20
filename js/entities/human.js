@@ -29,7 +29,7 @@ class Human {
         this.direction = pickRandomBool(0.5) ? "right" : "left";
 
         const def = TYPES[this.type];
-        const walkPacing = "normal"; // 여기 랜덤 - 나중에 난이도 추가 후 pickRandomBool(0.5) ? "normal" : "좁은보폭";
+        const walkPacing = pickRandomBool(0.5) ? "normal" : "close";
         this.stride =
             walkPacing === "normal"
                 ? HUMAN.STRIDE.normal // 비둘기 너비 * 2
