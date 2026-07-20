@@ -151,4 +151,25 @@ class Cigarette {
         const phase = framesIn % period; // 현재 주기 내 위치
         return phase >= period / 2; // 뒤 절반이면 숨김
     }
+
+    /**
+     * 지금 프레임의 담배 투명도(opacity). 사라지기 전 서서히 옅어지게 한다.
+     *
+     * 규칙: groundTimer 가 FADE_DURATION_FRAMES 이하로 남았을 때부터 선형으로 감소.
+     *   groundTimer == FADE_DURATION_FRAMES → 1.0 (완전 불투명)
+     *   groundTimer == 0                    → 0.0 (완전 투명)
+     * air 상태거나 groundTimer 가 넉넉히 남았을 땐 1.
+     * FADE_DURATION_FRAMES <= 0 이면 페이드 없음(항상 1).
+     * @returns {number} 0~1 사이 opacity
+     */
+    currentOpacity() {
+        const { FADE_DURATION_FRAMES } = DATA.CONFIG.CIGARETTE;
+        if (FADE_DURATION_FRAMES <= 0) return 1;
+        if (this.cigarStatus !== "ground") return 1;
+        if (this.groundTimer >= FADE_DURATION_FRAMES) return 1;
+
+        // groundTimer 가 FADE_DURATION_FRAMES → 0 으로 줄어드는 만큼 opacity 도 1 → 0.
+        //   clamp 로 안전하게 [0, 1] 로 가둠 (혹시 음수 프레임 상황 대비).
+        return clamp(this.groundTimer / FADE_DURATION_FRAMES, 0, 1);
+    }
 }

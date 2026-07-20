@@ -111,14 +111,17 @@ const DATA = {
             // (플레이어가 그 위에 서 있든 말든 무관. 시간만이 기준.)
             GROUND_LIFETIME_FRAMES: 600, // 10초 @60fps
 
-            // ── 사라지기 전 깜빡임(경고) ──
-            // BLINK_COUNT : 총 몇 번 깜빡일지. 0 = 깜빡임 없음(그냥 사라짐).
-            // BLINK_DURATION_FRAMES : 깜빡임이 진행되는 총 시간(수명 마지막에서 이만큼 앞에서 시작).
-            //   예) BLINK_COUNT=5, BLINK_DURATION=60  → 1초 안에 5번 (빠르게 깜빡)
-            //       BLINK_COUNT=1, BLINK_DURATION=60  → 1초 동안 1번   (느리게 한 번)
-            //   한 번의 "깜빡"은 (앞 절반 보임 → 뒤 절반 안 보임) 한 주기를 뜻함.
-            BLINK_COUNT: 5,
-            BLINK_DURATION_FRAMES: 100, // 1초 @60fps
+            // ── 사라지기 전 깜빡임(경고) — 지금은 미사용. 필요할 때 BLINK_COUNT>0 으로 켜기 ──
+            // BLINK_COUNT : 총 몇 번 깜빡일지. 0 = 깜빡임 없음.
+            // BLINK_DURATION_FRAMES : 깜빡임 총 시간(수명 마지막에서 이만큼 앞에서 시작).
+            //   예) COUNT=5, DURATION=60  → 1초 안에 5번(빠름) / COUNT=1, DURATION=60 → 1초에 1번(느림).
+            BLINK_COUNT: 0, // ← 0 이면 깜빡임 로직 자체가 꺼짐(항상 opacity 1)
+            BLINK_DURATION_FRAMES: 100,
+
+            // ── 사라지기 전 페이드아웃(현재 사용) ──
+            // 수명 마지막에서 이만큼 앞에서부터 opacity 1 → 0 으로 서서히 사라진다.
+            // (blink 와 동시에 켜지면 시각적으로 어색하니 보통 둘 중 하나만 씀)
+            FADE_DURATION_FRAMES: 100, // 1초가 60fps
         },
 
         // ── 적: 인간 발(walk) ──
@@ -154,7 +157,7 @@ const DATA = {
 
             SPAWN_Y: -360, // 발 시작 y(월드 위). 음수면 화면 위 밖에서 내려옴.
             SPAWN_MARGIN: 300, // 맵 좌우 바깥 여유. 이만큼 밖에서 걷고/나가면 사라짐.
-            SPAWN_INTERVAL: 1800, // 자동 생성 간격(프레임). 1800 ≈ 30초 @60fps. TODO(밸런스)
+            SPAWN_INTERVAL: 1200, // 자동 생성 간격(프레임). 1800 ≈ 30초 @60fps. TODO(밸런스)
 
             AIR_DAMAGE: 5, // down/up(공중) 발이 닿을 때 깎이는 폐 게이지
             STUN_STATUS: "stunned", // 맞으면 들어갈 플레이어 상태 (player FSM 에 이미 있음)
@@ -389,7 +392,7 @@ const DATA = {
         training: {
             boxW: 280,
             boxH: 420,
-            hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
+            hitbox: { offsetX: 5, offsetY: 250, w: 120, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_trainingR1.png",
@@ -407,7 +410,7 @@ const DATA = {
         suit: {
             boxW: 280,
             boxH: 420,
-            hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
+            hitbox: { offsetX: 5, offsetY: 200, w: 120, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_suitR1.png",
@@ -425,7 +428,7 @@ const DATA = {
         jean: {
             boxW: 280,
             boxH: 420,
-            hitbox: { offsetX: 35, offsetY: 200, w: 50, h: 150 }, // 이미지 박스 좌상단 기준
+            hitbox: { offsetX: 5, offsetY: 200, w: 100, h: 150 }, // 이미지 박스 좌상단 기준
             sprites: {
                 R: {
                     down: "img_assets/enemies/foot/human_walking_jeanR1.png",
