@@ -105,6 +105,20 @@ const DATA = {
             },
             AIR_DAMAGE: 5, // air 담배가 플레이어에 닿을 때 깎이는 폐 게이지
             SPAWN_Y: 0, // 생성 시작 y(월드 맨 위). 음수면 화면 밖에서 떨어짐
+
+            // ── 땅에 놓인 담배의 수명 ──
+            // ground 로 전환된 순간부터 이 프레임 수가 지나면 담배가 사라진다(despawn).
+            // (플레이어가 그 위에 서 있든 말든 무관. 시간만이 기준.)
+            GROUND_LIFETIME_FRAMES: 600, // 10초 @60fps
+
+            // ── 사라지기 전 깜빡임(경고) ──
+            // BLINK_COUNT : 총 몇 번 깜빡일지. 0 = 깜빡임 없음(그냥 사라짐).
+            // BLINK_DURATION_FRAMES : 깜빡임이 진행되는 총 시간(수명 마지막에서 이만큼 앞에서 시작).
+            //   예) BLINK_COUNT=5, BLINK_DURATION=60  → 1초 안에 5번 (빠르게 깜빡)
+            //       BLINK_COUNT=1, BLINK_DURATION=60  → 1초 동안 1번   (느리게 한 번)
+            //   한 번의 "깜빡"은 (앞 절반 보임 → 뒤 절반 안 보임) 한 주기를 뜻함.
+            BLINK_COUNT: 5,
+            BLINK_DURATION_FRAMES: 100, // 1초 @60fps
         },
 
         // ── 적: 인간 발(walk) ──

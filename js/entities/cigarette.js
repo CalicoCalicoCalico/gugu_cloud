@@ -56,6 +56,13 @@ class Cigarette {
         // 공중에서 플레이어를 이미 한 번 때렸나? (한 담배는 떨어지며 딱 한 번만 데미지)
         this.hasHitPlayer = false;
 
+        // ── 땅 수명 타이머 ──
+        // ground 상태로 전환되는 순간 GROUND_LIFETIME_FRAMES 로 세팅된다(fall() 내부).
+        // 매 프레임 -1 되고, 0 에 닿으면 dead=true → cigaretteFall 이 배열에서 제거.
+        //   air 상태에선 사용 안 함. seed 로 만든 담배도 첫 프레임에 착지하면 그때 세팅됨.
+        this.groundTimer = 0;
+        this.dead = false; // updateCigarettes 가 배열에서 splice 할 표시
+
         // ── (Phase 2) 회전/눕기 속성 (생성 시 랜덤 1회, 헬퍼로 뽑음) ── TODO(주림)
         //   담배종류(type)는 이미 spawn.js 의 pickRandomCigaretteType() 로 정해져 넘어옴.
         //   여기선 나머지 셋을 뽑는다:
@@ -105,6 +112,10 @@ class Cigarette {
             // 착지 시 눕는 방향(faceDirection) 각도로 스냅
             // right 면 180° 뒤집어 눕고, left 면 0°. (담배 스프라이트 기본 방향 보고 조절)
             this.angle = this.faceDirection === "right" ? 180 : 0;
+
+            // ── 땅 수명 시작: 이 순간부터 GROUND_LIFETIME_FRAMES 뒤에 사라진다 ──
+            //   seed 로 만들어 하늘에서 떨어진 담배도 여기서 세팅되므로 특별 취급 불필요.
+            this.groundTimer = DATA.CONFIG.CIGARETTE.GROUND_LIFETIME_FRAMES;
         }
     }
 
@@ -116,5 +127,28 @@ class Cigarette {
         const { offsetX, offsetY, w, h } =
             DATA.CIGARETTE_TYPES[this.type].hitbox;
         return { x: this.x + offsetX, y: this.y + offsetY, w, h };
+    }
+
+    /**
+     * (사라지기 전 깜빡임 표현용)
+     *
+     * 규칙: groundTimer 가 BLINK_DURATION_FRAMES 이하로 남았을 때 깜빡이기 시작.
+     *   한 주기(period) = BLINK_DURATION / BLINK_COUNT.
+     *   각 주기의 앞 절반은 보이고, 뒤 절반은 안 보인다 → 이를 BLINK_COUNT 번 반복.
+     * BLINK_COUNT === 0 이면 항상 false(깜빡임 없음).
+     * air 상태나 groundTimer 가 넉넉히 남았을 땐 false.
+     * @returns {boolean}
+     */
+    isBlinkHidden() {
+        const { BLINK_COUNT, BLINK_DURATION_FRAMES } = DATA.CONFIG.CIGARETTE;
+        if (BLINK_COUNT <= 0) return false;
+        if (this.cigarStatus !== "ground") return false;
+        if (this.groundTimer > BLINK_DURATION_FRAMES) return false;
+
+        // 깜빡임 구간에 들어온 뒤 지난 프레임 수 (0 → BLINK_DURATION_FRAMES 로 증가)
+        const framesIn = BLINK_DURATION_FRAMES - this.groundTimer;
+        const period = BLINK_DURATION_FRAMES / BLINK_COUNT; // 한 번 깜빡이는 데 걸리는 프레임
+        const phase = framesIn % period; // 현재 주기 내 위치
+        return phase >= period / 2; // 뒤 절반이면 숨김
     }
 }
