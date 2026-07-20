@@ -106,8 +106,10 @@ class HumanFoot {
     }
 
     isAttacking() {
-        return this.stepStatus === "down" || this.stepStatus === "up";
+        // 내려오는 중(down)만 공격. 올라가는(up) 발은 공중이어도 공격 안 함.
+        return this.stepStatus === "down";
     }
+
     isWall() {
         return this.stepStatus === "ground";
     }

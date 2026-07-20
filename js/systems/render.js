@@ -93,9 +93,13 @@ function renderCigarettes() {
         el.style.top = `${cig.y}px`;
         el.style.transform = `rotate(${cig.angle}deg)`;
         el.classList.toggle("collected", cig.collected);
-        // 사라지기 전 깜빡임: 담배가 결정한 숨김 여부를 그대로 반영
-        //   (visibility 사용 → 자리는 남기고 그림만 숨김. layout thrash 없음)
-        el.style.visibility = cig.isBlinkHidden() ? "hidden" : "visible";
+        // 사라지기 전 페이드아웃 (현재 사용) + 깜빡임 (BLINK_COUNT>0 일 때만 겸용).
+        //   깜빡임은 opacity 0 으로 순간 숨김 처리 — 페이드 값과 곱해서 자연스럽게 합침.
+        //   ⚠ 보통 둘 중 하나만 켠다: 페이드만 쓰려면 BLINK_COUNT=0 (기본값) 유지.
+        const fade = cig.currentOpacity();
+        const blinkHidden = cig.isBlinkHidden() ? 0 : 1;
+        el.style.opacity = fade * blinkHidden;
+        el.style.visibility = "visible"; // 이전 회차의 hidden 잔재 리셋 (안전)
 
         // ── 디버그 히트박스 DOM ──
         let dbg = cigHitboxCache.get(cig.id);
