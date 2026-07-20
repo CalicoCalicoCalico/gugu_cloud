@@ -7,7 +7,7 @@
 // 핵심 데이터:
 //   x, y          : 좌상단 좌표(px)
 //   looking       : 바라보는 방향 "left" | "right" (render 가 좌우 반전에 사용)
-//   playerStatus  : "idle" | "picking" | "smoking" (지금은 항상 idle, 애니는 다음 스코프)
+//   playerStatus  : "idle" | "picking" | "smoking" | stunned | smokeFire
 //
 // STATE.player 에 인스턴스 하나로 들어간다 (resetGameState 에서 생성).
 // 크기·속도 같은 "안 변하는 값"은 DATA.CONFIG.PLAYER 에서 읽는다.

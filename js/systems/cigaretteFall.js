@@ -36,17 +36,32 @@ function updateCigarettes() {
         ) {
             cig.hasHitPlayer = true; // 먼저 잠가 다음 프레임 재타격 차단
             addGauge(-DATA.CONFIG.CIGARETTE.AIR_DAMAGE); // 폐 게이지 -5 (clamp 내장)
-            // 떨어지는 담배에 맞으면 '불붙음(smokeFire)' 상태로.
 
             // ── SFX: 담배에 맞음 (공격당함) ──
             playSfx("hitByCigarette");
 
-            // smokeFire 는 idle 과 동작 동일(이동·줍기 가능), 이미지만 다르고 시간 지나면 자동 idle 복귀.
-            // ⚠ 줍기/피우기 중(picking/smoking)에 맞으면 그 애니가 끊기지 않도록 idle/smokeFire 일 때만 덮어쓴다.
+            // smokeFire 는 idle 과 동작 동일(이동·줍기 가능). idle/smokeFire 일 때만 덮어씀.
             const s = STATE.player.playerStatus;
             if (s === "idle" || s === "smokeFire") {
                 STATE.player.enterStatus("smokeFire");
             }
+        }
+
+        // 3. ground 상태 담배의 수명 감소 → 0 이하면 dead 로 표시
+        //    (땅에 놓인 지 GROUND_LIFETIME_FRAMES 지나면 사라진다. 플레이어 위치 무관.)
+        if (cig.cigarStatus === "ground") {
+            cig.groundTimer -= 1;
+            if (cig.groundTimer <= 0) {
+                cig.dead = true;
+            }
+        }
+    }
+
+    // 4. 죽은 담배 정리: 배열에서 제거 (render 의 "청소" 블록이 DOM 도 자동 제거).
+    //    뒤에서부터 splice — 인덱스 어긋남 방지 (humanWalk 의 dead 사람 제거와 동일 패턴).
+    for (let i = STATE.cigarettesArray.length - 1; i >= 0; i--) {
+        if (STATE.cigarettesArray[i].dead) {
+            STATE.cigarettesArray.splice(i, 1);
         }
     }
 }

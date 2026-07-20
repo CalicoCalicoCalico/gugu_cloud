@@ -93,6 +93,9 @@ function renderCigarettes() {
         el.style.top = `${cig.y}px`;
         el.style.transform = `rotate(${cig.angle}deg)`;
         el.classList.toggle("collected", cig.collected);
+        // 사라지기 전 깜빡임: 담배가 결정한 숨김 여부를 그대로 반영
+        //   (visibility 사용 → 자리는 남기고 그림만 숨김. layout thrash 없음)
+        el.style.visibility = cig.isBlinkHidden() ? "hidden" : "visible";
 
         // ── 디버그 히트박스 DOM ──
         let dbg = cigHitboxCache.get(cig.id);
