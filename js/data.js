@@ -209,10 +209,14 @@ const DATA = {
                     { img: "99_default_picking2.png", duration: 7 },
                     { img: "99_default_picking1.png", duration: 7 },
                 ],
-                // 스턴: 일단 기본 이미지로 placeholder
+                // 스턴:
                 stunned: [{ img: "99_default_stepOn.png", duration: 8 }], // TODO 스턴 전용 이미지로 교체
+
                 // 불붙음: idle 과 동작은 같고 이미지만 다름. 정적 1장.
                 smokeFire: [{ img: "99_default_smokeFire.png", duration: 8 }], // TODO 에셋: 실제 불붙은 이미지로 교체
+
+                // 짜부 : (스턴과 같음 이미지)  시간 제한 없음 → STATUS_DURATION 에 안 넣음 (다음 담배 줍기 or 재타격 전까지 유지)
+                squashed: [{ img: "99_default_stepOn.png", duration: 8 }], // TODO(에셋): squashed 전용 이미지로 교체
             },
 
             // 피우기(smoking)는 담배 종류마다 프레임 수/그림이 다르다 (개발문서 단/중/장).
@@ -259,6 +263,8 @@ const DATA = {
         AUDIO: {
             BGM: "audio_assets/mainBGM.mp3",
             BGM_VOLUME: 0.08,
+            GAME_OVER_BGM: "audio_assets/gameover_g_aria.mp3",
+            GAME_OVER_BGM_VOLUME: 0.7,
 
             // 환경음(ambience) — play 씬에서 항상 깔리는 배경 소리.
             // ⚠ BGM 과 달리 설정 슬라이더로 못 줄인다(고정 볼륨). 끄려면 여기 값만 바꿈.

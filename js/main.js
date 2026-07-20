@@ -84,11 +84,25 @@ window.addEventListener("DOMContentLoaded", () => {
         if (_skipSceneVideo) _skipSceneVideo();
     });
 
-    // dev 버튼: 담배를 한 개씩 수동 생성 (테스트용)
-    // $("btn-dev-spawn").addEventListener("click", () => {
-    //     if (STATE.currentScene !== "play") return;
-    //     spawnOneCigarette();
-    // });
+    // 게임오버 씬 버튼들:
+    //   다시하기 → onPlayReStart (STATE 리셋 + 담배 재배치 + play 씬 + BGM 재시작)
+    //   타이틀로 → title 씬 (오디오는 switchScene 이 이미 정지 중)
+    $("btn-gameover-replay").addEventListener("click", onPlayReStart);
+    $("btn-gameover-title").addEventListener("click", () =>
+        switchScene("title"),
+    );
+
+    // ⚠ dev: play 중 'h' 키 → 인간 발 1명 생성 (테스트용. 정식 스포너 생기면 제거)
+    // ⚠ dev: play 중 'k' 키 → 즉시 게임오버 씬으로 (게임오버 화면/버튼 테스트용)
+    window.addEventListener("keydown", (e) => {
+        const key = e.key.toLowerCase();
+        if (key === "h" && STATE.currentScene === "play") {
+            spawnOneHuman();
+        }
+        if (key === "k" && STATE.currentScene === "play") {
+            switchScene("gameOver"); // switchScene 이 BGM/환경음도 정지시켜 줌
+        }
+    });
 
     // ── 게임 루프 시작 (고정 타임스텝 / fixed timestep) ──
     // ⚠ 모니터 주사율(refresh rate)이 컴퓨터마다 달라서(60Hz / 144Hz 등)

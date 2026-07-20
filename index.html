@@ -102,6 +102,33 @@
                 </div>
             </div>
 
+            <!-- ═══ 씬: 게임오버 gameOver ═══ -->
+            <!-- 발에 두 번 밟히거나 담배 불붙음(smokeFire) 타이머 종료 시 진입 -->
+            <div id="scene-gameOver" class="scene">
+                <h2
+                    style="
+                        font-family: var(--font-display);
+                        font-size: var(--font-size-h1);
+                    "
+                >
+                    Game Over
+                </h2>
+                <div
+                    style="
+                        display: flex;
+                        gap: var(--spacing-4);
+                        margin-top: var(--spacing-6);
+                    "
+                >
+                    <button id="btn-gameover-replay" class="btn-primary">
+                        다시하기
+                    </button>
+                    <button id="btn-gameover-title" class="btn-primary">
+                        타이틀로
+                    </button>
+                </div>
+            </div>
+
             <!-- ═══ 씬: 엔딩 영상(이미지) ═══ -->
             <div id="scene-endingVideo" class="scene">
                 <video
