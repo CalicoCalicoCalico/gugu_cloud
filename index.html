@@ -105,27 +105,28 @@
             <!-- ═══ 씬: 게임오버 gameOver ═══ -->
             <!-- 발에 두 번 밟히거나 담배 불붙음(smokeFire) 타이머 종료 시 진입 -->
             <div id="scene-gameOver" class="scene">
-                <h2
-                    style="
-                        font-family: var(--font-display);
-                        font-size: var(--font-size-h1);
-                    "
-                >
-                    Game Over
-                </h2>
-                <div
-                    style="
-                        display: flex;
-                        gap: var(--spacing-4);
-                        margin-top: var(--spacing-6);
-                    "
-                >
-                    <button id="btn-gameover-replay" class="btn-primary">
-                        다시하기
-                    </button>
-                    <button id="btn-gameover-title" class="btn-primary">
-                        타이틀로
-                    </button>
+                <img
+                    class="game-over-title"
+                    src="img_assets/ui/gameoverTitle.png"
+                    alt="게임오버 타이틀"
+                />
+                <div class="gameover-controls">
+                    <div class="btn-group">
+                        <button id="btn-gameover-exit" class="btn-ui-frame">
+                            <img
+                                src="img_assets/ui/gameoverExitButton.png"
+                                alt="타이틀로 나가기"
+                            />
+                            <span>타이틀로 나가기</span>
+                        </button>
+                        <button id="btn-gameover-restart" class="btn-ui-frame">
+                            <img
+                                src="img_assets/ui/gameoverRestartButton.png"
+                                alt="다시하기"
+                            />
+                            <span>다시하기</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 

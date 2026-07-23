@@ -12,6 +12,7 @@ body {
 #game-container {
     position: relative;
     width: var(--viewport-width); /* 보이는 게임 = 뷰포트 폭 */
+    height: var(--viewport-height, 440px);
     background: var(--bg-stage);
     border: 2px solid #d0ebff;
     border-radius: var(--radius-lg);
@@ -186,4 +187,93 @@ body {
     top: 24px; /* 상단 테두리로부터 내려올 거리 */
     right: 32px; /* 오른쪽 테두리로부터 떨어질 거리 */
     z-index: 100; /* 게임 속 다른 요소들보다 항상 위에 보이도록 설정 */
+}
+
+/* ═══════════════════════════════════════════════════════
+   [게임오버 씬 - 최종 완벽 고정 스타일]
+   ═══════════════════════════════════════════════════════ */
+
+/* 1. 게임오버 씬 전체 박스 (443px 아래로 밀려나던 현상 해결) */
+#scene-gameOver.scene.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+    /* 밀려난 상자를 무대 맨 위(0, 0)로 강제 고정 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    margin: 0;
+
+    padding-top: 140px;
+    padding-bottom: 85px;
+    box-sizing: border-box;
+    
+    background: rgba(0, 0, 0, 0.75) url('../img_assets/bg/gameover.png') no-repeat center / cover;
+}
+
+/* 2. 타이틀 및 버튼 이미지 가시성 보장 */
+#scene-gameOver.scene.active img {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 3. 타이틀 글자 깜빡임 애니메이션 */
+#scene-gameOver.scene.active .game-over-title {
+    max-width: 40%;
+    height: auto;
+    object-fit: contain;
+    z-index: 10;
+    margin: 0;
+
+    will-change: opacity;
+    animation: arcadeBlink 0.8s steps(1) infinite;
+}
+
+@keyframes arcadeBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* 4. 버튼 액자 스타일 */
+#scene-gameOver.scene.active .btn-ui-frame {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    cursor: pointer;
+    width: auto; /* 기존 btn-ui-frame의 120px 고정너비 해제 */
+}
+
+#scene-gameOver.scene.active .btn-ui-frame img {
+    width: 120px; /* 버튼 사이즈 조정 */
+    height: auto;
+    object-fit: contain;
+}
+
+#scene-gameOver.scene.active .btn-ui-frame span {
+    display: none;
+}
+
+/* 버튼 컨테이너 (하단 정렬) */
+#scene-gameOver.scene.active .gameover-controls {
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* 게임오버 버튼 그룹의 좌우 간격 조절 */
+#scene-gameOver.scene.active .btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 60px
 }
