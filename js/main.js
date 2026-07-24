@@ -87,8 +87,8 @@ window.addEventListener("DOMContentLoaded", () => {
     // 게임오버 씬 버튼들:
     //   다시하기 → onPlayReStart (STATE 리셋 + 담배 재배치 + play 씬 + BGM 재시작)
     //   타이틀로 → title 씬 (오디오는 switchScene 이 이미 정지 중)
-    $("btn-gameover-replay").addEventListener("click", onPlayReStart);
-    $("btn-gameover-title").addEventListener("click", () =>
+    $("btn-gameover-restart").addEventListener("click", onPlayReStart);
+    $("btn-gameover-exit").addEventListener("click", () =>
         switchScene("title"),
     );
 
